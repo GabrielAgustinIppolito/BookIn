@@ -10,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "book")
 public class Book {
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,9 +25,8 @@ public class Book {
    private boolean isShippable;
    private String review;
    private GeoLocation location;
-   @Enumerated(EnumType.STRING)
-   @Column(columnDefinition = "genre")
-   @Type(PostgreSQLEnumType.class)
+   @Column(name = "genre")
+   @ManyToMany
    private Iterable<Genre> genres;
    @ManyToMany(mappedBy = "book", fetch = FetchType.EAGER)
    @JoinColumn(name = "tag_id")
