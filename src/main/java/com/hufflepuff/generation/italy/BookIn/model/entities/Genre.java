@@ -4,6 +4,6 @@ import jakarta.persistence.Entity;
 
 @Entity
 public enum Genre {
-   Giallo, Rosa, Horror, Fantasy, Fantascienza, Erotico, Storico, Umoristico,
-   Avventura, Biografia, Ragazzi, Fumetti, Manga
+   GIALLO, ROSA, HORROR, FANTASY, FANTASCIENZA, EROTICO, STORICO, UMORISTICO,
+   AVVENTURA, BIOGRAFIA, RAGAZZI, FUMETTI, MANGA, SAGGIO
 }
