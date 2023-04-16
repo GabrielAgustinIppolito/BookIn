@@ -17,7 +17,7 @@ public class Book {
    @SequenceGenerator(name = "book_generator", allocationSize = 1)
    private long id;
    private String title;
-   private long isbn;
+   private String isbn;
    private LocalDate year;
    private String publisher;
    private String language;
