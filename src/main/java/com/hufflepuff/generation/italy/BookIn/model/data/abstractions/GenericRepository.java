@@ -1,6 +1,8 @@
 package com.hufflepuff.generation.italy.BookIn.model.data.abstractions;
 
-public interface GenericRepository<T> {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
-    T create(T entity);
+@NoRepositoryBean
+public interface GenericRepository<T> extends JpaRepository<T, Long> {
 }

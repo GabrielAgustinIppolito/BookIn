@@ -1,7 +1,7 @@
 package com.hufflepuff.generation.italy.BookIn.restController;
 
 import com.hufflepuff.generation.italy.BookIn.model.entities.User;
-import com.hufflepuff.generation.italy.BookIn.model.entities.data.abstractions.UserRepository;
+import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.UserRepository;
 import com.hufflepuff.generation.italy.BookIn.utils.JWTUtil;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
