@@ -29,10 +29,12 @@ public class ApiUserController {
 
    @GetMapping()
    public List<User> getAllUsers(@RequestHeader(value = "Authorization:Admin") String token){
-      return !getToken(token) ? null : repo.findAll();
+      return !isValidToken(token) ? null : repo.findAll();
    }
 
-   private boolean getToken(String token){
+   private boolean isValidToken(String token){
       return jwtUtil.getKey(token) != null;
    }
+
+
 }

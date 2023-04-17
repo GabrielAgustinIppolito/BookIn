@@ -1,6 +1,6 @@
 package com.hufflepuff.generation.italy.BookIn.model.services.implementations;
 
-import com.hufflepuff.generation.italy.BookIn.model.entities.data.abstractions.GenericRepository;
+import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
