@@ -2,6 +2,7 @@ package com.hufflepuff.generation.italy.BookIn.model.data.abstractions;
 
 import com.hufflepuff.generation.italy.BookIn.model.entities.Book;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Genre;
+import com.hufflepuff.generation.italy.BookIn.model.entities.GeoLocation;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Tag;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +22,11 @@ public interface AbstractBookRepository extends GenericRepository<Book> {
     public Iterable<Book> findByYearBetween(LocalDate startDate, LocalDate endDate);
     public Iterable<Book> findByLanguage (String language);
     public Iterable<Book> findByIsShippable (boolean isShippable);
-
+    @Query("SELECT b from Book b WHERE b.location.city = :cityname")
+    public Iterable<Book> findByGeoLocationCity (String cityname);
+    @Query
+    public Iterable<Book> findByGeoLocationCoordinates (double latitude, double longitude);
+    
     @Query("SELECT b from Book b WHERE b.title LIKE :title and b.author LIKE :author and b.genre = :genre and" +
             "b.tags = :tags and b.publisher LIKE :publisher and b.isbn = :isbn and b.year BETWEEN :startDate and endDate" +
             "b.language = :language and b.isShippable = :isShippable")
@@ -36,6 +41,7 @@ public interface AbstractBookRepository extends GenericRepository<Book> {
             @Param("endDate") LocalDate endDate,
             @Param("language") String language,
             @Param("isShippable") boolean isShippable
+
     );
 
     void deleteByID(long id);

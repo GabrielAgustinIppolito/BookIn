@@ -9,6 +9,8 @@ import lombok.Data;
 @Table(name = "geolocation")
 public class GeoLocation {
    private long id;
-   private long latitude;
-   private long longitude;
+   private String city;
+   private double latitude;
+   private double longitude;
+
 }
