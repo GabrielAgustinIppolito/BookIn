@@ -10,6 +10,8 @@ import java.time.LocalDate;
 
 public interface AbstractBookRepository extends GenericRepository<Book> {
 
+    Iterable<Book> findAll();
+    Book create (Book b);
     public Iterable<Book> findByTitleContaining(String part);
     public Iterable<Book> findByAuthorContaining(String partname);
     public Iterable<Book> findByGenre(Genre genre);
@@ -35,6 +37,10 @@ public interface AbstractBookRepository extends GenericRepository<Book> {
             @Param("language") String language,
             @Param("isShippable") boolean isShippable
     );
+
+    void deleteByID(long id);
+    void update (Book b);
+
 
 
 }
