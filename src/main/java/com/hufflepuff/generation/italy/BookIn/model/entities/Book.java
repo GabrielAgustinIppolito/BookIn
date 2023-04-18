@@ -26,6 +26,7 @@ public class Book {
    private String author;
    private boolean isShippable;
    private String review;
+   private boolean isAvailable;
    @OneToOne
    private GeoLocation location;
    @ManyToMany

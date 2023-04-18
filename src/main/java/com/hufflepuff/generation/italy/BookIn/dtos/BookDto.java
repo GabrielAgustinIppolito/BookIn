@@ -23,10 +23,12 @@ public class BookDto {
     private Set<Genre> genres;
     private Set<Tag> tags;
     private String review;
+    private boolean isAvailable;
     private GeoLocation location;
 
     public BookDto(long id, String title, String isbn, LocalDate year, String publisher, String language, String author,
-                   boolean isShippable, String review, GeoLocation location, Set<Genre> genres, Set<Tag> tags) {
+                   boolean isShippable, String review, boolean isAvailable, GeoLocation location, Set<Genre> genres,
+                   Set<Tag> tags) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
@@ -36,6 +38,7 @@ public class BookDto {
         this.author = author;
         this.isShippable = isShippable;
         this.review = review;
+        this.isAvailable = isAvailable;
         this.location = location;
         this.genres = genres;
         this.tags = tags;
@@ -43,13 +46,14 @@ public class BookDto {
 
     public static BookDto fromEntity(Book b){
         return new BookDto(b.getId(), b.getTitle(), b.getIsbn(), b.getYear(), b.getPublisher(), b.getLanguage(),
-                b.getAuthor(), b.isShippable(), b.getReview(), b.getLocation(), b.getGenres(), b.getTags());
+                b.getAuthor(), b.isShippable(), b.getReview(), b.isAvailable(), b.getLocation(), b.getGenres(), b.getTags());
 
 
     }
 
     public Book toEntity(){
-        return new Book(id, title, isbn, year, publisher, language, author, isShippable, review, location, genres, tags);
+        return new Book(id, title, isbn, year, publisher, language, author, isShippable, review, isAvailable,
+                location, genres, tags);
     }
 
     public static List<BookDto> fromEntityList(List<Book> books) {
@@ -99,7 +103,9 @@ public class BookDto {
     public GeoLocation getLocation() {
         return location;
     }
-
+    public boolean isAvailable() {
+        return isAvailable;
+    }
     public void setId(long id) {
         this.id = id;
     }
@@ -138,5 +144,9 @@ public class BookDto {
 
     public void setLocation(GeoLocation location) {
         this.location = location;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 }

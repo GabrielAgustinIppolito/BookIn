@@ -27,65 +27,65 @@ public class BookService implements AbstractBookService {
     }
 
     @Override
-    public Iterable<Book> findByTitleContaining(String part) {
-        return repo.findByTitleContaining(part);
+    public Iterable<Book> findByTitleContainingAndIsAvailableTrue(String part) {
+        return repo.findByTitleContainingAndIsAvailableTrue(part);
     }
 
     @Override
-    public Iterable<Book> findByAuthorContaining(String partName) {
-        return repo.findByAuthorContaining(partName);
+    public Iterable<Book> findByAuthorContainingAndIsAvailableTrue(String partName) {
+        return repo.findByAuthorContainingAndIsAvailableTrue(partName);
     }
 
     @Override
-    public Iterable<Book> findByGenre(Genre genre) {
-        return repo.findByGenre(genre);
+    public Iterable<Book> findByGenreAndIsAvailableTrue(Genre genre) {
+        return repo.findByGenreAndIsAvailableTrue(genre);
     }
 
     @Override
-    public Iterable<Book> findByTag(Iterable<Tag> tags) {
-        return repo.findByTag(tags);
+    public Iterable<Book> findByTagAndIsAvailableTrue(Iterable<Tag> tags) {
+        return repo.findByTagAndIsAvailableTrue(tags);
     }
 
     @Override
-    public Iterable<Book> findByPublisherContaining(String pubPartName) {
-        return repo.findByPublisherContaining(pubPartName);
+    public Iterable<Book> findByPublisherContainingAndIsAvailableTrue(String pubPartName) {
+        return repo.findByPublisherContainingAndIsAvailableTrue(pubPartName);
     }
 
     @Override
-    public Optional<Book> findByISBN(String isbn) {
-        return repo.findByISBN(isbn);
+    public Optional<Book> findByISBNAndIsAvailableTrue(String isbn) {
+        return repo.findByISBNAndIsAvailableTrue(isbn);
     }
 
     @Override
-    public Iterable<Book> findByYearBetween(LocalDate startDate, LocalDate endDate) {
-        return repo.findByYearBetween(startDate, endDate);
+    public Iterable<Book> findByYearBetweenAndIsAvailableTrue(LocalDate startDate, LocalDate endDate) {
+        return repo.findByYearBetweenAndIsAvailableTrue(startDate, endDate);
     }
 
     @Override
-    public Iterable<Book> findByLanguage(String language) {
-        return repo.findByLanguage(language);
+    public Iterable<Book> findByLanguageAndIsAvailableTrue(String language) {
+        return repo.findByLanguageAndIsAvailableTrue(language);
     }
 
     @Override
-    public Iterable<Book> findByIsShippable(boolean isShippable) {
-        return repo.findByIsShippable(isShippable);
+    public Iterable<Book> findByIsShippableAndIsAvailableTrue(boolean isShippable) {
+        return repo.findByIsShippableAndIsAvailableTrue(isShippable);
     }
 
     @Override
-    public Iterable<Book> findByGeoLocationCity(String cityname) {
-        return findByGeoLocationCity(cityname);
+    public Iterable<Book> findByGeoLocationCityAndIsAvailableTrue(String cityname) {
+        return findByGeoLocationCityAndIsAvailableTrue(cityname);
     }
 
     @Override
-    public Iterable<Book> findByGeoLocationCoordinates(double latitude, double longitude) {
+    public Iterable<Book> findByGeoLocationCoordinatesAndIsAvailableTrue(double latitude, double longitude) {
         return null;
     }
 
     @Override
-    public Iterable<Book> findBookByNamedParams(String title, String author, Genre genre, Iterable<Tag> tags,
+    public Iterable<Book> findBookByNamedParamsAndIsAvailableTrue(String title, String author, Genre genre, Iterable<Tag> tags,
                                                 String publisher, String isbn, LocalDate startDate, LocalDate endDate,
                                                 String language, boolean isShippable, String cityname) {
-        return repo.findBookByNamedParams(title, author, genre, tags, publisher, isbn, startDate,
+        return repo.findBookByNamedParamsAndIsAvailableTrue(title, author, genre, tags, publisher, isbn, startDate,
                 endDate, language, isShippable, cityname);
     }
 
