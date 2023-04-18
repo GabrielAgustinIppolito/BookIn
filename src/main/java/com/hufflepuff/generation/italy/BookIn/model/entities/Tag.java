@@ -1,14 +1,20 @@
 package com.hufflepuff.generation.italy.BookIn.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.Set;
 
 @Entity
 @Data
 @Table(name = "tag")
 public class Tag {
+   @Id
+   @GeneratedValue(strategy = GenerationType.SEQUENCE)
+   @SequenceGenerator(name = "tag_generator", allocationSize = 1)
    private long id;
    private String name;
    private String description;
+   @ManyToMany( fetch = FetchType.EAGER)
+   private Set<Book> books;
 }

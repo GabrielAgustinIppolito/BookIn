@@ -1,13 +1,15 @@
 package com.hufflepuff.generation.italy.BookIn.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "geolocation")
 public class GeoLocation {
+   @Id
+   @GeneratedValue(strategy = GenerationType.SEQUENCE)
+   @SequenceGenerator(name = "geolocation_generator", allocationSize = 1)
    private long id;
    private String city;
    private double latitude;

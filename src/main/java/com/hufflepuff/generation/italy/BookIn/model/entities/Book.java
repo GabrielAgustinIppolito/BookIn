@@ -24,12 +24,21 @@ public class Book {
    private String author;
    private boolean isShippable;
    private String review;
+   @OneToOne
    private GeoLocation location;
-   @Column(name = "genre")
    @ManyToMany
-   private Iterable<Genre> genres;
-   @ManyToMany(mappedBy = "book", fetch = FetchType.EAGER)
-   @JoinColumn(name = "tag_id")
+   @JoinTable(
+         name = "book_genre",
+         joinColumns = @JoinColumn(name = "book_id"),
+         inverseJoinColumns = @JoinColumn(name = "genre_id")
+   )
+   private Set<Genre> genres;
+   @ManyToMany(fetch = FetchType.EAGER)
+   @JoinTable(
+         name = "book_tag",
+         joinColumns = @JoinColumn(name = "book_id"),
+         inverseJoinColumns = @JoinColumn(name = "tag_id")
+   )
    private Set<Tag> tags;
 
 }
