@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public interface AbstractBookRepository extends GenericRepository<Book> {
 
@@ -17,7 +18,7 @@ public interface AbstractBookRepository extends GenericRepository<Book> {
     public Iterable<Book> findByGenre(Genre genre);
     public Iterable<Book> findByTag(Iterable<Tag> tags);
     public Iterable<Book> findByPublisherContaining(String pubpartname);
-    public Iterable<Book> findByISBN(String isbn);
+    public Optional<Book> findByISBN(String isbn);
     public Iterable<Book> findByYearBetween(LocalDate startDate, LocalDate endDate);
     public Iterable<Book> findByLanguage (String language);
     public Iterable<Book> findByIsShippable (boolean isShippable);

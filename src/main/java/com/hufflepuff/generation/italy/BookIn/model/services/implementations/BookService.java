@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class BookService implements AbstractBookService {
@@ -31,8 +32,8 @@ public class BookService implements AbstractBookService {
     }
 
     @Override
-    public Iterable<Book> findByAuthorContaining(String partname) {
-        return repo.findByAuthorContaining(partname);
+    public Iterable<Book> findByAuthorContaining(String partName) {
+        return repo.findByAuthorContaining(partName);
     }
 
     @Override
@@ -46,12 +47,12 @@ public class BookService implements AbstractBookService {
     }
 
     @Override
-    public Iterable<Book> findByPublisherContaining(String pubpartname) {
-        return repo.findByPublisherContaining(pubpartname);
+    public Iterable<Book> findByPublisherContaining(String pubPartName) {
+        return repo.findByPublisherContaining(pubPartName);
     }
 
     @Override
-    public Iterable<Book> findByISBN(String isbn) {
+    public Optional<Book> findByISBN(String isbn) {
         return repo.findByISBN(isbn);
     }
 

@@ -6,7 +6,10 @@ import com.hufflepuff.generation.italy.BookIn.model.entities.GeoLocation;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Tag;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+
 
 public class BookDto {
     private long id;
@@ -17,11 +20,13 @@ public class BookDto {
     private String language;
     private String author;
     private boolean isShippable;
+    private Set<Genre> genres;
+    private Set<Tag> tags;
     private String review;
     private GeoLocation location;
 
     public BookDto(long id, String title, String isbn, LocalDate year, String publisher, String language, String author,
-                   boolean isShippable, String review, GeoLocation location, Iterable<Genre> genres, Set<Tag> tags) {
+                   boolean isShippable, String review, GeoLocation location, Set<Genre> genres, Set<Tag> tags) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
@@ -32,6 +37,8 @@ public class BookDto {
         this.isShippable = isShippable;
         this.review = review;
         this.location = location;
+        this.genres = genres;
+        this.tags = tags;
     }
 
     public static BookDto fromEntity(Book b){
@@ -39,6 +46,18 @@ public class BookDto {
                 b.getAuthor(), b.isShippable(), b.getReview(), b.getLocation(), b.getGenres(), b.getTags());
 
 
+    }
+
+    public Book toEntity(){
+        return new Book(id, title, isbn, year, publisher, language, author, isShippable, review, location, genres, tags);
+    }
+
+    public static List<BookDto> fromEntityList(List<Book> books) {
+        List<BookDto> bookDtoList = new ArrayList<>();
+        for (Book b : books) {
+            bookDtoList.add(fromEntity(b));
+        }
+        return bookDtoList;
     }
 
     public long getId() {

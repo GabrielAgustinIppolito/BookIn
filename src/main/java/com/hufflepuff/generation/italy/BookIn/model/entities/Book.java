@@ -2,6 +2,7 @@ package com.hufflepuff.generation.italy.BookIn.model.entities;
 
 import io.hypersistence.utils.hibernate.type.basic.PostgreSQLEnumType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@AllArgsConstructor
 @Table(name = "book")
 public class Book {
    @Id
