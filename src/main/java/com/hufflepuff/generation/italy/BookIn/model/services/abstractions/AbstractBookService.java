@@ -5,34 +5,40 @@ import com.hufflepuff.generation.italy.BookIn.model.entities.Genre;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Tag;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
+@Service
 public interface AbstractBookService {
-    Book create (Book b);
-    public Iterable<Book> findByTitleContainingAndIsAvailableTrue(String part);
-    public Iterable<Book> findByAuthorContainingAndIsAvailableTrue(String partName);
-    public Iterable<Book> findByGenreAndIsAvailableTrue(Genre genre);
-    public Iterable<Book> findByTagAndIsAvailableTrue(Iterable<Tag> tags);
-    public Iterable<Book> findByPublisherContainingAndIsAvailableTrue(String pubPartName);
-    public Optional<Book> findByISBNAndIsAvailableTrue(String isbn);
-    public Iterable<Book> findByYearBetweenAndIsAvailableTrue(LocalDate startDate, LocalDate endDate);
-    public Iterable<Book> findByLanguageAndIsAvailableTrue (String language);
-    public Iterable<Book> findByIsShippableAndIsAvailableTrue (boolean isShippable);
-    @Query("SELECT b from Book b WHERE b.location.city = :cityname")
-    public Iterable<Book> findByGeoLocationCityAndIsAvailableTrue (String cityname);
-    @Query
-    public Iterable<Book> findByGeoLocationCoordinatesAndIsAvailableTrue (double latitude, double longitude);
+    Iterable<Book> findByTitleContainingAndIsAvailableTrue(String part);
 
-    @Query("SELECT b from Book b WHERE b.title LIKE :title and b.author LIKE :author and b.genre = :genre and" +
-            "b.tags = :tags and b.publisher LIKE :publisher and b.isbn = :isbn and b.year BETWEEN :startDate and endDate" +
-            "b.language = :language and b.isShippable = :isShippable and b.location.city = :cityname")
-    Iterable<Book> findBookByNamedParamsAndIsAvailableTrue(
+    Iterable<Book> findByAuthorContainingAndIsAvailableTrue(String partName);
+
+    Iterable<Book> findByGenresAndIsAvailableTrue(Genre genre);
+
+    Iterable<Book> findByTagsAndIsAvailableTrue(Tag tag);
+
+    Iterable<Book> findByPublisherContainingAndIsAvailableTrue(String pubPartName);
+
+    Optional<Book> findByISBNAndIsAvailableTrue(String isbn);
+
+    Iterable<Book> findByYearBetweenAndIsAvailableTrue(LocalDate startDate, LocalDate endDate);
+
+    Iterable<Book> findByLanguageAndIsAvailableTrue(String language);
+
+    Iterable<Book> findByIsShippableAndIsAvailableTrue(boolean isShippable);
+
+    Iterable<Book> findByGeoLocationCityAndIsAvailableTrue(String cityname);
+
+    Iterable<Book> findByGeoLocationCoordinatesAndIsAvailableTrue(double latitude, double longitude);
+
+    /*Iterable<Book> findBookByNamedParamsAndIsAvailableTrue(
             @Param("title") String title,
             @Param("author") String author,
             @Param("genre") Genre genre,
-            @Param("tags") Iterable<Tag> tags,
+            @Param("tag") Tag tag,
             @Param("publisher") String publisher,
             @Param("isbn") String isbn,
             @Param("startDate") LocalDate startDate,
@@ -41,8 +47,6 @@ public interface AbstractBookService {
             @Param("isShippable") boolean isShippable,
             @Param("cityname") String cityname
 
-    );
+    );*/
 
-    void deleteByID(long id);
-    void update (Book b);
 }

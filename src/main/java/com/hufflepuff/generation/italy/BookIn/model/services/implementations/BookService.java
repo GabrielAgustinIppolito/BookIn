@@ -21,10 +21,6 @@ public class BookService implements AbstractBookService {
         this.repo = repo;
     }
 
-    @Override
-    public Book create(Book b) {
-        return repo.create(b);
-    }
 
     @Override
     public Iterable<Book> findByTitleContainingAndIsAvailableTrue(String part) {
@@ -37,13 +33,13 @@ public class BookService implements AbstractBookService {
     }
 
     @Override
-    public Iterable<Book> findByGenreAndIsAvailableTrue(Genre genre) {
-        return repo.findByGenreAndIsAvailableTrue(genre);
+    public Iterable<Book> findByGenresAndIsAvailableTrue(Genre genre) {
+        return repo.findByGenresAndIsAvailableTrue(genre);
     }
 
     @Override
-    public Iterable<Book> findByTagAndIsAvailableTrue(Iterable<Tag> tags) {
-        return repo.findByTagAndIsAvailableTrue(tags);
+    public Iterable<Book> findByTagsAndIsAvailableTrue(Tag tag) {
+        return repo.findByTagsAndIsAvailableTrue(tag);
     }
 
     @Override
@@ -81,23 +77,12 @@ public class BookService implements AbstractBookService {
         return null;
     }
 
-    @Override
-    public Iterable<Book> findBookByNamedParamsAndIsAvailableTrue(String title, String author, Genre genre, Iterable<Tag> tags,
+    /*@Override
+    public Iterable<Book> findBookByNamedParamsAndIsAvailableTrue(String title, String author, Genre genre, Tag tag,
                                                 String publisher, String isbn, LocalDate startDate, LocalDate endDate,
                                                 String language, boolean isShippable, String cityname) {
-        return repo.findBookByNamedParamsAndIsAvailableTrue(title, author, genre, tags, publisher, isbn, startDate,
+        return repo.findBookByNamedParamsAndIsAvailableTrue(title, author, genre, tag, publisher, isbn, startDate,
                 endDate, language, isShippable, cityname);
-    }
+    }*/
 
-    @Override
-    public void deleteByID(long id) {
-        repo.deleteByID(id);
-
-    }
-
-    @Override
-    public void update(Book b) {
-        repo.update(b);
-
-    }
 }
