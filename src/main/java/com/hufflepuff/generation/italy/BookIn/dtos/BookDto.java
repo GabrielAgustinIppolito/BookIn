@@ -1,9 +1,12 @@
 package com.hufflepuff.generation.italy.BookIn.dtos;
 
 import com.hufflepuff.generation.italy.BookIn.model.entities.Book;
+import com.hufflepuff.generation.italy.BookIn.model.entities.Genre;
 import com.hufflepuff.generation.italy.BookIn.model.entities.GeoLocation;
+import com.hufflepuff.generation.italy.BookIn.model.entities.Tag;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class BookDto {
     private long id;
@@ -18,7 +21,7 @@ public class BookDto {
     private GeoLocation location;
 
     public BookDto(long id, String title, String isbn, LocalDate year, String publisher, String language, String author,
-                   boolean isShippable, String review, GeoLocation location) {
+                   boolean isShippable, String review, GeoLocation location, Iterable<Genre> genres, Set<Tag> tags) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
@@ -33,7 +36,7 @@ public class BookDto {
 
     public static BookDto fromEntity(Book b){
         return new BookDto(b.getId(), b.getTitle(), b.getIsbn(), b.getYear(), b.getPublisher(), b.getLanguage(),
-                b.getAuthor(), b.isShippable(), b.getReview(), b.getLocation());
+                b.getAuthor(), b.isShippable(), b.getReview(), b.getLocation(), b.getGenres(), b.getTags());
 
 
     }

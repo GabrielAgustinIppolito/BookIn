@@ -29,7 +29,7 @@ public interface AbstractBookRepository extends GenericRepository<Book> {
     
     @Query("SELECT b from Book b WHERE b.title LIKE :title and b.author LIKE :author and b.genre = :genre and" +
             "b.tags = :tags and b.publisher LIKE :publisher and b.isbn = :isbn and b.year BETWEEN :startDate and endDate" +
-            "b.language = :language and b.isShippable = :isShippable")
+            "b.language = :language and b.isShippable = :isShippable and b.location.city = :cityname")
     Iterable<Book> findBookByNamedParams(
             @Param("title") String title,
             @Param("author") String author,
@@ -40,7 +40,8 @@ public interface AbstractBookRepository extends GenericRepository<Book> {
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate,
             @Param("language") String language,
-            @Param("isShippable") boolean isShippable
+            @Param("isShippable") boolean isShippable,
+            @Param("cityname") String cityname
 
     );
 

@@ -31,4 +31,5 @@ public class Book {
    @ManyToMany(mappedBy = "book", fetch = FetchType.EAGER)
    @JoinColumn(name = "tag_id")
    private Set<Tag> tags;
+
 }
