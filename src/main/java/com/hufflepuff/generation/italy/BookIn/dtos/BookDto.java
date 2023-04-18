@@ -42,7 +42,7 @@ public class BookDto {
     }
 
     public static BookDto fromEntity(Book b){
-        return new BookDto(b.getId(), b.getTitle(), b.getIsbn(), b.getYear(), b.getPublisher(), b.getLanguage(),
+        return new BookDto(b.getId(), b.getTitle(), b.getISBN(), b.getYear(), b.getPublisher(), b.getLanguage(),
                 b.getAuthor(), b.isShippable(), b.getReview(), b.getLocation(), b.getGenres(), b.getTags());
 
 

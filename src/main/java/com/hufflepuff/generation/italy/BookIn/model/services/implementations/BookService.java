@@ -23,7 +23,7 @@ public class BookService implements AbstractBookService {
 
     @Override
     public Book create(Book b) {
-        return repo.create(b);
+        return repo.save(b);
     }
 
     @Override
@@ -38,12 +38,12 @@ public class BookService implements AbstractBookService {
 
     @Override
     public Iterable<Book> findByGenre(Genre genre) {
-        return repo.findByGenre(genre);
+        return repo.findByGenres(genre);
     }
 
     @Override
     public Iterable<Book> findByTag(Iterable<Tag> tags) {
-        return repo.findByTag(tags);
+        return repo.findByTags(tags);
     }
 
     @Override
@@ -91,13 +91,13 @@ public class BookService implements AbstractBookService {
 
     @Override
     public void deleteByID(long id) {
-        repo.deleteByID(id);
+        repo.deleteById(id);
 
     }
 
     @Override
     public void update(Book b) {
-        repo.update(b);
+        repo.save(b);
 
     }
 }

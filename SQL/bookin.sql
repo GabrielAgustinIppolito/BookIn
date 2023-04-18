@@ -25,8 +25,8 @@ OWNED BY tag.tag_id;
 
 CREATE TABLE "geolocation"(
     "geolocation_id" BIGINT NOT NULL,
-    "longitude" BIGINT NOT NULL,
-    "latitude" BIGINT NOT NULL,
+    "longitude" DECIMAL NOT NULL,
+    "latitude" DECIMAL NOT NULL,
     CONSTRAINT PK_geolocation PRIMARY KEY("geolocation_id")
 );
 
@@ -38,7 +38,7 @@ OWNED BY geolocation.geolocation_id;
 CREATE TABLE "book"(
     "book_id" BIGINT NOT NULL,
     "title" VARCHAR(255) NOT NULL,
-    "ISBN" BIGINT NULL,
+    "ISBN" VARCHAR(255) NULL,
     "year" DATE NULL,
     "publisher" VARCHAR(255) NULL,
     "language" VARCHAR(255) DEFAULT 'italian' NOT NULL,
@@ -58,3 +58,15 @@ CREATE TABLE "book"(
 
 CREATE SEQUENCE book_sequence
 OWNED BY book.book_id;
+
+-- create BOOK_TAG table --
+
+CREATE TABLE "book_tag"(
+    "book_tag_id" BIGINT,
+    "book_id" BIGINT REFERENCES book ("book_id"),
+    "tag_id" BIGINT REFERENCES tag ("tag_id"),
+    CONSTRAINT PK_book_tag PRIMARY KEY ("book_tag_id")
+);
+
+CREATE SEQUENCE book_tag_sequence
+OWNED BY book_tag.book_tag_id;

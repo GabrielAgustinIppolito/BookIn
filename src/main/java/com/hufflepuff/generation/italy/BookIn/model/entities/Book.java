@@ -1,10 +1,8 @@
 package com.hufflepuff.generation.italy.BookIn.model.entities;
 
-import io.hypersistence.utils.hibernate.type.basic.PostgreSQLEnumType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.hibernate.annotations.Type;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -19,7 +17,7 @@ public class Book {
    @SequenceGenerator(name = "book_generator", allocationSize = 1)
    private long id;
    private String title;
-   private String isbn;
+   private String ISBN;
    private LocalDate year;
    private String publisher;
    private String language;
