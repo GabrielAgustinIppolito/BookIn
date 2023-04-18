@@ -1,7 +1,7 @@
 package com.hufflepuff.generation.italy.BookIn.restController;
 
 import com.hufflepuff.generation.italy.BookIn.model.entities.User;
-import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.UserRepository;
+import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.AbstractUserRepository;
 import com.hufflepuff.generation.italy.BookIn.utils.JWTUtil;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(value = "api/user")
 public class ApiUserController {
    @Autowired
-   private UserRepository repo;
+   private AbstractUserRepository repo;
    @Autowired
    private JWTUtil jwtUtil;
 
@@ -28,7 +28,7 @@ public class ApiUserController {
    }
 
    @GetMapping()
-   public List<User> getAllUsers(@RequestHeader(value = "Authorization:Admin") String token){
+   public List<User> getAllUsers(@RequestHeader(value = "Authorization_Admin") String token){
       return !isValidToken(token) ? null : repo.findAll();
    }
 
