@@ -1,15 +1,15 @@
 package com.hufflepuff.generation.italy.BookIn.model.entities;
 
-import io.hypersistence.utils.hibernate.type.basic.PostgreSQLEnumType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.hibernate.annotations.Type;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
 @Data
+@AllArgsConstructor
 @Table(name = "book")
 public class Book {
    @Id
@@ -17,13 +17,14 @@ public class Book {
    @SequenceGenerator(name = "book_generator", allocationSize = 1)
    private long id;
    private String title;
-   private String isbn;
+   private String ISBN;
    private LocalDate year;
    private String publisher;
    private String language;
    private String author;
    private boolean isShippable;
    private String review;
+   private boolean isAvailable;
    @OneToOne
    private GeoLocation location;
    @ManyToMany
