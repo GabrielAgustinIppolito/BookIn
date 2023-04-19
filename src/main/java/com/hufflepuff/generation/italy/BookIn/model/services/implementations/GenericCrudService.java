@@ -1,11 +1,12 @@
 package com.hufflepuff.generation.italy.BookIn.model.services.implementations;
 
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class GenericCrudService<T> {
    private GenericRepository<T> repo;
 
