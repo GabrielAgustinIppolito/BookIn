@@ -1,10 +1,13 @@
 package com.hufflepuff.generation.italy.BookIn.model.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "geolocation")
 public class GeoLocation {
    @Id

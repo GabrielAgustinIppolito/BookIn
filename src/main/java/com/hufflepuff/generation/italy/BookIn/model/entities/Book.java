@@ -2,14 +2,17 @@ package com.hufflepuff.generation.italy.BookIn.model.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
+@Builder //genera codice per creare un bookBuilder
 @Table(name = "book")
 public class Book {
    @Id
