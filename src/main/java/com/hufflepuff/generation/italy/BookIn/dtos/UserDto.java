@@ -6,10 +6,11 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 public class UserDto {
-   private String nickname;
+   private String firstname;
+   private String lastname;
    private String email;
    public static UserDto dtoFromEntity(User user){
-      return new UserDto(user.getNickname(), user.getEmail());
+      return new UserDto(user.getFirstname(), user.getLastname(), user.getEmail());
    }
 
 }

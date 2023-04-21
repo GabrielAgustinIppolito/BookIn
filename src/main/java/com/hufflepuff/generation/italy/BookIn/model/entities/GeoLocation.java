@@ -17,5 +17,6 @@ public class GeoLocation {
    private String city;
    private double latitude;
    private double longitude;
-
+   @OneToOne(mappedBy = "location")
+   private Book book;
 }

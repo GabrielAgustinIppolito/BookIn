@@ -17,6 +17,6 @@ public class Genre {
    @SequenceGenerator(name = "genre_generator", allocationSize = 1)
    private long id;
    private String name;
-   @ManyToMany( fetch = FetchType.EAGER)
+   @ManyToMany(mappedBy = "genres", fetch = FetchType.EAGER)
    private Set<Book> books;
 }

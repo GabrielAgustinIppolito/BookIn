@@ -3,38 +3,47 @@ package com.hufflepuff.generation.italy.BookIn.model.entities;
 import com.hufflepuff.generation.italy.BookIn.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+//@Data
 @Getter
 @Setter
+@Builder // genera uno UserBuilder -> classe ausiliaria che ti permette di creare un utente in modo più flessibile
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "_user")
 public class User implements UserDetails {
+
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE)
    @SequenceGenerator(name = "user_generator", allocationSize = 1)
-   private long id;
-   private String nickname;
-   @Column(unique = true)
+   private Integer id;
+   private String firstname;
+   private String lastname;
    private String email;
    private String password;
 
    @Enumerated(EnumType.STRING)
    private Role role;
-   @OneToMany(mappedBy ="user")
+
+   @OneToMany(mappedBy = "user")
    private List<Token> tokens;
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
       return List.of(new SimpleGrantedAuthority(role.name()));
+   }
+
+   @Override
+   public String getPassword() {
+      return password;
    }
 
    @Override

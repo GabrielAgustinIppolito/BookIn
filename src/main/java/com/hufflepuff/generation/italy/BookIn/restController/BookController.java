@@ -20,7 +20,7 @@ import java.util.Optional;
 import static java.util.Arrays.stream;
 
 @RestController
-@RequestMapping(value = "api/books")
+@RequestMapping(value = "api/auth/books")
 public class BookController {
 
     private AbstractBookService service;
@@ -32,7 +32,7 @@ public class BookController {
         this.serviceCRUD = new GenericCrudService<>(crudRepoBook);
     }
 
-    @PostMapping()
+    @PostMapping("/register-new-book")
     public ResponseEntity<BookDto> create(@RequestBody BookDto bookDto){
         Book b = bookDto.toEntity();
         var bookResult = serviceCRUD.create(b);

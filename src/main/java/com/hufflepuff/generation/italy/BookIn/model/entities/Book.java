@@ -29,6 +29,7 @@ public class Book {
    private String review;
    private boolean isAvailable;
    @OneToOne
+   @JoinColumn(name = "location_id", referencedColumnName = "id")
    private GeoLocation location;
    @ManyToMany
    @JoinTable(

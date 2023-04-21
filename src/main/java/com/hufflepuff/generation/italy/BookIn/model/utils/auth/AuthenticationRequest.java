@@ -1,14 +1,16 @@
 package com.hufflepuff.generation.italy.BookIn.model.utils.auth;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuthenticationRequest {
 
-   private String email;
-   private String password;
+  private String email;
+  String password;
 }
