@@ -4,26 +4,23 @@ import com.hufflepuff.generation.italy.BookIn.model.entities.Book;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Genre;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Tag;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
-@Repository
 public interface AbstractBookRepository extends GenericRepository<Book> {
 
-    public Iterable<Book> findByTitleContainingAndIsAvailableTrue(String part);
-    public Iterable<Book> findByAuthorContainingAndIsAvailableTrue(String partname);
-    public Iterable<Book> findByGenresAndIsAvailableTrue(Genre genre);
-    public Iterable<Book> findByTagsAndIsAvailableTrue(Tag tag);
-    public Iterable<Book> findByPublisherContainingAndIsAvailableTrue(String pubpartname);
-    public Optional<Book> findByISBNAndIsAvailableTrue(String isbn);
-    public Iterable<Book> findByYearBetweenAndIsAvailableTrue(LocalDate startDate, LocalDate endDate);
-    public Iterable<Book> findByLanguageAndIsAvailableTrue (String language);
-    public Iterable<Book> findByIsShippableAndIsAvailableTrue (boolean isShippable);
+    Iterable<Book> findByTitleContainingAndIsAvailableTrue(String part);
+    Iterable<Book> findByAuthorContainingAndIsAvailableTrue(String partname);
+    Iterable<Book> findByGenresAndIsAvailableTrue(Genre genre);
+    Iterable<Book> findByTagsAndIsAvailableTrue(Tag tag);
+    Iterable<Book> findByPublisherContainingAndIsAvailableTrue(String pubpartname);
+    Optional<Book> findByISBNAndIsAvailableTrue(String isbn);
+    Iterable<Book> findByYearBetweenAndIsAvailableTrue(LocalDate startDate, LocalDate endDate);
+    Iterable<Book> findByLanguageAndIsAvailableTrue (String language);
+    Iterable<Book> findByIsShippableAndIsAvailableTrue (boolean isShippable);
     @Query("SELECT b from Book b WHERE b.location.city = :cityname")
-    public Iterable<Book> findByGeoLocationCityAndIsAvailableTrue (String cityname);
+    Iterable<Book> findByGeoLocationCityAndIsAvailableTrue (String cityname);
 
     // FARE QUERY PER LA GEOLOCATION
     //@Query

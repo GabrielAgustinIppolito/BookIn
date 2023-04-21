@@ -1,11 +1,13 @@
 package com.hufflepuff.generation.italy.BookIn.restController;
 
 import com.hufflepuff.generation.italy.BookIn.dtos.BookDto;
+import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Book;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Genre;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Tag;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractBookService;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractCrudService;
+import com.hufflepuff.generation.italy.BookIn.model.services.implementations.GenericCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +24,18 @@ import static java.util.Arrays.stream;
 public class BookController {
 
     private AbstractBookService service;
-    private AbstractCrudService<Book> serviceCRUD;
+    private GenericCrudService<Book> serviceCRUD;
 
     @Autowired
-    public BookController(AbstractBookService service){
+    public BookController(AbstractBookService service, GenericRepository<Book> crudRepoBook){
         this.service = service;
+        this.serviceCRUD = new GenericCrudService<>(crudRepoBook);
     }
 
     @PostMapping()
     public ResponseEntity<BookDto> create(@RequestBody BookDto bookDto){
         Book b = bookDto.toEntity();
-        var bookResult = this.serviceCRUD.create(b);
+        var bookResult = serviceCRUD.create(b);
         BookDto dtoResult = bookDto.fromEntity(bookResult);
         return ResponseEntity.created(URI.create("/api/books/" + bookResult.getId())).body(dtoResult);
     }
@@ -147,7 +150,7 @@ public class BookController {
             return ResponseEntity.badRequest().build();
         }
         Book b = bookDto.toEntity();
-            this.serviceCRUD.update(b);
+            serviceCRUD.update(b);
             return ResponseEntity.noContent().build();
     }
 
