@@ -1,8 +1,7 @@
 package com.hufflepuff.generation.italy.BookIn.model.services.abstractions;
 
-import com.hufflepuff.generation.italy.BookIn.dtos.UserDto;
-import com.hufflepuff.generation.italy.BookIn.model.entities.User;
+import org.springframework.stereotype.Service;
 
 public interface AbstractUserService {
-   UserDto saveUser(User user);
+
 }

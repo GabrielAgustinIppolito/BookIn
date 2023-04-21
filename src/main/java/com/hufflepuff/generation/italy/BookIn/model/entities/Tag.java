@@ -1,12 +1,14 @@
 package com.hufflepuff.generation.italy.BookIn.model.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
+import lombok.*;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tag")
 public class Tag {
    @Id

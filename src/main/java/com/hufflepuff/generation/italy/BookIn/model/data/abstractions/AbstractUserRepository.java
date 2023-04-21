@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface AbstractUserRepository extends GenericRepository<User> {
-   public Optional<User> findUserByEmail(String email);
+   public Optional<User> findByEmail(String email);
 }

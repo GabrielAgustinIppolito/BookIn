@@ -4,8 +4,6 @@ import com.hufflepuff.generation.italy.BookIn.dtos.UserDto;
 import com.hufflepuff.generation.italy.BookIn.model.entities.User;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractCrudService;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractUserService;
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +21,7 @@ public class ApiUserController {
    }
    @PostMapping
    public ResponseEntity<UserDto> createUser(@RequestBody User user){
-      return ResponseEntity(userService.saveUser(user));
+//      return ResponseEntity(userService.(user));
+      return null;
    }
 }
