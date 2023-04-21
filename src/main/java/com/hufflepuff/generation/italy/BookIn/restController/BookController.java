@@ -20,7 +20,7 @@ import java.util.Optional;
 import static java.util.Arrays.stream;
 
 @RestController
-@RequestMapping(value = "api/auth/books")
+@RequestMapping(value = "api/books")
 public class BookController {
 
     private AbstractBookService service;

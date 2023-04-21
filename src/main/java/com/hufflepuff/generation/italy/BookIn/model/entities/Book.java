@@ -29,20 +29,20 @@ public class Book {
    private String review;
    private boolean isAvailable;
    @OneToOne
-   @JoinColumn(name = "location_id", referencedColumnName = "id")
+   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = true)
    private GeoLocation location;
    @ManyToMany
    @JoinTable(
          name = "book_genre",
          joinColumns = @JoinColumn(name = "book_id"),
-         inverseJoinColumns = @JoinColumn(name = "genre_id")
+         inverseJoinColumns = @JoinColumn(name = "genre_id", nullable = true)
    )
    private Set<Genre> genres;
    @ManyToMany(fetch = FetchType.EAGER)
    @JoinTable(
          name = "book_tag",
          joinColumns = @JoinColumn(name = "book_id"),
-         inverseJoinColumns = @JoinColumn(name = "tag_id")
+         inverseJoinColumns = @JoinColumn(name = "tag_id", nullable = true)
    )
    private Set<Tag> tags;
 
