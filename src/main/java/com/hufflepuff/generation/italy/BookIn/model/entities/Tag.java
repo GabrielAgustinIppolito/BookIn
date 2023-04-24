@@ -17,6 +17,6 @@ public class Tag {
    private long id;
    private String name;
    private String description;
-   @ManyToMany(fetch = FetchType.EAGER)
-   private Set<Book> books;
+   @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
+   private Set<Book> tagBooks;
 }

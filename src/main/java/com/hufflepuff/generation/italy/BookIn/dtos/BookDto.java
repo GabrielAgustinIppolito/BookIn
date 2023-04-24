@@ -46,7 +46,7 @@ public class BookDto {
 
     public Book toEntity(){
         return new Book(id, title, isbn, year == null || year.length() == 0 ? null : LocalDate.parse(year), publisher,
-                language, author, isShippable, review, isAvailable);
+                language, author, isShippable, review, isAvailable, null, null, null);
     }
 
     public static List<BookDto> fromEntityList(List<Book> books) {

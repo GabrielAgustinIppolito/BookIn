@@ -1,13 +1,11 @@
 package com.hufflepuff.generation.italy.BookIn.restController;
 
 import com.hufflepuff.generation.italy.BookIn.dtos.BookDto;
+import com.hufflepuff.generation.italy.BookIn.dtos.GenreDto;
+import com.hufflepuff.generation.italy.BookIn.dtos.TagDto;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
-import com.hufflepuff.generation.italy.BookIn.model.entities.Book;
-import com.hufflepuff.generation.italy.BookIn.model.entities.Genre;
-import com.hufflepuff.generation.italy.BookIn.model.entities.GeoLocation;
-import com.hufflepuff.generation.italy.BookIn.model.entities.Tag;
+import com.hufflepuff.generation.italy.BookIn.model.entities.*;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractBookService;
-import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractCrudService;
 import com.hufflepuff.generation.italy.BookIn.model.services.implementations.GenericCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,10 +33,13 @@ public class BookController {
     }
 
     @PostMapping("/register-new-book")
-    public ResponseEntity<BookDto> create(@RequestBody BookDto bookDto){
-        Book b = bookDto.toEntity();
-        var bookResult = serviceCRUD.create(b);
-        BookDto dtoResult = bookDto.fromEntity(bookResult);
+    public ResponseEntity<BookDto> create(@RequestBody BookWrapper bookWrapper){
+        Book b = bookWrapper.getBookDto().toEntity();
+        Set<Genre> genres = GenreDto.fromDtoList(bookWrapper.getGenresDto());
+        Set<Tag> tags = TagDto.fromDtoList(bookWrapper.getTagsDto());
+        GeoLocation l = bookWrapper.getLocation();
+        Book bookResult = service.saveBookWithGenresTagsLocation(b, genres, tags, l);
+        BookDto dtoResult = BookDto.fromEntity(bookResult);
         return ResponseEntity.created(URI.create("/api/books/" + bookResult.getId())).body(dtoResult);
     }
 
