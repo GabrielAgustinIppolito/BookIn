@@ -31,14 +31,13 @@ public class BookService implements AbstractBookService {
 
     @Override
     public Book saveBookWithGenresTagsLocation(Book b, Set<Genre> genres, Set<Tag> tags, GeoLocation location) {
-        bookRepo.save(b);
         for (Genre g : genres) genreRepo.save(g);
         for (Tag t : tags) tagRepo.save(t);
         locationRepo.save(location);
-
         b.setGenres(genres);
         b.setTags(tags);
         b.setLocation(location);
+        bookRepo.save(b);
         return b;
     }
 
