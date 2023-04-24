@@ -1,9 +1,9 @@
 package com.hufflepuff.generation.italy.BookIn.dtos;
 
 import com.hufflepuff.generation.italy.BookIn.model.entities.Book;
-import com.hufflepuff.generation.italy.BookIn.model.entities.Genre;
 import com.hufflepuff.generation.italy.BookIn.model.entities.GeoLocation;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Tag;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,20 +15,16 @@ public class BookDto {
     private long id;
     private String title;
     private String isbn;
-    private LocalDate year;
+    private String year;
     private String publisher;
     private String language;
     private String author;
     private boolean isShippable;
-    private Set<Genre> genres;
-    private Set<Tag> tags;
     private String review;
     private boolean isAvailable;
-    private GeoLocation location;
 
-    public BookDto(long id, String title, String isbn, LocalDate year, String publisher, String language, String author,
-                   boolean isShippable, String review, boolean isAvailable, GeoLocation location, Set<Genre> genres,
-                   Set<Tag> tags) {
+    public BookDto(long id, String title, String isbn, String year, String publisher, String language, String author,
+                   boolean isShippable, String review, boolean isAvailable) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
@@ -39,21 +35,18 @@ public class BookDto {
         this.isShippable = isShippable;
         this.review = review;
         this.isAvailable = isAvailable;
-        this.location = location;
-        this.genres = genres;
-        this.tags = tags;
     }
 
     public static BookDto fromEntity(Book b){
-        return new BookDto(b.getId(), b.getTitle(), b.getISBN(), b.getYear(), b.getPublisher(), b.getLanguage(),
-                b.getAuthor(), b.isShippable(), b.getReview(), b.isAvailable(), b.getLocation(), b.getGenres(), b.getTags());
-
-
+        return new BookDto(b.getId(), b.getTitle(), b.getISBN() != null ? b.getISBN() : "",
+                b.getYear() != null ? b.getYear().toString() : "", b.getPublisher() != null ? b.getPublisher() : "",
+                b.getLanguage(), b.getAuthor(), b.isShippable(), b.getReview() != null ? b.getReview() : "",
+                b.isAvailable());
     }
 
     public Book toEntity(){
-        return new Book(id, title, isbn, year, publisher, language, author, isShippable, review, isAvailable,
-                location, genres, tags);
+        return new Book(id, title, isbn, year == null || year.length() == 0 ? null : LocalDate.parse(year), publisher,
+                language, author, isShippable, review, isAvailable);
     }
 
     public static List<BookDto> fromEntityList(List<Book> books) {
@@ -76,7 +69,7 @@ public class BookDto {
         return isbn;
     }
 
-    public LocalDate getYear() {
+    public String getYear() {
         return year;
     }
 
@@ -100,9 +93,6 @@ public class BookDto {
         return review;
     }
 
-    public GeoLocation getLocation() {
-        return location;
-    }
     public boolean isAvailable() {
         return isAvailable;
     }
@@ -118,7 +108,7 @@ public class BookDto {
         this.isbn = isbn;
     }
 
-    public void setYear(LocalDate year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -140,10 +130,6 @@ public class BookDto {
 
     public void setReview(String review) {
         this.review = review;
-    }
-
-    public void setLocation(GeoLocation location) {
-        this.location = location;
     }
 
     public void setAvailable(boolean available) {

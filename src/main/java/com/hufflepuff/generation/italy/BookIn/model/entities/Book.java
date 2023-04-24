@@ -28,17 +28,17 @@ public class Book {
    private boolean isShippable;
    private String review;
    private boolean isAvailable;
-   @OneToOne
+   @OneToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = true)
    private GeoLocation location;
-   @ManyToMany
+   @ManyToMany(mappedBy = "books", cascade = CascadeType.PERSIST)
    @JoinTable(
          name = "book_genre",
          joinColumns = @JoinColumn(name = "book_id"),
          inverseJoinColumns = @JoinColumn(name = "genre_id", nullable = true)
    )
    private Set<Genre> genres;
-   @ManyToMany(fetch = FetchType.EAGER)
+   @ManyToMany(mappedBy = "books", cascade = CascadeType.PERSIST)
    @JoinTable(
          name = "book_tag",
          joinColumns = @JoinColumn(name = "book_id"),
@@ -46,4 +46,17 @@ public class Book {
    )
    private Set<Tag> tags;
 
+   public Book(long id, String title, String ISBN, LocalDate year, String publisher, String language, String author,
+               boolean isShippable, String review, boolean isAvailable) {
+      this.id = id;
+      this.title = title;
+      this.ISBN = ISBN;
+      this.year = year;
+      this.publisher = publisher;
+      this.language = language;
+      this.author = author;
+      this.isShippable = isShippable;
+      this.review = review;
+      this.isAvailable = isAvailable;
+   }
 }

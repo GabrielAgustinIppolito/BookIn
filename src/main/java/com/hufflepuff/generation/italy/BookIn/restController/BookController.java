@@ -4,6 +4,7 @@ import com.hufflepuff.generation.italy.BookIn.dtos.BookDto;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Book;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Genre;
+import com.hufflepuff.generation.italy.BookIn.model.entities.GeoLocation;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Tag;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractBookService;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractCrudService;
@@ -16,6 +17,7 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static java.util.Arrays.stream;
 
