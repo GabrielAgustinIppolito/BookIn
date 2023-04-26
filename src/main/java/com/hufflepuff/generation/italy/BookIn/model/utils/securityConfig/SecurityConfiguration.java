@@ -24,6 +24,8 @@ public class SecurityConfiguration {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { //descrive il comportamento dell'app dall'inzio alla fine
     http
+        .cors()
+        .and()
         .csrf()
         .disable()
         .authorizeHttpRequests()
