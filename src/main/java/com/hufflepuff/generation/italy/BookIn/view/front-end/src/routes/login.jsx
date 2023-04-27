@@ -1,13 +1,16 @@
-import { Form, redirect, useSubmit } from "react-router-dom";
+import { Form, redirect } from "react-router-dom";
 import { getAuthentication } from "../apis/book-api";
 
-export const action = async ({ email, password }) => {
-    await getAuthentication(email, password);
+export  async function action({ request }) {
+    const formData = await request.formData();
+    const userData = Object.fromEntries(formData);
+    console.log(formData);
+    console.log(userData);
+    await getAuthentication(userData.email, userData.password);
     return redirect("/");
 }
 
 export default function Login() {
-    const submit = useSubmit();
     return (
         <>
         <h1>Login</h1>
