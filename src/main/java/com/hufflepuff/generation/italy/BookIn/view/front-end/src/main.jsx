@@ -4,7 +4,7 @@ import Root from './routes/root.jsx'
 import './index.css'
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Book, { getBook as bookLoader } from './routes/book.jsx';
+import Book, { loader as bookLoader } from './routes/book.jsx';
 import Login, { action as loginAction } from './routes/login.jsx';
 import Registration, { action as registrationAction } from './routes/registration.jsx';
 
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
   path: "/",
   element: <Root />,
   children: [
-    /*{
+    {
       path: "books/bookId",
       element: <Book />,
       loader: bookLoader
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       path: "/login/registration",
       element: <Registration />,
       action: registrationAction
-    },*/
+    },
     
   ]
 },
