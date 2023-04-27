@@ -32,6 +32,12 @@ public class BookController {
         this.serviceCRUD = new GenericCrudService<>(crudRepoBook);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<BookDto> findById(@PathVariable long id) {
+        Optional<Book> result = serviceCRUD.findById(id);
+        return result.map(book -> ResponseEntity.ok().body(BookDto.fromEntity(book))).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/register-new-book")
     public ResponseEntity<BookDto> create(@RequestBody BookWrapper bookWrapper){
         Book b = bookWrapper.getBookDto().toEntity();

@@ -1,4 +1,4 @@
-import { Outlet, Form } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 export default function Root() {
    return (
@@ -32,6 +32,7 @@ export default function Root() {
          </div>
 
          <div id="detail">
+            <Outlet></Outlet>
             <ul>
                <li>libro1</li>
                <li>libro2</li>
