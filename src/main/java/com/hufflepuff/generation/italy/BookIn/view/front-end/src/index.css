@@ -1,15 +1,17 @@
+#header {
+  background: #5A7F40;
+  padding: 1rem;
+}
+
+#header > h1 {
+  text-align: center;
+  color: #DBAF36;
+}
+
 #menu{
   display:flex;
   align-items: center;
   justify-content: space-between;
-}
-
-#detail>ul{
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(3,1fr);
-}
-
-li{
-  list-style-type: none;
+  width: 70%;
+  margin: auto;
 }

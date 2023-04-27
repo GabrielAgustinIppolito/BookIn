@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Form, Outlet } from 'react-router-dom'
 
 export default function Root() {
    return (
@@ -6,7 +6,9 @@ export default function Root() {
          <div id="header">
             <h1>BookIn</h1>
             <div id="menu">
-               <ul><li>Login</li></ul>
+               <Form>
+                  <button type="submit">Login</button>
+               </Form>
                <form id="search-form" role="search">
                   <input
                      id="q"
@@ -25,19 +27,14 @@ export default function Root() {
                      aria-live="polite"
                   ></div>
                </form>
-               <form method="post">
+               <Form method="post">
                   <button type="submit">New</button>
-               </form>
+               </Form>
             </div>
          </div>
 
          <div id="detail">
             <Outlet></Outlet>
-            <ul>
-               <li>libro1</li>
-               <li>libro2</li>
-               <li>libro3</li>
-            </ul>
          </div>
       </>
    );
