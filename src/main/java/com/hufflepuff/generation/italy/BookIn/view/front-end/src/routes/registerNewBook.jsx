@@ -1,13 +1,14 @@
 import { Form, useLoaderData } from "react-router-dom";
-import { saveBook, getTags } from "../apis/book-api";
+import { getTags } from "../apis/book-api";
 import TagSelection from "../components/TagSelection";
+import { useEffect, useState } from "react";
 
 export const action = async ({ request }) => {
    const formData = await request.formData();
    const bookData = Object.fromEntries(formData);
    bookData.id = 0 ;
    bookData.isAvailable = true;
-   await saveBook(bookWrapper);
+   //await saveBook(bookWrapper);
   //  await saveBook(bookData.firstname, bookData.lastname,
   //   bookData.email, bookData.password);
   //  return redirect("/");
@@ -21,6 +22,34 @@ export const action = async ({ request }) => {
 
  export default function RegisterNewBook() {
   const {tags} = useLoaderData();
+  const [tagList, setTag] = useState([]);
+
+  useEffect(() => {
+      console.log(tagList);
+  }, [tagList]);
+
+  const handleChangingTags = (e) => {
+    let tags = [...tagList];
+    let toDeleteId;
+    if (e.target.tagName == "INPUT"){
+      if (!e.target.checked) {
+        for (let i = 0; i < tags.length; i++) {
+          if (e.target.value === tags[i]) {
+            toDeleteId = i;
+          }
+        }
+        console.log(toDeleteId);
+        setTag(tags.slice(toDeleteId, ++toDeleteId)); // quasi funge
+      } else {
+        tags.push(e.target.value);
+        setTag(tags);
+      }
+      
+      
+    } 
+      
+  }
+
     return(
       <>
       <h1>Nuovo libro</h1>
@@ -30,7 +59,7 @@ export const action = async ({ request }) => {
         <input name="title" />
 
         <label htmlFor="isbn">ISBN</label>
-        <input name="isbn" length="13"/>
+        <input name="isbn" maxLength="13"/>
 
         <label htmlFor="year">Anno di pubblicazione</label>
         <input type="number" name="year" />
@@ -50,7 +79,7 @@ export const action = async ({ request }) => {
         <label htmlFor="isShippable">Disponibile alla spedizione</label>
         <input type="checkbox" name="isShippable" />
         
-        <TagSelection tagsToShow= {tags}/>
+        <TagSelection tagsToShow = {tags} onChange={handleChangingTags}/>
 
         <button type="submit">Registra</button>
       </Form>
