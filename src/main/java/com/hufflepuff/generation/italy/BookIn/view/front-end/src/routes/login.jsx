@@ -4,8 +4,6 @@ import { getAuthentication } from "../apis/book-api";
 export  async function action({ request }) {
     const formData = await request.formData();
     const userData = Object.fromEntries(formData);
-    console.log(formData);
-    console.log(userData);
     await getAuthentication(userData.email, userData.password);
     return redirect("/");
 }

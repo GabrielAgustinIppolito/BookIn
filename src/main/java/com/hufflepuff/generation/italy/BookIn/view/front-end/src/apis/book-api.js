@@ -13,6 +13,7 @@ export const getAuthentication = async(email, password) => {
     // }
   );
   localStorage.setItem("token", response.data.access_token);
+  localStorage.setItem("refresh_token", response.data.refresh_token);
 }
 
 export const registration = async(firstname, lastname, email, password) => {
@@ -23,6 +24,7 @@ export const registration = async(firstname, lastname, email, password) => {
     "password": `${password}`,
   });
   localStorage.setItem("token", response.data.access_token);
+  localStorage.setItem("refresh_token", response.data.access_token);
 }
 
 export const getBook = async(id) => {
@@ -31,7 +33,26 @@ export const getBook = async(id) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-  
-    return response.data.results;
+    return response.data;
   }
 
+  export const getTags = async() => {
+    const response = await axios.get(`${rootUrl}/books/all-tags`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response.data;
+  }
+
+  export const saveBook = async(bookWrapper) => {
+    const response = await axios.post(`${rootUrl}/books/register-new-book`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: {
+
+      }
+    });
+    return response.data;
+  }

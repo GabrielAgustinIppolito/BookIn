@@ -1,9 +1,12 @@
 import { Form, redirect } from "react-router-dom";
 import { registration } from "../apis/book-api";
 
-export const action = async ({ params }) => {
-  await registration(Object.values(params));
-  return redirect("/"); // da costruire
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const userData = Object.fromEntries(formData);
+  await registration(userData.firstname, userData.lastname,
+                     userData.email, userData.password);
+  return redirect("/");
   //return redirect("/profile"); // da costruire
 };
 
@@ -11,7 +14,7 @@ export default function Registration() {
   return (
     <>
       <h1>Registrati</h1>
-      <Form method="post" action="registration">
+      <Form method="post">
         <label htmlFor="firstname">Nome</label>
         <input name="firstname" />
         <label htmlFor="lastname">Cognome</label>

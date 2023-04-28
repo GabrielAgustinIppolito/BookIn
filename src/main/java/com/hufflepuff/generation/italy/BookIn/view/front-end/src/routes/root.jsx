@@ -1,4 +1,5 @@
-import { Form, Outlet } from 'react-router-dom'
+import { Form, NavLink, Outlet } from 'react-router-dom'
+
 
 export default function Root() {
    return (
@@ -6,9 +7,9 @@ export default function Root() {
          <div id="header">
             <h1>BookIn</h1>
             <div id="menu">
-               <Form>
-                  <button type="submit">Login</button>
-               </Form>
+               <NavLink to= "/login" className="buttons">
+                  Login
+               </NavLink>
                <form id="search-form" role="search">
                   <input
                      id="q"
@@ -27,9 +28,9 @@ export default function Root() {
                      aria-live="polite"
                   ></div>
                </form>
-               <Form method="post">
-                  <button type="submit">New</button>
-               </Form>
+               <NavLink to="/books/register-new-book" className="buttons">
+                  New
+               </NavLink>
             </div>
          </div>
 

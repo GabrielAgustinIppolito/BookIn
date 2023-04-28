@@ -7,43 +7,42 @@ export async function loader({ params }) {
 }
 
 export default function Book() {
-  const book = useLoaderData();
+  const {book} = useLoaderData();
 
   return (
     <div id="contact">
       <div>
         <img
           key={book.id}
-          src={book.front || "../assets/default_book_cover_2015.jpeg"}
+          
+          src={book.front || "/src/assets/default_book_cover_2015.jpeg"}
         />
       </div>
 
       <div>
-        <h1>{book.title ? <>{book.title}</> : <i>Nessun titolo</i>} </h1>
-        <span>
-          Autore:
-          {book.author ? <>{book.author}</> : <i>Non specificato</i>}
-        </span>
-        <span>
-          Editore:
-          {book.publisher ? <>{book.publisher}</> : <i>Non specificato</i>}
-        </span>
-        <span>
-          Anno:
-          {book.year ? <>{book.year}</> : <i>Non specificato</i>}
-        </span>
-        {book.language && <p>{book.language}</p>}
-        {book.review && <p>{book.review}</p>}
-        <span>
-          Shippable:
-          {book.year ? (
-            <>
-              <i>True</i>
-            </>
-          ) : (
-            <i>False</i>
-          )}
-        </span>
+        <h1>{book.title ? book.title : <i> Nessun titolo</i>} </h1>
+        <p>
+          Autore: 
+          {book.author ? " " + book.author : <i> Non specificato</i>}
+        </p>
+        <p>
+          Editore: 
+          {book.publisher ? " " +  book.publisher : <i> Non specificato</i>}
+        </p>
+        <p>
+          Anno:   
+          {book.year ? " " +  book.year : <i> Non specificato</i>}
+        </p>
+        {book.language && <p>Lingua: {book.language}</p>}
+        {book.review && <p>Recensione: {book.review}</p>}
+        <p>
+          Disponibile alla spedizione:
+          {book.shippable ? 
+            <i>🟢👍🟢</i>
+           : 
+            <i>🔴👎🔴</i>
+          }
+        </p>
 
         <div></div>
       </div>

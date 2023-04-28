@@ -4,6 +4,7 @@ import com.hufflepuff.generation.italy.BookIn.dtos.BookDto;
 import com.hufflepuff.generation.italy.BookIn.dtos.GenreDto;
 import com.hufflepuff.generation.italy.BookIn.dtos.TagDto;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
+import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.TagRepository;
 import com.hufflepuff.generation.italy.BookIn.model.entities.*;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractBookService;
 import com.hufflepuff.generation.italy.BookIn.model.services.implementations.GenericCrudService;
@@ -21,20 +22,25 @@ import static java.util.Arrays.stream;
 
 @RestController
 @RequestMapping(value = "api/books")
+@CrossOrigin
 public class BookController {
 
     private AbstractBookService service;
-    private GenericCrudService<Book> serviceCRUD;
+    private GenericCrudService<Book> bookServiceCRUD;
+    private GenericCrudService<Tag> tagServiceCRUD;
 
     @Autowired
-    public BookController(AbstractBookService service, GenericRepository<Book> crudRepoBook){
+    public BookController(AbstractBookService service, GenericRepository<Book> crudRepoBook,
+                            TagRepository crudRepoTag){
         this.service = service;
-        this.serviceCRUD = new GenericCrudService<>(crudRepoBook);
+        this.bookServiceCRUD = new GenericCrudService<>(crudRepoBook);
+        this.tagServiceCRUD = new GenericCrudService<>(crudRepoTag);
+
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookDto> findById(@PathVariable long id) {
-        Optional<Book> result = serviceCRUD.findById(id);
+        Optional<Book> result = bookServiceCRUD.findById(id);
         return result.map(book -> ResponseEntity.ok().body(BookDto.fromEntity(book))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -146,7 +152,7 @@ public class BookController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteByID (@PathVariable long id){
         try {
-            serviceCRUD.deleteById(id);
+            bookServiceCRUD.deleteById(id);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException IAE) {
             return ResponseEntity.notFound().build();
@@ -159,8 +165,13 @@ public class BookController {
             return ResponseEntity.badRequest().build();
         }
         Book b = bookDto.toEntity();
-            serviceCRUD.update(b);
+            bookServiceCRUD.update(b);
             return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/all-tags")
+    public ResponseEntity<List<TagDto>> getAllTags(){
+        List<TagDto> result = TagDto.fromEntityList(tagServiceCRUD.findAll());
+        return ResponseEntity.ok().body(result);
+    }
 }
