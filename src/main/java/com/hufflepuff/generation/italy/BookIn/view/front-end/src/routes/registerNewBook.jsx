@@ -43,7 +43,7 @@ export const action = async ({ request }) => {
   const tags = await getTags();
   const genres = await getGenres();
   const simplifiedGenres =await genres.map((genre) =>(
-    { label: `${genre.name}`, value: genre.name }
+    { label: `${genre.name}`, value: genre.id }
  ));
   return  {tags, genres, simplifiedGenres} ;
 }
@@ -55,7 +55,7 @@ export const action = async ({ request }) => {
   const animatedComponents = makeAnimated();
   
   useEffect(()=> {globalTags = [...tagList]}, [tagList]);
-  useEffect(()=> {console.log(...genreList)}, [genreList]);
+  useEffect(()=> {console.log(...genreList); globalGenres = [...genreList]}, [genreList]);
 
    const handleChangingTags = (e) => {
      let selectedTag = [...tagList];
@@ -80,7 +80,18 @@ export const action = async ({ request }) => {
    }
 
    const handleChangingGenres = (e) => {
-    console.log(e);
+    let arrayDiSupporto = [];
+    let idOfGenresSelcted = e.map((genre) => genre.value);
+    for(let i = 0; i < genres.length; i++){
+      if(idOfGenresSelcted.includes(genres[i].id)){
+        arrayDiSupporto = [...arrayDiSupporto, genres[i]];
+      }
+    }
+    setGenre(arrayDiSupporto);
+    // console.log(genreList);
+    // for(let i = 0; i < e.length; i++){
+    //   console.log(e[i].value);
+    // }
    } 
 
   return(
