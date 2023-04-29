@@ -8,9 +8,6 @@ export const getAuthentication = async(email, password) => {
       "email": `${email}`,
       "password": `${password}`
     },
-    // {
-    //   headers : {"Access-Control-Allow-Origin": "*"},
-    // }
   );
   localStorage.setItem("token", response.data.access_token);
   localStorage.setItem("refresh_token", response.data.refresh_token);
@@ -52,21 +49,14 @@ export const getBook = async(id) => {
     });
     return response.data;
   }
+  
   export const saveBook = async(bookWrapper) => {
-    const response = await axios.post(`${rootUrl}/books/register-new-book`, bookWrapper, {
+    const response = await axios.post(`${rootUrl}/books/register-new-book`,
+     bookWrapper,
+      {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     return response.data;
   }
-
-  /*/v1/auth/register`, {
-    "firstname": `${firstname}`,
-    "lastname": `${lastname}`,
-    "email": `${email}`,
-    "password": `${password}`,
-  });
-  localStorage.setItem("token", response.data.access_token);
-  localStorage.setItem("refresh_token", response.data.access_token);
-} */
