@@ -1,12 +1,12 @@
 import { Form, redirect, useLoaderData } from "react-router-dom";
 import { getGenres, getTags, saveBook } from "../apis/book-api";
 import TagSelection from "../components/TagSelection";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 
 let globalTags=[];
-let selectedGenres=[];
+let globalGenres=[];
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -24,7 +24,7 @@ export const action = async ({ request }) => {
       "review": bookAllData.review,
       "isAvailable": true
     },
-    "genresDto": selectedGenres,
+    "genresDto": globalGenres,
     "tagsDto": globalTags,
     "location": {
           "id": 0,
@@ -42,19 +42,20 @@ export const action = async ({ request }) => {
  export async function loader() {
   const tags = await getTags();
   const genres = await getGenres();
-  const simpliedGenres =await genres.map((genre) =>(
+  const simplifiedGenres =await genres.map((genre) =>(
     { label: `${genre.name}`, value: genre.name }
  ));
-  return  {tags, genres, simpliedGenres} ;
+  return  {tags, genres, simplifiedGenres} ;
 }
 
  export default function RegisterNewBook() {
-  const {tags, genres, simpliedGenres} = useLoaderData();
+  const {tags, genres, simplifiedGenres} = useLoaderData();
   const [tagList, setTag] = useState([]);
-  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [genreList, setGenre] = useState([]);
   const animatedComponents = makeAnimated();
   
   useEffect(()=> {globalTags = [...tagList]}, [tagList]);
+  useEffect(()=> {console.log(...genreList)}, [genreList]);
 
    const handleChangingTags = (e) => {
      let selectedTag = [...tagList];
@@ -77,6 +78,10 @@ export const action = async ({ request }) => {
        setTag(selectedTag);
      }
    }
+
+   const handleChangingGenres = (e) => {
+    console.log(e);
+   } 
 
   return(
       <>
@@ -107,10 +112,11 @@ export const action = async ({ request }) => {
         <label htmlFor="isShippable">Disponibile alla spedizione </label>
         <input type="checkbox" name="isShippable" />
         
-        <Select options={simpliedGenres}
+        <Select options={simplifiedGenres}
                 closeMenuOnSelect={false}
                 components={animatedComponents}
                 isMulti
+                onChange={handleChangingGenres}
                 ></Select>
 
         <TagSelection tagsToShow = {tags} onChange={handleChangingTags}/>
