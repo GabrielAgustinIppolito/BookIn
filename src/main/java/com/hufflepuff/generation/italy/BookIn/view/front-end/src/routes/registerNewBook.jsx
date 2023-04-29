@@ -1,35 +1,78 @@
-import { Form, useLoaderData } from "react-router-dom";
-import { getTags } from "../apis/book-api";
+import { Form, redirect, useLoaderData } from "react-router-dom";
+import { getGenres, getTags, saveBook } from "../apis/book-api";
 import TagSelection from "../components/TagSelection";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
+
+let selectedTags= [];
+let selectedGenres=[];
 
 export const action = async ({ request }) => {
-   const formData = await request.formData();
-   const bookData = Object.fromEntries(formData);
-   bookData.id = 0 ;
-   bookData.isAvailable = true;
-   //await saveBook(bookWrapper);
-  //  await saveBook(bookData.firstname, bookData.lastname,
-  //   bookData.email, bookData.password);
-  //  return redirect("/");
-   //return redirect("/profile"); // da costruire
+  const formData = await request.formData();
+  const bookAllData = Object.fromEntries(formData);
+  // bookAllData.id = 0;
+  // bookAllData.isAvailable = true;
+  // const bookDto = {
+  //   "id": bookAllData.id,
+  //   "title": bookAllData.title,
+  //   "isbn": bookAllData.isbn,
+  //   "year": bookAllData.year,
+  //   "publisher": bookAllData.publisher,
+  //   "language": bookAllData.language,
+  //   "author": bookAllData,
+  //   "isShippable": bookAllData.isShippable,
+  //   "review": bookAllData.review,
+  //   "isAvailable": bookAllData.isAvailable
+  // }
+  const bookWrapper = {
+    "bookDto":{
+      "id": 0,
+      "title": bookAllData.title,
+      "isbn": bookAllData.isbn,
+      "year": bookAllData.year,
+      "publisher": bookAllData.publisher,
+      "language": bookAllData.language,
+      "author": bookAllData.author,
+      "isShippable": bookAllData.isShippable == "on",
+      "review": bookAllData.review,
+      "isAvailable": true
+    },
+    "genresDto": selectedGenres,
+    "tagsDto": selectedTags,
+    "location": {
+          "id": 0,
+          "longitude": bookAllData.longitude,
+          "latitude": bookAllData.latitude,
+          "city": bookAllData.city
+      }
+  }
+  console.log(bookWrapper);
+  
+  await saveBook(bookWrapper);
+  return redirect("/");
  };
 
  export async function loader() {
   const tags = await getTags();
-  return  {tags} ;
+  const genres = await getGenres();
+  const simpliedGenres =await genres.map((genre) =>(
+    { label: `${genre.name}`, value: genre.name }
+ ));
+  return  {tags, genres, simpliedGenres} ;
 }
 
  export default function RegisterNewBook() {
-  const {tags} = useLoaderData();
+  let selectedGenresRef = useRef(null);
+  const {tags, genres, simpliedGenres} = useLoaderData();
   const [tagList, setTag] = useState([]);
+  const animatedComponents = makeAnimated();
 
   useEffect(() => {
-      console.log(tagList);
   }, [tagList]);
 
   const handleChangingTags = (e) => {
-    let tags = [...tagList];
+    let tags = tagList;
     let toDeleteId;
     if (e.target.tagName == "INPUT"){
       if (!e.target.checked) {
@@ -38,19 +81,34 @@ export const action = async ({ request }) => {
             toDeleteId = i;
           }
         }
-        console.log(toDeleteId);
-        setTag(tags.slice(toDeleteId, ++toDeleteId)); // quasi funge
+        setTag(tags.slice(0, toDeleteId).concat(tags.slice(++toDeleteId))); //funge
       } else {
         tags.push(e.target.value);
         setTag(tags);
       }
-      
-      
     } 
-      
   }
-
-    return(
+  
+  const updateStates = () =>{
+    for(let i = 0; i < tags.length; i++){
+      for ( let j = 0; j < tagList.length; j++){
+        if(tags[i].name === tagList[j]){
+          selectedTags.push(tags[i]);
+        }
+      }
+    }
+    console.log(selectedGenresRef.current.props.value);
+    const genresRefList = selectedGenresRef.current.props.value;
+    for(let i = 0; i < genres.length; i++){
+      for ( let j = 0; j < genresRefList.length; j++){
+        if(genres[i].name === genresRefList[j].value){
+          selectedGenres.push(tags[i]);
+        }
+      }
+    }
+    
+  }
+  return(
       <>
       <h1>Nuovo libro</h1>
       <Form method="post">
@@ -62,7 +120,7 @@ export const action = async ({ request }) => {
         <input name="isbn" maxLength="13"/>
 
         <label htmlFor="year">Anno di pubblicazione</label>
-        <input type="number" name="year" />
+        <input type="date" name="year" />
 
         <label htmlFor="publisher">Editore</label>
         <input name="publisher" />
@@ -76,48 +134,27 @@ export const action = async ({ request }) => {
         <label htmlFor="review">Recensione</label>
         <input name="review" />
 
-        <label htmlFor="isShippable">Disponibile alla spedizione</label>
+        <label htmlFor="isShippable">Disponibile alla spedizione </label>
         <input type="checkbox" name="isShippable" />
         
-        <TagSelection tagsToShow = {tags} onChange={handleChangingTags}/>
+        <Select options={simpliedGenres}
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                isMulti
+                ref={selectedGenresRef}
+                ></Select>
 
-        <button type="submit">Registra</button>
+        <TagSelection tagsToShow = {tags} onChange={handleChangingTags}/>
+        {console.log(selectedGenresRef.current)}
+        <label htmlFor="longitude">Longitudine</label>
+        <input name="longitude" />
+        <label htmlFor="latitude">Latitudine</label>
+        <input name="latitude" />
+        <label htmlFor="city">Città</label>
+        <input name="city" />
+
+        <button type="submit" onClick={updateStates}>Registra</button>
       </Form>
     </>
     );
 }
-
-//  {
-//   "bookDto":
-//   {
-//   "id": 0,
-//   "title": "La notte che mi svegliai con un d***o 3",
-//   "isbn": "111122220002",
-//   "year": "2015-05-22",
-//   "publisher": "Bompiani",
-//   "language": "english",
-//   "author": "Gabriel Ippolito",
-//   "isShippable": true,
-//   "review": "Capolavorone",
-//   "isAvailable": true
-//   },
-//   "genresDto": [
-//      {
-//          "id": 0,
-//          "name": "Action"
-//      }
-//  ],
-//  "tagsDto": [
-//      {
-//          "id": 0,
-//          "name": "Suspence"
-//      }
-//  ],
-//  "location": {
-//       "id": 0,
-//       "longitude": 37.054,
-//       "latitude": 50.124,
-//       "city": "Catania"
-//   }
- 
-// }

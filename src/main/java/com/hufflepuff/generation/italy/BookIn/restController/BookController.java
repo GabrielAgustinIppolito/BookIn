@@ -4,6 +4,7 @@ import com.hufflepuff.generation.italy.BookIn.dtos.BookDto;
 import com.hufflepuff.generation.italy.BookIn.dtos.GenreDto;
 import com.hufflepuff.generation.italy.BookIn.dtos.TagDto;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
+import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenreRepository;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.TagRepository;
 import com.hufflepuff.generation.italy.BookIn.model.entities.*;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractBookService;
@@ -28,14 +29,15 @@ public class BookController {
     private AbstractBookService service;
     private GenericCrudService<Book> bookServiceCRUD;
     private GenericCrudService<Tag> tagServiceCRUD;
+    private GenericCrudService<Genre> genreServiceCrud;
 
     @Autowired
     public BookController(AbstractBookService service, GenericRepository<Book> crudRepoBook,
-                            TagRepository crudRepoTag){
+                          TagRepository crudRepoTag, GenreRepository crudGenreRepo){
         this.service = service;
         this.bookServiceCRUD = new GenericCrudService<>(crudRepoBook);
         this.tagServiceCRUD = new GenericCrudService<>(crudRepoTag);
-
+        this.genreServiceCrud = new GenericCrudService<>(crudGenreRepo);
     }
 
     @GetMapping("/{id}")
@@ -172,6 +174,11 @@ public class BookController {
     @GetMapping("/all-tags")
     public ResponseEntity<List<TagDto>> getAllTags(){
         List<TagDto> result = TagDto.fromEntityList(tagServiceCRUD.findAll());
+        return ResponseEntity.ok().body(result);
+    }
+    @GetMapping("/all-genres")
+    public ResponseEntity<List<GenreDto>> getAllGenres(){
+        List<GenreDto> result = GenreDto.fromEntityList(genreServiceCrud.findAll());
         return ResponseEntity.ok().body(result);
     }
 }

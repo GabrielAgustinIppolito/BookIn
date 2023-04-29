@@ -33,7 +33,7 @@ public class Book {
    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = true)
    private GeoLocation location;
 
-   @ManyToMany(cascade = CascadeType.PERSIST)
+   @ManyToMany(cascade = CascadeType.MERGE)
    @JoinTable(
          name = "book_genre",
          joinColumns = @JoinColumn(name = "book_id"),
@@ -41,7 +41,7 @@ public class Book {
    )
    private Set<Genre> genres;
 
-   @ManyToMany(cascade = CascadeType.PERSIST)
+   @ManyToMany(cascade = CascadeType.MERGE)
    @JoinTable(
          name = "book_tag",
          joinColumns = @JoinColumn(name = "book_id"),

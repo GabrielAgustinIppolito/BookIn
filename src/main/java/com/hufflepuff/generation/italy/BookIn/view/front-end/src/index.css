@@ -16,6 +16,11 @@
   margin: auto;
 }
 
+#detail>*{
+  display:flex;
+  flex-direction: column;
+}
+
 .buttons{
   background-color: white;
 }
