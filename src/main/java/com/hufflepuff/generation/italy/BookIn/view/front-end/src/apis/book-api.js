@@ -24,6 +24,25 @@ export const registration = async(firstname, lastname, email, password) => {
   localStorage.setItem("refresh_token", response.data.access_token);
 }
 
+export const getUser = async() => {
+  const response = await axios.get(`${rootUrl}/books/user`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    }
+  });
+  
+  return response.data;
+}
+
+export const getUserBooks = async() => {
+  const response = await axios.get(`${rootUrl}/books/user/books`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    }
+  });
+  return response.data;
+}
+
 export const getBook = async(id) => {
     const response = await axios.get(`${rootUrl}/books/${id}`, {
       headers: {

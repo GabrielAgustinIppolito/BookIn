@@ -3,6 +3,7 @@ package com.hufflepuff.generation.italy.BookIn.restController;
 import com.hufflepuff.generation.italy.BookIn.dtos.BookDto;
 import com.hufflepuff.generation.italy.BookIn.dtos.GenreDto;
 import com.hufflepuff.generation.italy.BookIn.dtos.TagDto;
+import com.hufflepuff.generation.italy.BookIn.dtos.UserDto;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenreRepository;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.TagRepository;
@@ -56,7 +57,6 @@ public class BookController {
     @PostMapping("/register-new-book")
     public ResponseEntity<BookDto> create(@RequestBody BookWrapper bookWrapper, @AuthenticationPrincipal User user){
         BookDto bdto = bookWrapper.getBookDto();
-        //bdto.setOwner(user);
         Book b = bdto.toEntity();
         b.setOwner(user);
         Set<Genre> genres = GenreDto.fromDtoList(bookWrapper.getGenresDto());
@@ -182,7 +182,7 @@ public class BookController {
     }
 
     @GetMapping("/all-tags")
-    public ResponseEntity<List<TagDto>> getAllTags(@AuthenticationPrincipal User user){
+    public ResponseEntity<List<TagDto>> getAllTags(){
         List<TagDto> result = TagDto.fromEntityList(tagServiceCRUD.findAll());
         return ResponseEntity.ok().body(result);
     }
@@ -191,4 +191,19 @@ public class BookController {
         List<GenreDto> result = GenreDto.fromEntityList(genreServiceCrud.findAll());
         return ResponseEntity.ok().body(result);
     }
+
+    @GetMapping("/user")
+    public ResponseEntity<UserDto> getUser(@AuthenticationPrincipal User user){
+        return ResponseEntity.ok().body(UserDto.dtoFromEntity(user));
+    }
+
+    @GetMapping("/user/books")
+    public ResponseEntity<List<BookDto>> getUserBooks(@AuthenticationPrincipal User user){
+        Optional<User> owner = userService.findByEmail(user.getEmail());
+        if (owner.isPresent()) {
+            return ResponseEntity.ok().body(BookDto.fromEntityList(owner.get().getBooks()));
+        }
+        return ResponseEntity.noContent().build();
+    }
+
 }

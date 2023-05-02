@@ -33,7 +33,6 @@ export const action = async ({ request }) => {
           "city": bookAllData.city
       }
   }
-  console.log(bookWrapper);
   
   await saveBook(bookWrapper);
   return redirect("/");
@@ -42,7 +41,7 @@ export const action = async ({ request }) => {
  export async function loader() {
   const tags = await getTags();
   const genres = await getGenres();
-  const simplifiedGenres =await genres.map((genre) =>(
+  const simplifiedGenres = await genres.map((genre) =>(
     { label: `${genre.name}`, value: genre.id }
  ));
   return  {tags, genres, simplifiedGenres} ;
