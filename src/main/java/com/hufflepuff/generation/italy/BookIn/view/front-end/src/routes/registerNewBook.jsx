@@ -22,7 +22,7 @@ export const action = async ({ request }) => {
       "author": bookAllData.author,
       "isShippable": bookAllData.isShippable == "on",
       "review": bookAllData.review,
-      "isAvailable": true
+      "isAvailable": true,
     },
     "genresDto": globalGenres,
     "tagsDto": globalTags,
@@ -55,7 +55,7 @@ export const action = async ({ request }) => {
   const animatedComponents = makeAnimated();
   
   useEffect(()=> {globalTags = [...tagList]}, [tagList]);
-  useEffect(()=> {console.log(...genreList); globalGenres = [...genreList]}, [genreList]);
+  useEffect(()=> {globalGenres = [...genreList]}, [genreList]);
 
    const handleChangingTags = (e) => {
      let selectedTag = [...tagList];

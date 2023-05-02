@@ -8,12 +8,17 @@ import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenreRepos
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.TagRepository;
 import com.hufflepuff.generation.italy.BookIn.model.entities.*;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractBookService;
+import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractUserService;
 import com.hufflepuff.generation.italy.BookIn.model.services.implementations.GenericCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -27,14 +32,16 @@ import static java.util.Arrays.stream;
 public class BookController {
 
     private AbstractBookService service;
+    private AbstractUserService userService;
     private GenericCrudService<Book> bookServiceCRUD;
     private GenericCrudService<Tag> tagServiceCRUD;
     private GenericCrudService<Genre> genreServiceCrud;
 
     @Autowired
-    public BookController(AbstractBookService service, GenericRepository<Book> crudRepoBook,
+    public BookController(AbstractBookService service, AbstractUserService userService, GenericRepository<Book> crudRepoBook,
                           TagRepository crudRepoTag, GenreRepository crudGenreRepo){
         this.service = service;
+        this.userService = userService;
         this.bookServiceCRUD = new GenericCrudService<>(crudRepoBook);
         this.tagServiceCRUD = new GenericCrudService<>(crudRepoTag);
         this.genreServiceCrud = new GenericCrudService<>(crudGenreRepo);
@@ -47,8 +54,11 @@ public class BookController {
     }
 
     @PostMapping("/register-new-book")
-    public ResponseEntity<BookDto> create(@RequestBody BookWrapper bookWrapper){
-        Book b = bookWrapper.getBookDto().toEntity();
+    public ResponseEntity<BookDto> create(@RequestBody BookWrapper bookWrapper, @AuthenticationPrincipal User user){
+        BookDto bdto = bookWrapper.getBookDto();
+        //bdto.setOwner(user);
+        Book b = bdto.toEntity();
+        b.setOwner(user);
         Set<Genre> genres = GenreDto.fromDtoList(bookWrapper.getGenresDto());
         Set<Tag> tags = TagDto.fromDtoList(bookWrapper.getTagsDto());
         GeoLocation l = bookWrapper.getLocation();
@@ -172,7 +182,7 @@ public class BookController {
     }
 
     @GetMapping("/all-tags")
-    public ResponseEntity<List<TagDto>> getAllTags(){
+    public ResponseEntity<List<TagDto>> getAllTags(@AuthenticationPrincipal User user){
         List<TagDto> result = TagDto.fromEntityList(tagServiceCRUD.findAll());
         return ResponseEntity.ok().body(result);
     }

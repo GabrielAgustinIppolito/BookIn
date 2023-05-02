@@ -29,12 +29,16 @@ public class User implements UserDetails {
    private String lastname;
    private String email;
    private String password;
+   private String city; //per la geolocalizzazione
 
    @Enumerated(EnumType.STRING)
    private Role role;
 
    @OneToMany(mappedBy = "user")
    private List<Token> tokens;
+
+   @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
+   private List<Book> books;
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {

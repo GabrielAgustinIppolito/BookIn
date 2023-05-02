@@ -3,6 +3,7 @@ package com.hufflepuff.generation.italy.BookIn.dtos;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Book;
 import com.hufflepuff.generation.italy.BookIn.model.entities.GeoLocation;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Tag;
+import com.hufflepuff.generation.italy.BookIn.model.entities.User;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
@@ -46,7 +47,7 @@ public class BookDto {
 
     public Book toEntity(){
         return new Book(id, title, isbn, year == null || year.length() == 0 ? null : LocalDate.parse(year), publisher,
-                language, author, isShippable, review, isAvailable, null, null, null);
+                language, author, isShippable, review, isAvailable, null, null, null, null);
     }
 
     public static List<BookDto> fromEntityList(List<Book> books) {
@@ -135,4 +136,5 @@ public class BookDto {
     public void setAvailable(boolean available) {
         isAvailable = available;
     }
+
 }

@@ -49,6 +49,10 @@ public class Book {
    )
    private Set<Tag> tags;
 
+   @ManyToOne
+   @JoinColumn(name = "user_id", nullable = false)
+   private User owner;
+
    public Book(long id, String title, String ISBN, LocalDate year, String publisher, String language, String author,
                boolean isShippable, String review, boolean isAvailable) {
       this.id = id;
