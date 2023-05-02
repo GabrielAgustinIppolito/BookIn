@@ -17,5 +17,6 @@ public class UserService implements AbstractUserService {
    public Optional<User> findByEmail(String email){
       return repo.findByEmail(email);
    }
+   public User save(User user) { return repo.save(user); }
 
 }

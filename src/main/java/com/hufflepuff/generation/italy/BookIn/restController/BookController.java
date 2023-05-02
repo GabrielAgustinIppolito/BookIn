@@ -10,16 +10,14 @@ import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.TagReposit
 import com.hufflepuff.generation.italy.BookIn.model.entities.*;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractBookService;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractUserService;
+import com.hufflepuff.generation.italy.BookIn.model.services.implementations.AuthenticationService;
 import com.hufflepuff.generation.italy.BookIn.model.services.implementations.GenericCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -34,15 +32,17 @@ public class BookController {
 
     private AbstractBookService service;
     private AbstractUserService userService;
+    private AuthenticationService authService;
     private GenericCrudService<Book> bookServiceCRUD;
     private GenericCrudService<Tag> tagServiceCRUD;
     private GenericCrudService<Genre> genreServiceCrud;
 
     @Autowired
-    public BookController(AbstractBookService service, AbstractUserService userService, GenericRepository<Book> crudRepoBook,
+    public BookController(AbstractBookService service, AbstractUserService userService, AuthenticationService authService, GenericRepository<Book> crudRepoBook,
                           TagRepository crudRepoTag, GenreRepository crudGenreRepo){
         this.service = service;
         this.userService = userService;
+        this.authService = authService;
         this.bookServiceCRUD = new GenericCrudService<>(crudRepoBook);
         this.tagServiceCRUD = new GenericCrudService<>(crudRepoTag);
         this.genreServiceCrud = new GenericCrudService<>(crudGenreRepo);

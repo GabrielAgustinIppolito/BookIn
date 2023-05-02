@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.hufflepuff.generation.italy.BookIn.model.utils.auth.AuthenticationRequest;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -117,4 +118,5 @@ public class AuthenticationService {
       }
     }
   }
+
 }
