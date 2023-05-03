@@ -1,16 +1,16 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, NavLink  } from "react-router-dom";
 import { getBook, getBookOwner } from "../apis/book-api";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "../../node_modules/leaflet/dist/leaflet.css";
 
 export async function loader({ params }) {
   const book = await getBook(params.id);
-  const ownerId = await getBookOwner(book.ownerId)
-  return { book, ownerId };
+  const owner = await getBookOwner(book.ownerId)
+  return { book, owner };
 }
 
 export default function Book() {
-  const {book, ownerId} = useLoaderData();
+  const {book, owner} = useLoaderData();
 
   return (
     <div id="contact">
@@ -60,8 +60,10 @@ export default function Book() {
                 position={[book.latitude, book.longitude]}
                 >
                   {console.log(book)}
-                  <Popup>{book.title}, {book.author}
-                    {console.log(ownerId)}
+                  <Popup>
+                    {book.title}, {book.author}
+                    {console.log(owner.id)}
+                    <NavLink to={`/owner-profile/${owner.id}`} >Contattami!</NavLink>
                   </Popup>
               </Marker>
           </MapContainer>

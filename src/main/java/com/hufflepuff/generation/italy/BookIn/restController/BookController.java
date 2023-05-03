@@ -208,5 +208,13 @@ public class BookController {
         return oU.isPresent() ? ResponseEntity.ok().body(UserDto.dtoFromEntity(
                oU.get())) : ResponseEntity.notFound().build() ;
     }
+    @GetMapping("/user/books/{id}")
+    public ResponseEntity<List<BookDto>> getUserBooksFromUserId(@PathVariable long id){
+        Optional<User> owner = userService.findUserById(id);
+        if (owner.isPresent()) {
+            return ResponseEntity.ok().body(BookDto.fromEntityList(owner.get().getBooks()));
+        }
+        return ResponseEntity.noContent().build();
+    }
 
 }

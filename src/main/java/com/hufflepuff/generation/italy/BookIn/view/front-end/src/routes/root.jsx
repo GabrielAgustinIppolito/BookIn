@@ -18,7 +18,8 @@ export default function Root() {
 
          <div className="navbar-center">
             <figure>
-               <img className="max-h-20" src="src/assets/logo_bookin_notext.png" alt="BookIn Logo" />
+               <img className="max-h-20" 
+               src="../src/assets/logo_bookin_notext.png" alt="BookIn Logo" />
             </figure>
          </div>
 
@@ -32,7 +33,7 @@ export default function Root() {
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                <div className="w-10 rounded-full">
                   <NavLink to= "/profile">
-                     <img src="src/assets/user_icon.png" />
+                     <img src="../src/assets/user_icon.png" />
                   </NavLink>
                </div>
             </label>

@@ -1,29 +1,31 @@
-import { useLoaderData } from "react-router-dom";
-import { getUser, getUserBooks } from "../apis/book-api"
-import BookCard from "../components/BookCard";
+import { Link, useLoaderData } from "react-router-dom";
+import { getBookOwner, getOwnerBooks } from "../apis/book-api"
+import PublicBookCard from "../components/PublicBookCard";
 
-export const loader = async() => {
-    const user = await getUser();
-    const books = await getUserBooks();
-    return { user, books };
+export const loader = async({params}) => {
+   console.log(params);
+   const owner = await getBookOwner(params.id);
+   const books = await getOwnerBooks(params.id);
+    return { owner, books };
 }
 
-export default function Profile() {
-    const { user, books } = useLoaderData();
-    const cardsToShow = books.map(b =><BookCard key={b.id} book={b} ></BookCard>);
+export default function OwnerProfile() {
+    const {owner, books } = useLoaderData();
+    const cardsToShow = books.map(b =><PublicBookCard key={b.id} book={b} ></PublicBookCard>);
     return (
         <>
             <div className="grid grid-cols-3 gap-2 justify-center m-10 p-10">
                 <div className="propic grid place-items-center">
-                    <h1>Ciao {user.firstname}!</h1> 
+                    <h1>Ciao! Sono {owner.firstname}!</h1> 
                     <div className="avatar">
                         <div className="w-28 rounded-full">
-                            <img src="src/assets/user_icon.png" />
+                            <img src="../src/assets/user_icon.png" />
                         </div>
                     </div>
                 </div>
                 <div className="profile grid place-items-center">
-                    <p>Città: {user.city || "città non specificata"}</p>
+                    <p>Città: {owner.city || "città non specificata"}</p>
+                    <p>Email: <a href={`mailto: ${owner.email}`}>{owner.email}</a></p>
                     <p>Libri condivisi: {books.length}</p>
                 </div>
                 <div className="profile grid place-items-center">
