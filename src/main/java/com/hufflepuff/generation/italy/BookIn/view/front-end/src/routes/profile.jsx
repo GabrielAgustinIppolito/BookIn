@@ -10,8 +10,7 @@ export const loader = async() => {
 
 export default function Profile() {
     const { user, books } = useLoaderData();
-    const bookElements = books.map(b => <li key={b.id}><NavLink to={`/books/${b.id}`}>{b.title}</NavLink></li>);
-    const cardsToShow = books.map(b =><BookCard key={b.id} book={b} ></BookCard>);;
+    const cardsToShow = books.map(b =><BookCard key={b.id} book={b} ></BookCard>);
     return (
         <>
             <div className="p-data">
@@ -32,9 +31,6 @@ export default function Profile() {
             <div className="group-card">
                 {cardsToShow}
             </div>
-            {/* <ul id="profile-books">
-                {bookElements}
-            </ul> */}
         </>
     );
 }

@@ -1,29 +1,29 @@
 import { NavLink } from "react-router-dom";
 
 export default function BookCard({ book }) {
-   console.log(book)
-   return (
-      <div className="book-card">
-         {/* <div className="card-book">
-         <figure className="image is-1by1"> */}
-         
-         <h3 className="title">
-            <NavLink to={`/books/${book.id}`}>
-               {book.title}</NavLink>
-         </h3>
-         <NavLink to={`/books/${book.id}`}>
-            <img src={`https://picsum.photos/seed/${book.id}/300/200`} alt="Book Cover" />
-         </NavLink>
-         
-         {/* </figure>
-         </div> */}
-         <div className="card-content">
-            <div className="media-content">
-               {/* <h3 className="title">{book.title}</h3> */}
-               <p>Data di pubblicazione: {book.year ||"N/S"}</p>
-            </div>
-            <div className="content">{book.review}</div>
-         </div>
+  return (
+    <div className="card card-side bg-accent max-w-screen-lg m-8 shadow-xl">
+      <NavLink to={`/books/${book.id}`}>
+        <figure>
+          <img
+            className="max-w-xs h-80 rounded-xl"
+            src={`http://1.bp.blogspot.com/-Z0ePnWNTVuQ/VK3fouq-XBI/AAAAAAAAC0I/KdnHXLax8bg/s1600/PLDC0729.JPG`}
+            alt="Book Cover"
+          />
+        </figure>
+      </NavLink>
+      <div className="card-body">
+        <NavLink to={`/books/${book.id}`}>
+          <h2 className="card-title font-sans">{book.title}</h2>
+        </NavLink>
+        <p>Autore: {book.author || "N/S"}</p>
+        <p>Editore: {book.publisher || "N/S"}</p>
+        <p>Anno di pubblicazione: {book.year || "N/S"}</p>
+        <div className="card-actions justify-end">
+          <button className="btn btn-primary">Modifica</button>
+          <button className="btn btn-error">Elimina</button>
+        </div>
       </div>
-   );
+    </div>
+  );
 }

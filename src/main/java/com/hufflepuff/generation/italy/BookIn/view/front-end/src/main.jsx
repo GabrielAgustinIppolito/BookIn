@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Root from './routes/root.jsx'
-import './index.css'
+import './routes/root.css'
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Index from './routes/index.jsx';
 import Book, { loader as bookLoader } from './routes/book.jsx';
 import Login, { action as loginAction } from './routes/login.jsx';
 import Registration, { action as registrationAction } from './routes/registration.jsx';
@@ -15,6 +16,11 @@ const router = createBrowserRouter([
   path: "/",
   element: <Root />,
   children: [
+    {
+      index: true,
+      element: <Index />,
+      action: loginAction
+    },
     {
       path: "books/:id",
       element: <Book />,
