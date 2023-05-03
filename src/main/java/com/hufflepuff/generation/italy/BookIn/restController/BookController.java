@@ -1,9 +1,6 @@
 package com.hufflepuff.generation.italy.BookIn.restController;
 
-import com.hufflepuff.generation.italy.BookIn.dtos.BookDto;
-import com.hufflepuff.generation.italy.BookIn.dtos.GenreDto;
-import com.hufflepuff.generation.italy.BookIn.dtos.TagDto;
-import com.hufflepuff.generation.italy.BookIn.dtos.UserDto;
+import com.hufflepuff.generation.italy.BookIn.dtos.*;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenreRepository;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.TagRepository;
@@ -47,9 +44,10 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDto> findById(@PathVariable long id) {
+    public ResponseEntity<CompleteBookDto> findById(@PathVariable long id) {
         Optional<Book> result = bookServiceCRUD.findById(id);
-        return result.map(book -> ResponseEntity.ok().body(BookDto.fromEntity(book))).orElseGet(() -> ResponseEntity.notFound().build());
+        return result.map(book -> ResponseEntity.ok().body(CompleteBookDto.fromEntity(book)))
+              .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/register-new-book")
@@ -202,6 +200,13 @@ public class BookController {
             return ResponseEntity.ok().body(BookDto.fromEntityList(owner.get().getBooks()));
         }
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable long id){
+        Optional<User> oU=userService.findUserById(id);
+        return oU.isPresent() ? ResponseEntity.ok().body(UserDto.dtoFromEntity(
+               oU.get())) : ResponseEntity.notFound().build() ;
     }
 
 }

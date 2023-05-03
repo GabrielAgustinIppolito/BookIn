@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface AbstractUserService {
     public Optional<User> findByEmail(String email);
     public User save(User user);
+
+   Optional<User> findUserById(long id);
 }

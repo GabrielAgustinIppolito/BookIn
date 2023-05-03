@@ -1,13 +1,16 @@
 import { useLoaderData } from "react-router-dom";
-import { getBook } from "../apis/book-api";
+import { getBook, getBookOwner } from "../apis/book-api";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "../../node_modules/leaflet/dist/leaflet.css";
 
 export async function loader({ params }) {
   const book = await getBook(params.id);
-  return { book };
+  const ownerId = await getBookOwner(book.ownerId)
+  return { book, ownerId };
 }
 
 export default function Book() {
-  const {book} = useLoaderData();
+  const {book, ownerId} = useLoaderData();
 
   return (
     <div id="contact">
@@ -43,8 +46,26 @@ export default function Book() {
             <i>🔴👎🔴</i>
           }
         </p>
-
-        <div></div>
+        
+          <MapContainer
+            center={[38.1102, 13.3752]}
+            zoom={12}
+            scrollWheelZoom={false}
+            style={{height:'400px',}}>
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+              <Marker
+                position={[book.latitude, book.longitude]}
+                >
+                  {console.log(book)}
+                  <Popup>{book.title}, {book.author}
+                    {console.log(ownerId)}
+                  </Popup>
+              </Marker>
+          </MapContainer>
+        
       </div>
     </div>
   );

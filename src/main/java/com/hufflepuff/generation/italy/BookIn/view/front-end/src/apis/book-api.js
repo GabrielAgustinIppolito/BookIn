@@ -35,6 +35,15 @@ export const getUser = async() => {
   return response.data;
 }
 
+export const getBookOwner = async(id) => {
+  const response = await axios.get(`${rootUrl}/books/user/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    }
+  });
+  return response.data;
+}
+
 export const getUserBooks = async() => {
   const response = await axios.get(`${rootUrl}/books/user/books`, {
     headers: {
@@ -50,6 +59,7 @@ export const getBook = async(id) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
+    console.log(response.data);
     return response.data;
   }
 
