@@ -14,7 +14,7 @@ export default function BookCard({ book }) {
       </NavLink>
       <div className="card-body">
         <NavLink to={`/books/${book.id}`}>
-          <h2 className="card-title font-sans">{book.title}</h2>
+          <h2 className="card-title">{book.title}</h2>
         </NavLink>
         <p>Autore: {book.author || "N/S"}</p>
         <p>Editore: {book.publisher || "N/S"}</p>

@@ -1,6 +1,6 @@
 module.exports = {
   content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
-  plugins: [require("daisyui")],
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
     themes: [
       {
@@ -15,7 +15,7 @@ module.exports = {
           warning: "#FBBD23",
           error: "#C0564B",
           fontFamily: {
-            'sans': ['Berkshire Swash', "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"]
+            'custom': ["Berkshire Swash", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"]
           }
         },
       },

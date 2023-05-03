@@ -13,19 +13,22 @@ export default function Profile() {
     const cardsToShow = books.map(b =><BookCard key={b.id} book={b} ></BookCard>);
     return (
         <>
-            <div className="p-data">
-                <div className="profile p-title-pic">
+            <div className="grid grid-cols-3 gap-2 justify-center m-10 p-10">
+                <div className="propic grid place-items-center">
                     <h1>Ciao {user.firstname}!</h1> 
-                    <img src="https://picsum.photos/200" alt="propic" id="propic" />
+                    <div className="avatar">
+                        <div className="w-28 rounded-full">
+                            <img src="src/assets/user_icon.png" />
+                        </div>
+                    </div>
                 </div>
-                <div className="profile p-other-info">
+                <div className="profile grid place-items-center">
                     <p>Città: {user.city || "città non specificata"}</p>
                     <p>Libri condivisi: {books.length}</p>
                 </div>
-                <div className="profile p-bio">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor quam illum eveniet repellendus nesciunt minus suscipit consequatur corporis ab, incidunt porro commodi iure voluptate hic rem tempore? Voluptatibus, eius nihil.
-                    Et quaerat, voluptas itaque nisi, ratione quam tempora qui dicta modi excepturi non rerum nobis ad ab maxime sit inventore. Voluptas repudiandae voluptatem officiis nostrum earum quia iste debitis aperiam.
-                    Atque neque eius aut at minima quo dolorem voluptatem qui, quisquam nam officiis. Tenetur facere alias quas exercitationem veniam assumenda, provident, accusamus amet, consectetur delectus inventore quam praesentium! Obcaecati, sint!
+                <div className="profile grid place-items-center">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor quam illum eveniet repellendus nesciunt minus suscipit consequatur corporis ab,
+                    incidunt porro commodi iure voluptate hic rem tempore? Voluptatibus, eius nihil.
                 </div>
             </div>
             <div className="group-card">
