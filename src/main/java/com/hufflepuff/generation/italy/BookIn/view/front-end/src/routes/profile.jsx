@@ -1,5 +1,6 @@
 import { NavLink, useLoaderData } from "react-router-dom";
 import { getUser, getUserBooks } from "../apis/book-api"
+import BookCard from "../components/BookCard";
 
 export const loader = async() => {
     const user = await getUser();
@@ -10,6 +11,7 @@ export const loader = async() => {
 export default function Profile() {
     const { user, books } = useLoaderData();
     const bookElements = books.map(b => <li key={b.id}><NavLink to={`/books/${b.id}`}>{b.title}</NavLink></li>);
+    const cardsToShow = books.map(b =><BookCard key={b.id} book={b} ></BookCard>);;
     return (
         <>
             <div className="p-data">
@@ -18,7 +20,7 @@ export default function Profile() {
                     <img src="https://picsum.photos/200" alt="propic" id="propic" />
                 </div>
                 <div className="profile p-other-info">
-                    <p>Città: Palermo</p>
+                    <p>Città: {user.city || "città non specificata"}</p>
                     <p>Libri condivisi: {books.length}</p>
                 </div>
                 <div className="profile p-bio">
@@ -27,9 +29,12 @@ export default function Profile() {
                     Atque neque eius aut at minima quo dolorem voluptatem qui, quisquam nam officiis. Tenetur facere alias quas exercitationem veniam assumenda, provident, accusamus amet, consectetur delectus inventore quam praesentium! Obcaecati, sint!
                 </div>
             </div>
-            <ul id="profile-books">
+            <div className="group-card">
+                {cardsToShow}
+            </div>
+            {/* <ul id="profile-books">
                 {bookElements}
-            </ul>
+            </ul> */}
         </>
     );
 }

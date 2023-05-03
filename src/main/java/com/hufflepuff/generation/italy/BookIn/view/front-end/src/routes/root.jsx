@@ -10,6 +10,9 @@ export default function Root() {
                <NavLink to= "/login" className="buttons">
                   Login
                </NavLink>
+               <NavLink to= "/profile" className="buttons">
+                  <img src="src\assets\user.jpg" alt="Profile" />
+               </NavLink>
                <form id="search-form" role="search">
                   <input
                      id="q"

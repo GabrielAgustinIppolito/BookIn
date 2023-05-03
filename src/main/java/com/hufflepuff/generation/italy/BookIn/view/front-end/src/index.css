@@ -46,3 +46,8 @@
   margin: 1rem;
 }
 
+.group-card{
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: .5rem;
+}

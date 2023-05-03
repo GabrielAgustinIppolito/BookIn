@@ -9,8 +9,9 @@ public class UserDto {
    private String firstname;
    private String lastname;
    private String email;
+   private String city;
    public static UserDto dtoFromEntity(User user){
-      return new UserDto(user.getFirstname(), user.getLastname(), user.getEmail());
+      return new UserDto(user.getFirstname(), user.getLastname(), user.getEmail(), user.getCity());
    }
 
 }

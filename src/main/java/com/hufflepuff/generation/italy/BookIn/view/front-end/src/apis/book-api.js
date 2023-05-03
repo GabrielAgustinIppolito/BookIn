@@ -13,12 +13,13 @@ export const getAuthentication = async(email, password) => {
   localStorage.setItem("refresh_token", response.data.refresh_token);
 }
 
-export const registration = async(firstname, lastname, email, password) => {
+export const registration = async(firstname, lastname, email, password, city) => {
   const response = await axios.post(`${rootUrl}/v1/auth/register`, {
     "firstname": `${firstname}`,
     "lastname": `${lastname}`,
     "email": `${email}`,
     "password": `${password}`,
+    "city": `${city}`
   });
   localStorage.setItem("token", response.data.access_token);
   localStorage.setItem("refresh_token", response.data.access_token);

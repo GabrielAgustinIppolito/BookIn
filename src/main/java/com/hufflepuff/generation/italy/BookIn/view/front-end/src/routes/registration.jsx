@@ -5,7 +5,7 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
   const userData = Object.fromEntries(formData);
   await registration(userData.firstname, userData.lastname,
-                     userData.email, userData.password);
+                     userData.email, userData.password, userData.city);
   return redirect("/");
   //return redirect("/profile"); // da costruire
 };
@@ -19,6 +19,8 @@ export default function Registration() {
         <input name="firstname" />
         <label htmlFor="lastname">Cognome</label>
         <input name="lastname" />
+        <label htmlFor="city">Città</label>
+        <input name="city" />
         <label htmlFor="email">Email</label>
         <input type="email" name="email" />
         <label htmlFor="password">Password</label>

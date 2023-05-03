@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.util.Arrays.stream;
-
 @RestController
 @RequestMapping(value = "api/books")
 @CrossOrigin
