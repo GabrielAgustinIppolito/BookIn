@@ -1,8 +1,6 @@
 package com.hufflepuff.generation.italy.BookIn.dtos;
 
 import com.hufflepuff.generation.italy.BookIn.model.entities.Book;
-import com.hufflepuff.generation.italy.BookIn.model.entities.City;
-import com.hufflepuff.generation.italy.BookIn.model.entities.GeoLocation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +25,6 @@ public class CompleteBookDto {
    private boolean isAvailable;
 
    private long locationId;
-   private String city;
    private double latitude;
    private double longitude;
    private long ownerId;
@@ -36,7 +33,7 @@ public class CompleteBookDto {
       return new CompleteBookDto(b.getId(), b.getTitle(), b.getISBN() != null ? b.getISBN() : "",
             b.getYear() != null ? b.getYear().toString() : "", b.getPublisher() != null ? b.getPublisher() : "",
             b.getLanguage(), b.getAuthor(), b.isShippable(), b.getReview() != null ? b.getReview() : "",
-            b.isAvailable(), b.getLocation().getId(), b.getCity().getName(), b.getLocation().getLatitude(),
+            b.isAvailable(), b.getLocation().getId(), b.getLocation().getLatitude(),
             b.getLocation().getLongitude(), b.getOwner().getId());
    }
 

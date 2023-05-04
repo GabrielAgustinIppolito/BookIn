@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-   private Integer id;
+   private long id;
    private String firstname;
    private String lastname;
    private String email;

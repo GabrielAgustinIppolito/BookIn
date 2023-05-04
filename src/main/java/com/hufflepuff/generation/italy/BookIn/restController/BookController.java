@@ -61,7 +61,6 @@ public class BookController {
         Set<Genre> genres = GenreDto.fromDtoList(bookWrapper.getGenresDto());
         Set<Tag> tags = TagDto.fromDtoList(bookWrapper.getTagsDto());
         GeoLocation l = bookWrapper.getLocation();
-        b.setCity(cityServiceCrud.findById(bdto.getCityId()).get());
         Book bookResult = service.saveBookWithGenresTagsLocation(b, genres, tags, l);
         BookDto dtoResult = BookDto.fromEntity(bookResult);
         return ResponseEntity.created(URI.create("/api/books/" + bookResult.getId())).body(dtoResult);

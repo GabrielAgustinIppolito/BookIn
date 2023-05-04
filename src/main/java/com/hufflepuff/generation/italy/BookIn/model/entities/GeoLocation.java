@@ -17,8 +17,4 @@ public class GeoLocation {
    private long id;
    private double latitude;
    private double longitude;
-   //@OneToOne(mappedBy = "location")
-   //private Book book;
-   //@OneToOne(mappedBy = "center")
-   //private City city;
 }

@@ -34,8 +34,8 @@ public class Book {
    @JoinColumn(name = "location_id")
    private GeoLocation location;
 
-   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-   @JoinColumn(name = "city_id", referencedColumnName = "city_id", nullable = true)
+   @ManyToOne
+   @JoinColumn(name = "city_id", nullable = false)
    private City city;
 
    @ManyToMany(cascade = CascadeType.MERGE)

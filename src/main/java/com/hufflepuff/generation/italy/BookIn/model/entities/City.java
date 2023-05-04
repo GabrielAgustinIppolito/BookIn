@@ -9,11 +9,11 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "city")
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,6 +21,15 @@ public class City {
     @Column(name = "city_id")
     private long id;
     private String name;
+
+//    @OneToMany(mappedBy = "city", cascade = CascadeType.DETACH)
+//    private List<GeoLocation> geoLocations;
+
+    @OneToMany(mappedBy = "city", cascade = CascadeType.DETACH)
+    private List<User> users;
+
+    @OneToMany(mappedBy = "city", cascade = CascadeType.DETACH)
+    private List<Book> books;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "geolocation_id", referencedColumnName = "geolocation_id", nullable = true)

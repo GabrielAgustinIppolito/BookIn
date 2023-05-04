@@ -25,12 +25,14 @@ public class User implements UserDetails {
    @GeneratedValue(strategy = GenerationType.SEQUENCE)
    @SequenceGenerator(name = "user_generator", allocationSize = 1)
    @Column(name = "_user_id")
-   private Integer id;
+   private long id;
    private String firstname;
    private String lastname;
    private String email;
    private String password;
 
+   @ManyToOne
+   @JoinColumn(name = "city_id", nullable = false)
    private City city;
 
    @Enumerated(EnumType.STRING)

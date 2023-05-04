@@ -19,7 +19,7 @@ public interface AbstractBookRepository extends GenericRepository<Book> {
     Iterable<Book> findByYearBetweenAndIsAvailableTrue(LocalDate startDate, LocalDate endDate);
     Iterable<Book> findByLanguageAndIsAvailableTrue (String language);
     Iterable<Book> findByIsShippableAndIsAvailableTrue (boolean isShippable);
-    @Query("SELECT b from Book b WHERE b.location.city = :cityname")
+    @Query("SELECT b from Book b WHERE b.city.name = :cityname")
     Iterable<Book> findByGeoLocationCityAndIsAvailableTrue (String cityname);
 
     // FARE QUERY PER LA GEOLOCATION
