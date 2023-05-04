@@ -19,6 +19,7 @@ export default function BookCard({ book }) {
         <p>Autore: {book.author || "N/S"}</p>
         <p>Editore: {book.publisher || "N/S"}</p>
         <p>Anno di pubblicazione: {book.year || "N/S"}</p>
+        <p>{ book.available ? "Da scambiare" : "Già scambiato"}</p>
         <div className="card-actions justify-end">
           <button className="btn btn-primary">Modifica</button>
           <button className="btn btn-error">Elimina</button>

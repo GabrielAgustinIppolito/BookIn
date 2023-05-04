@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS genre, book, book_genre, tag, book_tag, _user, geolocation,
 CREATE TABLE _user (
         _user_id INTEGER NOT NULL,
         city VARCHAR(255),
-        email VARCHAR(255),
+        email VARCHAR(255) UNIQUE,
         firstname VARCHAR(255),
         lastname VARCHAR(255),
         password VARCHAR(255),

@@ -6,7 +6,7 @@ export const action = async ({ request }) => {
   const userData = Object.fromEntries(formData);
   await registration(userData.firstname, userData.lastname,
                      userData.email, userData.password, userData.city);
-  return redirect("/profile");
+  return redirect("/");
   //return redirect("/profile"); // da costruire
 };
 
