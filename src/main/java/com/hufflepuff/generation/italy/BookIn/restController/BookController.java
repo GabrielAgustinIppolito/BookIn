@@ -1,6 +1,7 @@
 package com.hufflepuff.generation.italy.BookIn.restController;
 
 import com.hufflepuff.generation.italy.BookIn.dtos.*;
+import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.CityRepository;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenreRepository;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.TagRepository;
@@ -31,16 +32,18 @@ public class BookController {
     private GenericCrudService<Book> bookServiceCRUD;
     private GenericCrudService<Tag> tagServiceCRUD;
     private GenericCrudService<Genre> genreServiceCrud;
+    private GenericCrudService<City> cityServiceCrud;
 
     @Autowired
     public BookController(AbstractBookService service, AbstractUserService userService, AuthenticationService authService, GenericRepository<Book> crudRepoBook,
-                          TagRepository crudRepoTag, GenreRepository crudGenreRepo){
+                          TagRepository crudRepoTag, GenreRepository crudGenreRepo, CityRepository crudCityRepo){
         this.service = service;
         this.userService = userService;
         this.authService = authService;
         this.bookServiceCRUD = new GenericCrudService<>(crudRepoBook);
         this.tagServiceCRUD = new GenericCrudService<>(crudRepoTag);
         this.genreServiceCrud = new GenericCrudService<>(crudGenreRepo);
+        this.cityServiceCrud = new GenericCrudService<>(crudCityRepo);
     }
 
     @GetMapping("/{id}")
@@ -58,6 +61,7 @@ public class BookController {
         Set<Genre> genres = GenreDto.fromDtoList(bookWrapper.getGenresDto());
         Set<Tag> tags = TagDto.fromDtoList(bookWrapper.getTagsDto());
         GeoLocation l = bookWrapper.getLocation();
+        b.setCity(cityServiceCrud.findById(bdto.getCityId()).get());
         Book bookResult = service.saveBookWithGenresTagsLocation(b, genres, tags, l);
         BookDto dtoResult = BookDto.fromEntity(bookResult);
         return ResponseEntity.created(URI.create("/api/books/" + bookResult.getId())).body(dtoResult);

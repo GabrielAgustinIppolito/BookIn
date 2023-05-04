@@ -16,7 +16,7 @@ public class UserDto {
    private String email;
    private String city;
    public static UserDto dtoFromEntity(User user){
-      return new UserDto(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail(), user.getCity());
+      return new UserDto(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail(), user.getCity().getName());
    }
 
 }

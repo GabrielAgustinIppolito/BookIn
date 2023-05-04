@@ -1,8 +1,11 @@
 package com.hufflepuff.generation.italy.BookIn.model.services.implementations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.CityRepository;
+import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.TokenRepository;
 import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.UserRepository;
+import com.hufflepuff.generation.italy.BookIn.model.entities.City;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Token;
 import com.hufflepuff.generation.italy.BookIn.model.entities.User;
 import com.hufflepuff.generation.italy.BookIn.model.enums.Role;
@@ -27,6 +30,7 @@ import java.util.List;
 public class AuthenticationService {
   private final UserRepository repository;
   private final TokenRepository tokenRepository;
+  private final CityRepository cityRepo;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
@@ -38,7 +42,7 @@ public class AuthenticationService {
         .email(request.getEmail())
         .password(passwordEncoder.encode(request.getPassword()))
         .role(Role.USER)
-        .city(request.getCity())
+        .city(cityRepo.findById(request.getCity_id()).get())
         .build();
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
