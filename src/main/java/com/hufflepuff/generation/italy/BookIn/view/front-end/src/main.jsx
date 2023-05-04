@@ -10,7 +10,7 @@ import Login, { action as loginAction } from './routes/login.jsx';
 import Registration, { action as registrationAction } from './routes/registration.jsx';
 import RegisterNewBook, { action as registrationBookAction, loader as registrationBookLoader } from './routes/registerNewBook.jsx';
 import Profile, { loader as profileLoader } from './routes/profile.jsx';
-import OwnerProfile, {loader as ownerProfileLoader} from './routes/ownerProfile.jsx';
+import OwnerProfile, {loader as ownerProfileLoader} from './routes/publicProfile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
       loader: profileLoader,
     },
     {
-      path: "/owner-profile/:id",
+      path: "/public-profile/:id",
       element: <OwnerProfile />,
       loader: ownerProfileLoader,
     }

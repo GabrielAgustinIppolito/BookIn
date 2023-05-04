@@ -52,22 +52,24 @@ export default function Book() {
         
         
           <MapContainer
-            center={[38.1102, 13.3752]}
-            zoom={12}
+          
+            center={[book.longitude, book.latitude]}
+            zoom={13}
             scrollWheelZoom={false}
             style={{height:'400px',}}>
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                {console.log(book.latitude)}
               <Marker
-                position={[book.latitude, book.longitude]}
+                position={[book.longitude, book.latitude]}
                 >
                   {console.log(book)}
                   <Popup>
                     {book.title}, {book.author}
                     {console.log(owner.id)}
-                    <NavLink to={`/owner-profile/${owner.id}`} >Contattami!</NavLink>
+                    <NavLink to={`/public-profile/${owner.id}`} >Contattami!</NavLink>
                   </Popup>
               </Marker>
           </MapContainer>

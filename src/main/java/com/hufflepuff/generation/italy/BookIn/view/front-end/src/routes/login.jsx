@@ -1,4 +1,4 @@
-import { Form, redirect } from "react-router-dom";
+import { Form, NavLink, redirect } from "react-router-dom";
 import { getAuthentication } from "../apis/book-api";
 
 export  async function action({ request }) {
@@ -36,6 +36,8 @@ export default function Login() {
                 </div>
                 <div className="form-control mt-6">
                 <button className="btn btn-primary">Login</button>
+                <NavLink to="/login/registration" 
+                         className="btn btn-secindary">Registrati</NavLink>
                 </div>
 
             </Form>

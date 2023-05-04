@@ -30,7 +30,7 @@ export default function PublicProfile() {
                     {/* ${ownerSelectedBook} */}
 {/* ${userSelectedBook.value != 0 && "http://localhost:3571/book/" + userSelectedBook.value} */}
                     <div>Scambia!
-                        <p>Email: <a href={`mailto:?subject=Ti va di scambiare\?&body=Salve, sono ${user.firstname}, ti va di scambiare dei libri\? `} >{owner.email}</a></p>
+                        <p>Email: <a href={`mailto:${user.email}?subject=Scambiamo un libro!&body=Salve, sono ${user.firstname}, ti va di scambiare dei libri? `} >{owner.email}</a></p>
                     </div>
                     
                    
