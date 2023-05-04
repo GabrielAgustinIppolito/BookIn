@@ -117,5 +117,23 @@ CREATE TABLE token (
    CONSTRAINT FK_book_user FOREIGN KEY(_user_id)
                REFERENCES _user(_user_id)
 );
+
+INSERT INTO tag (tag_id, name)
+    VALUES (0001, 'Surreale'), (0002, 'Provocatorio'), (0003, 'Distopico'), (0004, 'Suspense'), (0005, 'Fantapolitico'),
+    (0006, 'Critica Sociale'), (0007, 'Satirico'), (0008, 'LGBTQ+'), (0009, 'Erotico'), (0010, 'Serie/Collana'),
+    (0011, 'Memorie'), (0012, 'Viaggi'), (0013, 'Post-Apocalittico'), (0014, 'Mito/Leggenda'), (0015, 'Ispirazione'),
+    (0016, 'Grimdark'), (0017, 'Cyberpunk'), (0018, 'Pirati'), (0019, 'Western'), (0020, 'Spazio'), (0021, 'Supereroi'),
+    (0022, 'Tragicomico'), (0023, 'Black Humour'), (0024, 'Parodia'), (0025, 'Isekai'), (0026, 'Franco-belga'),
+    (0027, 'Light Novel'), (0028, 'Lovecraftiano'), (0029, 'Ricette'), (0030, 'Statistiche'), (0031, 'True crime'),
+    (0032, 'Angst'), (0033, 'Libro di testo scolastico'), (0034, 'Protagonista femminile'), (0035, 'Universi paralleli'),
+    (0036, 'Epistolare'), (0037, 'Guerra'), (0038, 'Classico della letteratura'), (0039, 'Best seller'), (0040, 'Libro sacro')
+
+INSERT INTO genre (genre_id, name)
+    VALUES (001, 'Saggio'), (002, 'Manuale'), (003, 'Reportage'), (004, 'Romanzo'), (005, 'Fantasy'), (006, 'Horror'),
+    (007, 'Thriller'), (008, 'Giallo'), (009, 'Fantascienza'), (010, 'Drammatico'), (011, 'Umoristico'), (012, 'Rosa'),
+    (013, 'Storico'), (014, 'Avventura'), (015, 'Biografia'), (016, 'Folklore'), (017, 'Poesia'), (018, 'Raccolta Fotografica'),
+    (019, 'Graphic Novel'), (020, 'Opera teatrale')
+
+
 CREATE SEQUENCE token_sequence
 OWNED BY token.token_id;
