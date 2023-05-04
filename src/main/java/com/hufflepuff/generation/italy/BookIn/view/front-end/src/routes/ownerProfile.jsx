@@ -1,16 +1,17 @@
 import { Link, useLoaderData } from "react-router-dom";
-import { getBookOwner, getOwnerBooks } from "../apis/book-api"
+import { getBookOwner, getOwnerBooks, getUser } from "../apis/book-api"
 import PublicBookCard from "../components/PublicBookCard";
 
 export const loader = async({params}) => {
    console.log(params);
+   const user = await getUser();
    const owner = await getBookOwner(params.id);
    const books = await getOwnerBooks(params.id);
-    return { owner, books };
+    return { owner, books, user };
 }
 
-export default function OwnerProfile() {
-    const {owner, books } = useLoaderData();
+export default function PublicProfile() {
+    const {owner, books, user } = useLoaderData();
     const cardsToShow = books.map(b =><PublicBookCard key={b.id} book={b} ></PublicBookCard>);
     return (
         <>
@@ -25,11 +26,17 @@ export default function OwnerProfile() {
                 </div>
                 <div className="profile grid place-items-center">
                     <p>Città: {owner.city || "città non specificata"}</p>
-                    <p>Email: <a href={`mailto: ${owner.email}`}>{owner.email}</a></p>
                     <p>Libri condivisi: {books.length}</p>
+                    {/* ${ownerSelectedBook} */}
+{/* ${userSelectedBook.value != 0 && "http://localhost:3571/book/" + userSelectedBook.value} */}
+                    <div>Scambia!
+                        <p>Email: <a href={`mailto:?subject=Ti va di scambiare\?&body=Salve, sono ${user.firstname}, ti va di scambiare dei libri\? `} >{owner.email}</a></p>
+                    </div>
+                    
+                   
                 </div>
                 <div className="profile grid place-items-center">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor quam illum eveniet repellendus nesciunt minus suscipit consequatur corporis ab,
+                Bio: -Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor quam illum eveniet repellendus nesciunt minus suscipit consequatur corporis ab,
                     incidunt porro commodi iure voluptate hic rem tempore? Voluptatibus, eius nihil.
                 </div>
             </div>

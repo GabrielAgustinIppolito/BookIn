@@ -27,7 +27,7 @@ export default function Profile() {
                     <p>Libri condivisi: {books.length}</p>
                 </div>
                 <div className="profile grid place-items-center">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor quam illum eveniet repellendus nesciunt minus suscipit consequatur corporis ab,
+                    Bio: -Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor quam illum eveniet repellendus nesciunt minus suscipit consequatur corporis ab,
                     incidunt porro commodi iure voluptate hic rem tempore? Voluptatibus, eius nihil.
                 </div>
             </div>

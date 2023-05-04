@@ -38,14 +38,18 @@ export default function Book() {
         </p>
         {book.language && <p>Lingua: {book.language}</p>}
         {book.review && <p>Recensione: {book.review}</p>}
-        <p>
-          Disponibile alla spedizione:
-          {book.shippable ? 
-            <i>🟢👍🟢</i>
-           : 
-            <i>🔴👎🔴</i>
+       
+          {book.available ? `Disponibile alla spedizione:
+            ${book.shippable ? 
+              "<p>🟢👍🟢</p>"
+             : 
+             "<p>🔴👎🔴</p>"
+            }` 
+            :
+           <h2>"Non è più disponibile allo scambio."</h2>
           }
-        </p>
+          
+        
         
           <MapContainer
             center={[38.1102, 13.3752]}
