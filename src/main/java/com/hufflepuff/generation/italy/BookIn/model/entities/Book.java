@@ -18,6 +18,7 @@ public class Book {
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE)
    @SequenceGenerator(name = "book_generator", allocationSize = 1)
+   @Column(name = "book_id")
    private long id;
    private String title;
    private String ISBN;
@@ -30,7 +31,7 @@ public class Book {
    private boolean isAvailable;
 
    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = true)
+   @JoinColumn(name = "location_id", referencedColumnName = "geolocation_id", nullable = true)
    private GeoLocation location;
 
    @ManyToMany(cascade = CascadeType.MERGE)
@@ -50,7 +51,7 @@ public class Book {
    private Set<Tag> tags;
 
    @ManyToOne
-   @JoinColumn(name = "user_id", nullable = false)
+   @JoinColumn(name = "_user_id", nullable = false)
    private User owner;
 
    public Book(long id, String title, String ISBN, LocalDate year, String publisher, String language, String author,

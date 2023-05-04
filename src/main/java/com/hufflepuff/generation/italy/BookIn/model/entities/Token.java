@@ -14,6 +14,7 @@ public class Token {
 
   @Id
   @GeneratedValue
+  @Column(name = "token_id")
   public Integer id;
 
   @Column(unique = true)
@@ -27,6 +28,6 @@ public class Token {
   public boolean expired;
 
   @ManyToOne(fetch =  FetchType.LAZY)
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "_user_id")
   public User user;
 }

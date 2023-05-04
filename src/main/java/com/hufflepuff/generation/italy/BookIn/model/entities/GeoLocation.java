@@ -13,6 +13,7 @@ public class GeoLocation {
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE)
    @SequenceGenerator(name = "geolocation_generator", allocationSize = 1)
+   @Column(name = "geolocation_id")
    private long id;
    private String city;
    private double latitude;

@@ -15,6 +15,7 @@ public class Genre {
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE)
    @SequenceGenerator(name = "genre_generator", allocationSize = 1)
+   @Column(name = "genre_id")
    private long id;
    private String name;
    @ManyToMany(mappedBy = "genres", fetch = FetchType.EAGER)
