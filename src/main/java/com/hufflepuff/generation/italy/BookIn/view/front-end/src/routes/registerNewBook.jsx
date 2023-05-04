@@ -1,9 +1,7 @@
 import { Form, redirect, useLoaderData } from "react-router-dom";
 import { getGenres, getTags, saveBook } from "../apis/book-api";
-import TagSelection from "../components/TagSelection";
+import Selection from "../components/Selection";
 import { useEffect, useState } from "react";
-import Select from 'react-select'
-import makeAnimated from 'react-select/animated';
 
 let globalTags=[];
 let globalGenres=[];
@@ -41,32 +39,32 @@ export const action = async ({ request }) => {
  export async function loader() {
   const tags = await getTags();
   const genres = await getGenres();
-  const simplifiedGenres = await genres.map((genre) =>(
+  /* const simplifiedGenres = await genres.map((genre) =>(
     { label: `${genre.name}`, value: genre.id }
- ));
-  return  {tags, genres, simplifiedGenres} ;
+ )); */
+  return  {tags, genres} ;
 }
 
  export default function RegisterNewBook() {
-  const {tags, genres, simplifiedGenres} = useLoaderData();
+  const {tags, genres} = useLoaderData();
   const [tagList, setTag] = useState([]);
   const [genreList, setGenre] = useState([]);
-  const animatedComponents = makeAnimated();
+  //const animatedComponents = makeAnimated();
   
   useEffect(()=> {globalTags = [...tagList]}, [tagList]);
   useEffect(()=> {globalGenres = [...genreList]}, [genreList]);
 
    const handleChangingTags = (e) => {
      let selectedTag = [...tagList];
-     let toDeleteId;
+     let toDeleteIndex;
      if (e.target.tagName == "INPUT") {
        if (!e.target.checked) {
          for (let i = 0; i < selectedTag.length; i++) {
            if (e.target.value === selectedTag[i].name) {
-             toDeleteId = i;
+             toDeleteIndex = i;
            }
          }
-         selectedTag = selectedTag.slice(0, toDeleteId).concat(selectedTag.slice(++toDeleteId));
+         selectedTag = selectedTag.slice(0, toDeleteIndex).concat(selectedTag.slice(++toDeleteIndex));
        } else {
          for (let tag of tags) {
            if (e.target.value == tag.name) {
@@ -79,66 +77,114 @@ export const action = async ({ request }) => {
    }
 
    const handleChangingGenres = (e) => {
-    let arrayDiSupporto = [];
-    let idOfGenresSelcted = e.map((genre) => genre.value);
-    for(let i = 0; i < genres.length; i++){
-      if(idOfGenresSelcted.includes(genres[i].id)){
-        arrayDiSupporto = [...arrayDiSupporto, genres[i]];
+    let genresSelected = [...genreList];
+    let toDeleteIndex;
+    if (e.target.tagName == "INPUT") {
+      if (!e.target.checked) {
+        for (let i = 0; i < genresSelected.length; i++) {
+          if (e.target.value === genresSelected[i].name) {
+            toDeleteIndex = i;
+          }
+      }
+      genresSelected = genresSelected.slice(0, toDeleteIndex).concat(genresSelected.slice(++toDeleteIndex));
+    } else {
+      for (let genre of genres) {
+        if (e.target.value == genre.name) {
+          genresSelected.push(genre);
+        }
       }
     }
-    setGenre(arrayDiSupporto);
-    // console.log(genreList);
-    // for(let i = 0; i < e.length; i++){
-    //   console.log(e[i].value);
-    // }
-   } 
+    setGenre(genresSelected);
+   }
+  } 
 
   return(
       <>
-      <h1>Nuovo libro</h1>
-      <Form method="post">
-     
-        <label htmlFor="title">Titolo</label>
-        <input name="title" />
+      <Form method="post" className="grid grid-cols-2 gap-5 m-auto mt-10 mb-10 p-5 bg-base-200 rounded-xl max-w-screen-lg shadow-2xl">
+        <div className="flex flex-col items-center justify-center gap-5">
+        <h1 className="my-titles text-4xl m-auto mt-5">Nuovo libro</h1>
 
-        <label htmlFor="isbn">ISBN</label>
-        <input name="isbn" maxLength="13"/>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="text-lg">Titolo</span>
+          </label>
+          <input name="title" type="text" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
+        </div>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="text-lg">ISBN</span>
+          </label>
+          <input name="isbn" maxLength="13" type="text" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
+        </div>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="text-lg">Anno di pubblicazione</span>
+          </label>
+          <input name="year" type="date" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
+        </div>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="text-lg">Editore</span>
+          </label>
+          <input name="publisher" type="text" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
+        </div>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="text-lg">Lingua</span>
+          </label>
+          <input name="language" type="text" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
+        </div>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="text-lg">Autore</span>
+          </label>
+          <input name="author" type="text" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
+        </div>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="text-lg">Recensione</span>
+          </label>
+          <input name="review" type="text" className="textarea textarea-bordered h-24 shadow-inner w-full max-w-xs" />
+        </div>
+        <div className="form-control">
+          <label htmlFor="isShippable" className="cursor-pointer label">
+            <span className="label-text">Disponibile alla spedizione</span>
+            <input type="checkbox" name="isShippable" className="checkbox checkbox-accent" />
+          </label>
+        </div>
+        <button type="submit" className="btn btn-accent">Registra</button>
+        </div>
+        <div className="flex flex-col items-center justify-center gap-5">
 
-        <label htmlFor="year">Anno di pubblicazione</label>
-        <input type="date" name="year" />
+        <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+          <div className="collapse-title text-xl font-medium">
+            Aggiungi dei generi
+          </div>
+          <div className="collapse-content">
+            <Selection thingsToShow = {genres} onChange={handleChangingGenres}/>
+          </div>
+        </div>
+        <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+          <div className="collapse-title text-xl font-medium">
+            Aggiungi dei tag
+          </div>
+          <div className="collapse-content">
+            <Selection thingsToShow = {tags} onChange={handleChangingTags}/>
+          </div>
+        </div>
+        {
+          /*
+          Qua ci va' la mappa
+          <label htmlFor="longitude">Longitudine</label>
+          <input name="longitude" />
+          <label htmlFor="latitude">Latitudine</label>
+          <input name="latitude" />
+          <label htmlFor="city">Città</label>
+          <input name="city" />
+          */
+        }
 
-        <label htmlFor="publisher">Editore</label>
-        <input name="publisher" />
-
-        <label htmlFor="language">Lingua</label>
-        <input name="language" />
-
-        <label htmlFor="author">Autore</label>
-        <input name="author" />
-
-        <label htmlFor="review">Recensione</label>
-        <input name="review" />
-
-        <label htmlFor="isShippable">Disponibile alla spedizione </label>
-        <input type="checkbox" name="isShippable" />
-        
-        <Select options={simplifiedGenres}
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti
-                onChange={handleChangingGenres}
-                ></Select>
-
-        <TagSelection tagsToShow = {tags} onChange={handleChangingTags}/>
-        <label htmlFor="longitude">Longitudine</label>
-        <input name="longitude" />
-        <label htmlFor="latitude">Latitudine</label>
-        <input name="latitude" />
-        <label htmlFor="city">Città</label>
-        <input name="city" />
-
-
-        <button type="submit" >Registra</button>
+        </div>
       </Form>
     </>
     );

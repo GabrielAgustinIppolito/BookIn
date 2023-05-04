@@ -126,13 +126,13 @@ INSERT INTO tag (tag_id, name)
     (0022, 'Tragicomico'), (0023, 'Black Humour'), (0024, 'Parodia'), (0025, 'Isekai'), (0026, 'Franco-belga'),
     (0027, 'Light Novel'), (0028, 'Lovecraftiano'), (0029, 'Ricette'), (0030, 'Statistiche'), (0031, 'True crime'),
     (0032, 'Angst'), (0033, 'Libro di testo scolastico'), (0034, 'Protagonista femminile'), (0035, 'Universi paralleli'),
-    (0036, 'Epistolare'), (0037, 'Guerra'), (0038, 'Classico della letteratura'), (0039, 'Best seller'), (0040, 'Libro sacro')
+    (0036, 'Epistolare'), (0037, 'Guerra'), (0038, 'Classico della letteratura'), (0039, 'Best seller'), (0040, 'Libro sacro');
 
 INSERT INTO genre (genre_id, name)
     VALUES (001, 'Saggio'), (002, 'Manuale'), (003, 'Reportage'), (004, 'Romanzo'), (005, 'Fantasy'), (006, 'Horror'),
     (007, 'Thriller'), (008, 'Giallo'), (009, 'Fantascienza'), (010, 'Drammatico'), (011, 'Umoristico'), (012, 'Rosa'),
     (013, 'Storico'), (014, 'Avventura'), (015, 'Biografia'), (016, 'Folklore'), (017, 'Poesia'), (018, 'Raccolta Fotografica'),
-    (019, 'Graphic Novel'), (020, 'Opera teatrale')
+    (019, 'Graphic Novel'), (020, 'Opera teatrale');
 
 
 CREATE SEQUENCE token_sequence
