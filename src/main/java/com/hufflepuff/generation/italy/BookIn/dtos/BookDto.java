@@ -23,9 +23,10 @@ public class BookDto {
     private boolean isShippable;
     private String review;
     private boolean isAvailable;
+    private long cityId;
 
     public BookDto(long id, String title, String isbn, String year, String publisher, String language, String author,
-                   boolean isShippable, String review, boolean isAvailable) {
+                   boolean isShippable, String review, boolean isAvailable, long cityId) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
@@ -36,18 +37,19 @@ public class BookDto {
         this.isShippable = isShippable;
         this.review = review;
         this.isAvailable = isAvailable;
+        this.cityId = cityId;
     }
 
     public static BookDto fromEntity(Book b){
         return new BookDto(b.getId(), b.getTitle(), b.getISBN() != null ? b.getISBN() : "",
                 b.getYear() != null ? b.getYear().toString() : "", b.getPublisher() != null ? b.getPublisher() : "",
                 b.getLanguage(), b.getAuthor(), b.isShippable(), b.getReview() != null ? b.getReview() : "",
-                b.isAvailable());
+                b.isAvailable(), b.getCity().getId());
     }
 
     public Book toEntity(){
         return new Book(id, title, isbn, year == null || year.length() == 0 ? null : LocalDate.parse(year), publisher,
-                language, author, isShippable, review, isAvailable, null, null, null, null);
+                language, author, isShippable, review, isAvailable, null, null, null, null, null);
     }
 
     public static List<BookDto> fromEntityList(List<Book> books) {
@@ -137,4 +139,11 @@ public class BookDto {
         isAvailable = available;
     }
 
+    public long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(long cityId) {
+        this.cityId = cityId;
+    }
 }

@@ -31,8 +31,12 @@ public class Book {
    private boolean isAvailable;
 
    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-   @JoinColumn(name = "location_id", referencedColumnName = "geolocation_id", nullable = true)
+   @JoinColumn(name = "location_id")
    private GeoLocation location;
+
+   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+   @JoinColumn(name = "city_id", referencedColumnName = "city_id", nullable = true)
+   private City city;
 
    @ManyToMany(cascade = CascadeType.MERGE)
    @JoinTable(

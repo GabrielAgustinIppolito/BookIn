@@ -30,7 +30,8 @@ public class User implements UserDetails {
    private String lastname;
    private String email;
    private String password;
-   private String city; //per la geolocalizzazione
+
+   private City city;
 
    @Enumerated(EnumType.STRING)
    private Role role;

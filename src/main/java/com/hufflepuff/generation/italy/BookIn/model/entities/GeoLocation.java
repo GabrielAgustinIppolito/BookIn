@@ -15,9 +15,10 @@ public class GeoLocation {
    @SequenceGenerator(name = "geolocation_generator", allocationSize = 1)
    @Column(name = "geolocation_id")
    private long id;
-   private String city;
    private double latitude;
    private double longitude;
-   @OneToOne(mappedBy = "location")
-   private Book book;
+   //@OneToOne(mappedBy = "location")
+   //private Book book;
+   //@OneToOne(mappedBy = "center")
+   //private City city;
 }
