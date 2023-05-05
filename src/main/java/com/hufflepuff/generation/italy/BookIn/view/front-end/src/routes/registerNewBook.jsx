@@ -1,6 +1,7 @@
 import { Form, redirect, useLoaderData } from "react-router-dom";
 import { getGenres, getTags, getUserCityPosix, saveBook } from "../apis/book-api";
 import Selection from "../components/Selection";
+//import DraggableMarker from "../components/DraggableMarker";
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "../../node_modules/leaflet/dist/leaflet.css";
@@ -55,7 +56,7 @@ export const action = async ({ request }) => {
   
   useEffect(()=> {globalTags = [...tagList]}, [tagList]);
   useEffect(()=> {globalGenres = [...genreList]}, [genreList]);
-
+  
    const handleChangingTags = (e) => {
      let selectedTag = [...tagList];
      let toDeleteIndex;
@@ -99,6 +100,18 @@ export const action = async ({ request }) => {
     setGenre(genresSelected);
    }
   } 
+
+  const collapser = (e) => {
+    let el = e.target.parentElement;
+    console.log(el);
+            if (el.classList.contains("collapse-close")) {
+              el.classList.remove("collapse-close");
+              el.classList.add("collapse-open");
+            } else if (el.classList.contains("collapse-open")) {
+              el.classList.remove("collapse-open");
+              el.classList.add("collapse-close");
+            }
+  }
 
   return(
       <>
@@ -157,6 +170,7 @@ export const action = async ({ request }) => {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
+              {/*<DraggableMarker />*/}
         </MapContainer>
         <div className="form-control bg-primary rounded-xl p-3">
           <label htmlFor="isShippable" className="cursor-pointer label">
@@ -168,22 +182,23 @@ export const action = async ({ request }) => {
         </div>
         <div className="flex flex-col items-center justify-center gap-5">
 
-        <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
-          <div className="collapse-title text-xl font-medium">
+        <div tabIndex={0} id="genresCollapse" className="collapse collapse-close collapse-arrow border border-base-300 bg-base-100 rounded-box">
+          <div onClick={collapser} className="collapse-title text-xl font-medium">
             Aggiungi dei generi
           </div>
           <div className="collapse-content">
             <Selection thingsToShow = {genres} onChange={handleChangingGenres}/>
           </div>
         </div>
-        <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
-          <div className="collapse-title text-xl font-medium">
+        <div tabIndex={0} id="tagsCollapse" className="collapse collapse-close collapse-arrow border border-base-300 bg-base-100 rounded-box">
+          <div onClick={collapser} className="collapse-title text-xl font-medium">
             Aggiungi dei tag
           </div>
           <div className="collapse-content">
             <Selection thingsToShow = {tags} onChange={handleChangingTags}/>
           </div>
         </div>
+        
         {console.log(userCityPosix)
           /*
           Qua ci va' la mappa
