@@ -1,10 +1,10 @@
 import { Form, redirect, useLoaderData } from "react-router-dom";
 import { getGenres, getTags, getUserCityPosix, saveBook } from "../apis/book-api";
 import Selection from "../components/Selection";
-//import DraggableMarker from "../components/DraggableMarker";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "../../node_modules/leaflet/dist/leaflet.css";
+import MapPositioner from "../components/MapPositioner";
 
 let globalTags=[];
 let globalGenres=[];
@@ -53,10 +53,27 @@ export const action = async ({ request }) => {
   const {tags, genres, userCityPosix} = useLoaderData();
   const [tagList, setTag] = useState([]);
   const [genreList, setGenre] = useState([]);
+  const [map, setMap] = useState(null);
   
   useEffect(()=> {globalTags = [...tagList]}, [tagList]);
   useEffect(()=> {globalGenres = [...genreList]}, [genreList]);
+  useEffect(() => console.log(map), [map]);
   
+  const displayMap = useMemo(() => (
+    <MapContainer
+      center={[userCityPosix.longitude, userCityPosix.latitude]}
+      zoom={13}
+      scrollWheelZoom={false}
+      ref={setMap}
+      style={{height:'400px', width: '90%', overflow: 'scroll'}}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+        </MapContainer>
+        
+  ), [userCityPosix]);
+
    const handleChangingTags = (e) => {
      let selectedTag = [...tagList];
      let toDeleteIndex;
@@ -103,14 +120,13 @@ export const action = async ({ request }) => {
 
   const collapser = (e) => {
     let el = e.target.parentElement;
-    console.log(el);
-            if (el.classList.contains("collapse-close")) {
-              el.classList.remove("collapse-close");
-              el.classList.add("collapse-open");
-            } else if (el.classList.contains("collapse-open")) {
-              el.classList.remove("collapse-open");
-              el.classList.add("collapse-close");
-            }
+    if (el.classList.contains("collapse-close")) {
+      el.classList.remove("collapse-close");
+      el.classList.add("collapse-open");
+    } else if (el.classList.contains("collapse-open")) {
+      el.classList.remove("collapse-open");
+      el.classList.add("collapse-close");
+    }
   }
 
   return(
@@ -161,17 +177,8 @@ export const action = async ({ request }) => {
           </label>
           <input name="review" type="text" className="textarea textarea-bordered h-24 shadow-inner w-full max-w-xs" />
         </div>
-        <MapContainer
-          center={[userCityPosix.longitude, userCityPosix.latitude]}
-          zoom={13}
-          scrollWheelZoom={false}
-          style={{height:'300px', width: '90%', overflow: 'hidden'}}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              {/*<DraggableMarker />*/}
-        </MapContainer>
+        {map ? <MapPositioner map={map} /> : null}
+          {displayMap}
         <div className="form-control bg-primary rounded-xl p-3">
           <label htmlFor="isShippable" className="cursor-pointer label">
             <span className="label-text text-xl mr-3 text-accent">Disponibile alla spedizione</span>
