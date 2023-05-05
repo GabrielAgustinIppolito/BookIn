@@ -26,14 +26,16 @@ OWNED BY city.city_id;
 -- create USER table --
 CREATE TABLE _user (
         _user_id INTEGER NOT NULL,
-        city VARCHAR(255),
+        city_id BIGINT NOT NULL,
         email VARCHAR(255) UNIQUE,
         firstname VARCHAR(255),
         lastname VARCHAR(255),
         password VARCHAR(255),
         role VARCHAR(255),
 
-        CONSTRAINT PK_user PRIMARY KEY (_user_id)
+        CONSTRAINT PK_user PRIMARY KEY (_user_id),
+        CONSTRAINT FK_user_city FOREIGN KEY(city_id)
+            REFERENCES city(city_id)
     );
 CREATE SEQUENCE _user_sequence
 OWNED BY _user._user_id;
@@ -53,7 +55,7 @@ CREATE TABLE book (
         year DATE,
         city_id BIGINT,
         location_id BIGINT,
-        _user_id INTEGER NOT NULL,
+        _user_id BIGINT NOT NULL,
 
         CONSTRAINT PK_book PRIMARY KEY (book_id),
         CONSTRAINT FK_book_user FOREIGN KEY(_user_id)
@@ -116,16 +118,19 @@ CREATE TABLE book_genre(
 
 -- create TOKEN table --
 CREATE TABLE token (
-   token_id INTEGER NOT NULL,
-   expired boolean NOT NULL,
-   revoked boolean NOT NULL,
+   token_id BIGINT NOT NULL,
+   expired BOOLEAN NOT NULL,
+   revoked BOOLEAN NOT NULL,
    token VARCHAR(255),
    token_type VARCHAR(255),
-   _user_id INTEGER,
+   _user_id BIGINT,
    CONSTRAINT PK_token PRIMARY KEY (token_id),
    CONSTRAINT FK_book_user FOREIGN KEY(_user_id)
                REFERENCES _user(_user_id)
 );
+
+CREATE SEQUENCE token_sequence
+OWNED BY token.token_id;
 
 INSERT INTO tag (tag_id, name)
     VALUES (0001, 'Surreale'), (0002, 'Provocatorio'), (0003, 'Distopico'), (0004, 'Suspense'), (0005, 'Fantapolitico'),
@@ -143,6 +148,22 @@ INSERT INTO genre (genre_id, name)
     (013, 'Storico'), (014, 'Avventura'), (015, 'Biografia'), (016, 'Folklore'), (017, 'Poesia'), (018, 'Raccolta Fotografica'),
     (019, 'Graphic Novel'), (020, 'Opera teatrale');
 
+INSERT INTO public.geolocation(geolocation_id, longitude, latitude)
+	VALUES (001, 37.3110710, 13.5768652), (002, 37.3572607, 13.9237678), (003, 38.1156369,13.3612966),
+	      (004, 37.5028120, 15.0883146), (005, 42.3506978, 	13.3999338), (006, 40.6372425, 15.8022214),
+       (007, 38.9099992, 16.5876779), (008, 40.8399968, 14.2528707), (009, 44.4944456, 11.3492311),
+       (010, 45.6536295, 13.7784072), (011, 41.8954656, 12.4823243), (012, 44.4070624, 8.9339889),
+       (013, 45.4636707, 9.1881263), (014, 43.6158281, 13.5189447), (015, 41.5600859, 14.6647992),
+       (016, 45.0706029, 7.6867102), (017, 41.1260529, 16.8692905), (018, 39.2149029, 9.1094988),
+       (019, 43.7687324, 11.2569013), (020, 46.0702531, 11.1216386), (021, 43.1107009, 12.3891720),
+       (022, 45.7356745, 7.3190697), (023, 45.4343363, 12.3387844);
 
-CREATE SEQUENCE token_sequence
-OWNED BY token.token_id;
+INSERT INTO public.city(city_id, name, geolocation_id)
+	VALUES (001, 'Agrigento', 001), (002, 'Delia', 002), (003, 'Palermo', 003),
+	       (004, 'Catania', 004), (005, 'L Aquila', 005), (006, 'Potenza', 006),
+	       (007, 'Catanzaro', 007), (008, 'Napoli', 008), (009, 'Bologna', 009),
+	       (010, 'Trieste', 010), (011, 'Roma', 011), (012, 'Genova', 012),
+	       (013, 'Milano', 013), (014, 'Ancona', 014), (015, 'Campobasso', 015),
+	       (016, 'Torino', 016), (017, 'Bari', 017), (018, 'Cagliari', 018),
+	       (019, 'Firenze', 019), (020, 'Trento', 020), (021, 'Perugia', 021),
+	       (022, 'Aosta', 022), (023, 'Venezia', 023);

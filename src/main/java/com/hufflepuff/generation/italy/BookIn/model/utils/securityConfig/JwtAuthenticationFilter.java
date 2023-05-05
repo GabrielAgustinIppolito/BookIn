@@ -32,7 +32,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       @NonNull HttpServletResponse response,
       @NonNull FilterChain filterChain
   ) throws ServletException, IOException {
-    if (request.getServletPath().contains("/api/v1/auth")) { // nella pagina di login non deve esserci autenticazione
+    if (request.getServletPath().contains("/api/auth") ||
+          request.getServletPath().contains("/all-cities")) { // nella pagina di login non deve esserci autenticazione
       filterChain.doFilter(request, response); // quindi si comporta normalmente e non la richiede almeno per quella pagina
       return;
     }

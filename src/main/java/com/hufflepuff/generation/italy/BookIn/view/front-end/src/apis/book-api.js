@@ -19,7 +19,7 @@ export const registration = async(firstname, lastname, email, password, city) =>
     "lastname": `${lastname}`,
     "email": `${email}`,
     "password": `${password}`,
-    "city": `${city}`
+    "city_id": `${city_id}`
   });
   localStorage.setItem("token", response.data.access_token);
   localStorage.setItem("refresh_token", response.data.access_token);
@@ -87,6 +87,11 @@ export const getBook = async(id) => {
     });
     return response.data;
   }
+  export const getCities = async() => {
+    const response = await axios.get(`${rootUrl}/public/all-cities`);
+    return response.data;
+  }
+  
   
   export const saveBook = async(bookWrapper) => {
     const response = await axios.post(`${rootUrl}/books/register-new-book`,

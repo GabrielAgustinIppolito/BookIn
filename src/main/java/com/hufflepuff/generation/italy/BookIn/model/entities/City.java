@@ -22,9 +22,6 @@ public class City {
     private long id;
     private String name;
 
-//    @OneToMany(mappedBy = "city", cascade = CascadeType.DETACH)
-//    private List<GeoLocation> geoLocations;
-
     @OneToMany(mappedBy = "city", cascade = CascadeType.DETACH)
     private List<User> users;
 
