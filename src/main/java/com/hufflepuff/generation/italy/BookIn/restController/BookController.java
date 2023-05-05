@@ -1,10 +1,7 @@
 package com.hufflepuff.generation.italy.BookIn.restController;
 
 import com.hufflepuff.generation.italy.BookIn.dtos.*;
-import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.CityRepository;
-import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenericRepository;
-import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.GenreRepository;
-import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.TagRepository;
+import com.hufflepuff.generation.italy.BookIn.model.data.abstractions.*;
 import com.hufflepuff.generation.italy.BookIn.model.entities.*;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractBookService;
 import com.hufflepuff.generation.italy.BookIn.model.services.abstractions.AbstractUserService;
@@ -33,10 +30,11 @@ public class BookController {
     private GenericCrudService<Tag> tagServiceCRUD;
     private GenericCrudService<Genre> genreServiceCrud;
     private GenericCrudService<City> cityServiceCrud;
+    private GenericCrudService<GeoLocation> locationServiceCrud;
 
     @Autowired
     public BookController(AbstractBookService service, AbstractUserService userService, AuthenticationService authService, GenericRepository<Book> crudRepoBook,
-                          TagRepository crudRepoTag, GenreRepository crudGenreRepo, CityRepository crudCityRepo){
+                          TagRepository crudRepoTag, GenreRepository crudGenreRepo, CityRepository crudCityRepo, GeoLocationRepository crudGeoLocationRepo){
         this.service = service;
         this.userService = userService;
         this.authService = authService;
@@ -44,6 +42,7 @@ public class BookController {
         this.tagServiceCRUD = new GenericCrudService<>(crudRepoTag);
         this.genreServiceCrud = new GenericCrudService<>(crudGenreRepo);
         this.cityServiceCrud = new GenericCrudService<>(crudCityRepo);
+        this.locationServiceCrud = new GenericCrudService<>(crudGeoLocationRepo);
     }
 
     @GetMapping("/{id}")
@@ -211,11 +210,22 @@ public class BookController {
         return oU.isPresent() ? ResponseEntity.ok().body(UserDto.dtoFromEntity(
                oU.get())) : ResponseEntity.notFound().build() ;
     }
+
     @GetMapping("/user/books/{id}")
     public ResponseEntity<List<BookDto>> getUserBooksFromUserId(@PathVariable long id){
         Optional<User> owner = userService.findUserById(id);
         if (owner.isPresent()) {
             return ResponseEntity.ok().body(BookDto.fromEntityList(owner.get().getBooks()));
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/user/city")
+    public ResponseEntity<GeoLocation> getUserCityPosix(@AuthenticationPrincipal User user){
+        Optional<User> currentUser = userService.findUserById(user.getId());
+        if (currentUser.isPresent()) {
+            GeoLocation cityPosix = locationServiceCrud.findById(currentUser.get().getCity().getCenter().getId()).get();
+            return ResponseEntity.ok().body(cityPosix);
         }
         return ResponseEntity.noContent().build();
     }

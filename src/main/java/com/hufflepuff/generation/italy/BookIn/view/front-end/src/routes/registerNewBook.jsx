@@ -1,7 +1,9 @@
 import { Form, redirect, useLoaderData } from "react-router-dom";
-import { getGenres, getTags, saveBook } from "../apis/book-api";
+import { getGenres, getTags, getUserCityPosix, saveBook } from "../apis/book-api";
 import Selection from "../components/Selection";
 import { useEffect, useState } from "react";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import "../../node_modules/leaflet/dist/leaflet.css";
 
 let globalTags=[];
 let globalGenres=[];
@@ -39,17 +41,17 @@ export const action = async ({ request }) => {
  export async function loader() {
   const tags = await getTags();
   const genres = await getGenres();
+  const userCityPosix = await getUserCityPosix();
   /* const simplifiedGenres = await genres.map((genre) =>(
     { label: `${genre.name}`, value: genre.id }
  )); */
-  return  {tags, genres} ;
+  return  {tags, genres, userCityPosix} ;
 }
 
  export default function RegisterNewBook() {
-  const {tags, genres} = useLoaderData();
+  const {tags, genres, userCityPosix} = useLoaderData();
   const [tagList, setTag] = useState([]);
   const [genreList, setGenre] = useState([]);
-  //const animatedComponents = makeAnimated();
   
   useEffect(()=> {globalTags = [...tagList]}, [tagList]);
   useEffect(()=> {globalGenres = [...genreList]}, [genreList]);
@@ -146,9 +148,19 @@ export const action = async ({ request }) => {
           </label>
           <input name="review" type="text" className="textarea textarea-bordered h-24 shadow-inner w-full max-w-xs" />
         </div>
-        <div className="form-control">
+        <MapContainer
+          center={[userCityPosix.longitude, userCityPosix.latitude]}
+          zoom={13}
+          scrollWheelZoom={false}
+          style={{height:'300px', width: '90%', overflow: 'hidden'}}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+        </MapContainer>
+        <div className="form-control bg-primary rounded-xl p-3">
           <label htmlFor="isShippable" className="cursor-pointer label">
-            <span className="label-text">Disponibile alla spedizione</span>
+            <span className="label-text text-xl mr-3 text-accent">Disponibile alla spedizione</span>
             <input type="checkbox" name="isShippable" className="checkbox checkbox-accent" />
           </label>
         </div>
@@ -172,7 +184,7 @@ export const action = async ({ request }) => {
             <Selection thingsToShow = {tags} onChange={handleChangingTags}/>
           </div>
         </div>
-        {
+        {console.log(userCityPosix)
           /*
           Qua ci va' la mappa
           <label htmlFor="longitude">Longitudine</label>

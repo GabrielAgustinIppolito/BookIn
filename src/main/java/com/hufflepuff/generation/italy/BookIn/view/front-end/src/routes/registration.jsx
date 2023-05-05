@@ -6,9 +6,8 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
   const userData = Object.fromEntries(formData);
   await registration(userData.firstname, userData.lastname,
-    userData.email, userData.password, userData.city_id);
+    userData.email, userData.password, userData.city);
   return redirect("/profile");
-  //return redirect("/profile"); // da costruire
 };
 
 export const loader = async () => {
@@ -18,8 +17,9 @@ export const loader = async () => {
 
 export default function Registration() {
   const { citiesOptions } = useLoaderData();
-  const optionedCities = citiesOptions.map(city =>  <option value={city.id}>{city.name}</option>);
-  const [cityId, setCityId] = useState
+  const optionedCities = citiesOptions.map(city => <option key={city.id} value={city.id}>{city.name}</option>);
+  //const [cityId, setCityId] = useState();
+
   return (
     <>
       <Form method="post" className="flex flex-col gap-y-5 justify-center items-center m-auto mt-10 mb-10 p-5 bg-base-200 rounded-xl max-w-screen-md min-w-min shadow-2xl">
@@ -37,19 +37,13 @@ export default function Registration() {
           <input name="lastname" type="text" placeholder="Scrivi qui" className="input input-bordered w-full max-w-xs" />
         </div>
 
-        <select className="select w-full max-w-xs">
+        <select name="city" className="select w-full max-w-xs">
           <option disabled selected>Scegli la tua città</option>
-          {optionedCities} /* fare una chiamata axios a tutte le city 
-          e sul on change del select impostare il value di uno stato con i valori della citta*/
+          {optionedCities} 
+          {/* fare una chiamata axios a tutte le city 
+          e sul on change del select impostare il value
+           di uno stato con i valori della citta*/}
         </select>
-
-        <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="text-lg">Città</span>
-          </label>
-          <input name="city" type="text" placeholder="Scrivi qui" className="input input-bordered w-full max-w-xs" />
-        </div>
-
 
         <div className="form-control w-full max-w-xs">
           <label className="label">
