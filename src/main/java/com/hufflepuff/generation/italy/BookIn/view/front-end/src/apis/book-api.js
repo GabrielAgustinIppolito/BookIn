@@ -124,5 +124,17 @@ export const getBooksByGenre = async(genreId) => {
   } catch (error) {
     return error.response.status;
   }
-
 }
+
+export const getBooksByTag = async(tagId) => {
+  try {
+    const response = await axios.get(`${rootUrl}/books/search-genre/${tagId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }});
+      return response.data;
+  } catch (error) {
+    return error.response.status;
+  }
+}
+

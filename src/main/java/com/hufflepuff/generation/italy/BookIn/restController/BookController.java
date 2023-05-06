@@ -99,8 +99,11 @@ public class BookController {
     }
 
     @GetMapping("/search-tag/{tag}")
-    public ResponseEntity<List<BookDto>> findByTagsAndIsAvailableTrue(@PathVariable Tag tag){
-        List<Book> books = (List) service.findByTagsAndIsAvailableTrue(tag);
+    public ResponseEntity<List<BookDto>> findByTagsAndIsAvailableTrue(@PathVariable long tagId,
+                                                                      @AuthenticationPrincipal User user){
+        Optional<User> currentUser = userService.findUserById(user.getId());
+        long cityId = currentUser.get().getCity().getId();
+        List<Book> books = (List) service.findByTagsAndCityIdAndIsAvailableTrue(tagId, cityId);
         if (!books.isEmpty()) {
             return ResponseEntity.ok().body(BookDto.fromEntityList(books));
         }

@@ -57,8 +57,8 @@ public class BookService implements AbstractBookService {
     }
 
     @Override
-    public Iterable<Book> findByTagsAndIsAvailableTrue(Tag tag) {
-        return bookRepo.findByTagsAndIsAvailableTrue(tag);
+    public Iterable<Book> findByTagsAndCityIdAndIsAvailableTrue(long tagId, long cityId) {
+        return bookRepo.findByTagsAndCityIdAndIsAvailableTrue(tagId, cityId);
     }
 
     @Override
