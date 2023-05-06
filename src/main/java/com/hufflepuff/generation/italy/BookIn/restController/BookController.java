@@ -188,17 +188,6 @@ public class BookController {
             return ResponseEntity.noContent().build();
     }
 
-//    @GetMapping("/by-genre")
-//    public ResponseEntity<List<BookDto>> findByLanguageAndIsAvailableTrue(@PathVariable String language){
-//        List<Book> books = (List) service.findByLanguageAndIsAvailableTrue(language);
-//        if (!books.isEmpty()) {
-//            return ResponseEntity.ok().body(BookDto.fromEntityList(books));
-//        }
-//        return ResponseEntity.notFound().build();
-//    }
-
-
-
     @GetMapping("/all-tags")
     public ResponseEntity<List<TagDto>> getAllTags(){
         List<TagDto> result = TagDto.fromEntityList(tagServiceCRUD.findAll());
@@ -208,6 +197,17 @@ public class BookController {
     public ResponseEntity<List<GenreDto>> getAllGenres(){
         List<GenreDto> result = GenreDto.fromEntityList(genreServiceCrud.findAll());
         return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping("/all-books-from-user-city")
+    public ResponseEntity<List<CompleteBookDto>> getAllInUserCity(@AuthenticationPrincipal User user){
+        Optional<User> currentUser = userService.findUserById(user.getId());
+        long cityId = currentUser.get().getCity().getId();
+        List<Book> books = (List) service.findByCityId(cityId);
+        if (!books.isEmpty()) {
+            return ResponseEntity.ok().body(CompleteBookDto.fromEntityList(books));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/user")

@@ -12,6 +12,7 @@ public interface AbstractBookRepository extends GenericRepository<Book> {
 
     Iterable<Book> findByTitleContainingAndIsAvailableTrue(String part);
     Iterable<Book> findByAuthorContainingAndIsAvailableTrue(String partname);
+    Iterable<Book> findByCityId(long id);
     Iterable<Book> findByGenresIdAndCityIdAndIsAvailableTrue(long genreId, long cityId);
     Iterable<Book> findByTagsAndCityIdAndIsAvailableTrue(long tagId, long cityId);
     Iterable<Book> findByPublisherContainingAndIsAvailableTrue(String pubpartname);

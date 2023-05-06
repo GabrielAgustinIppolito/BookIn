@@ -17,6 +17,8 @@ public interface AbstractBookService {
 
     Book saveBookWithGenresTagsLocation(Book b, Set<Genre> genres, Set<Tag> tags, GeoLocation location);
 
+    Iterable<Book> findByCityId(long id);
+
     Iterable<Book> findByTitleContainingAndIsAvailableTrue(String part);
 
     Iterable<Book> findByAuthorContainingAndIsAvailableTrue(String partName);

@@ -42,6 +42,11 @@ public class BookService implements AbstractBookService {
     }
 
     @Override
+    public Iterable<Book> findByCityId(long id) {
+        return bookRepo.findByCityId(id);
+    }
+
+    @Override
     public Iterable<Book> findByTitleContainingAndIsAvailableTrue(String part) {
         return bookRepo.findByTitleContainingAndIsAvailableTrue(part);
     }

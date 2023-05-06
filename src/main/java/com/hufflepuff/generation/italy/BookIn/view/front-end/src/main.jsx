@@ -11,7 +11,7 @@ import Registration, { action as registrationAction, loader as registrationLoade
 import RegisterNewBook, { action as registrationBookAction, loader as registrationBookLoader } from './routes/registerNewBook.jsx';
 import Profile, { loader as profileLoader } from './routes/profile.jsx';
 import OwnerProfile, {loader as ownerProfileLoader} from './routes/publicProfile.jsx';
-import Search from './routes/search.jsx';
+import Search, {loader as searchLoader} from './routes/search.jsx';
 
 const router = createBrowserRouter([
   {
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
     {
       path: "/search",
       element: <Search />,
-      loader: registrationBookLoader
+      loader: searchLoader,
     }
     
   ]

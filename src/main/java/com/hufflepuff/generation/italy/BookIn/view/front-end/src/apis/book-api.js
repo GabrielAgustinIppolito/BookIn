@@ -138,3 +138,14 @@ export const getBooksByTag = async(tagId) => {
   }
 }
 
+export const getAllBooksFromUserCity = async() => {
+  try {
+    const response = await axios.get(`${rootUrl}/books/all-books-from-user-city`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }});
+      return response.data;
+  } catch (error) {
+    return error.response.status;
+  }
+}
