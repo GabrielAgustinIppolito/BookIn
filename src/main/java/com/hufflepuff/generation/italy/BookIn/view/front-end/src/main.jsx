@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Root from './routes/root.jsx'
+import Root, {action as rootAction}  from './routes/root.jsx'
 import './routes/root.css'
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -17,6 +17,7 @@ const router = createBrowserRouter([
   {
   path: "/",
   element: <Root />,
+  action: rootAction,
   children: [
     {
       index: true,

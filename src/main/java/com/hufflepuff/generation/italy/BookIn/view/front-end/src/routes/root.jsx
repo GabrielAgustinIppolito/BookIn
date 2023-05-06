@@ -1,7 +1,29 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Form, NavLink, Outlet, useLoaderData } from "react-router-dom";
 import "./root.css";
+import { useState } from "react";
+
+export const action = ({request})=>{
+  console.log("ciao");
+  console.log(document.getElementById("q"));
+  
+  console.log(request);
+}
+
+// export async function loader({ request }) {
+//   const url = new URL(request.url);
+//   const q = url.searchParams.get("q");
+//   const contacts = await getContacts(q);
+//   return { contacts };
+// }
 
 export default function Root() {
+  const [q, setQ] = useState();
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+    setQ(e.target.value);
+  }
+
   return (
     <>
       <div className="navbar bg-base-300 mb-10 shadow-lg">
@@ -46,7 +68,9 @@ export default function Root() {
 
         <div className="navbar-end">
           <div className="flex-none gap-2 mr-4">
+            <Form  method="get" role="search">
             <div className="form-control">
+
               <div className="form-control">
                 <div className="input-group">
                   <input
@@ -55,6 +79,8 @@ export default function Root() {
                     id="q"
                     name="q"
                     className="input input-bordered"
+                    defaultValue={q}
+                    onChange={handleChange}
                   />
                   <button className="btn btn-square">
                     <svg
@@ -74,7 +100,9 @@ export default function Root() {
                   </button>
                 </div>
               </div>
+              
             </div>
+            </Form>
           </div>
 
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">

@@ -5,10 +5,8 @@ import { getBooksByGenre, getBooksByTag } from "../apis/book-api";
 
 export default function Search() {
    const { tags, genres, userCityPosix } = useLoaderData();
-   const [tag, setTag] = useState();
 
    const [booksToShow, setBooksToShow] = useState([]);
-   const [tagsToShow, setTagsToShow] = useState([]);
 
    const optionedGenres = genres.map(genre => <option key={genre.id} value={genre.id}>{genre.name}</option>);
    const optionedTags = tags.map(tag => <option key={tag.id} value={tag.id}>{tag.name}</option>);
@@ -22,10 +20,9 @@ export default function Search() {
          setBooksToShow([]);
       } else {
          console.log(books);
-      setBooksToShow([...books]);
+         setBooksToShow([...books]);
       }
    };
-   useEffect(()=>{console.log(booksToShow)},[booksToShow])
 
    return (
       <>
@@ -58,7 +55,8 @@ export default function Search() {
                         <NavLink to={`/public-profile/${book.ownerId}`} >Contattami!</NavLink>
                      </Popup>
                   </Marker>))
-               : null}
+               : null
+            }
          </MapContainer>
          <p>{booksToShow.map(book => book.title)}</p>
          
