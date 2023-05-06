@@ -1,7 +1,29 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Form, NavLink, Outlet, useLoaderData } from "react-router-dom";
 import "./root.css";
+import { useState } from "react";
+
+export const action = ({request})=>{
+  console.log("ciao");
+  console.log(document.getElementById("q"));
+  
+  console.log(request);
+}
+
+// export async function loader({ request }) {
+//   const url = new URL(request.url);
+//   const q = url.searchParams.get("q");
+//   const contacts = await getContacts(q);
+//   return { contacts };
+// }
 
 export default function Root() {
+  const [q, setQ] = useState();
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+    setQ(e.target.value);
+  }
+
   return (
     <>
       <div className="navbar bg-base-300 mb-10 shadow-lg">
@@ -26,6 +48,12 @@ export default function Root() {
               </label>
             </NavLink>
           </div>
+          <div className="w-10 rounded-full">
+              <NavLink to="/search">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
+              style={{fill: "spacing + rgba(0, 0, 0, 1); transform: ; msFilter:"}}><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path><path d="M11.412 8.586c.379.38.588.882.588 1.414h2a3.977 3.977 0 0 0-1.174-2.828c-1.514-1.512-4.139-1.512-5.652 0l1.412 1.416c.76-.758 2.07-.756 2.826-.002z"></path></svg> Avanzata
+              </NavLink>
+            </div>
         </div>
 
         <div className="navbar-center">
@@ -40,7 +68,9 @@ export default function Root() {
 
         <div className="navbar-end">
           <div className="flex-none gap-2 mr-4">
+            <Form  method="get" role="search">
             <div className="form-control">
+
               <div className="form-control">
                 <div className="input-group">
                   <input
@@ -49,6 +79,8 @@ export default function Root() {
                     id="q"
                     name="q"
                     className="input input-bordered"
+                    defaultValue={q}
+                    onChange={handleChange}
                   />
                   <button className="btn btn-square">
                     <svg
@@ -68,7 +100,9 @@ export default function Root() {
                   </button>
                 </div>
               </div>
+              
             </div>
+            </Form>
           </div>
 
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">

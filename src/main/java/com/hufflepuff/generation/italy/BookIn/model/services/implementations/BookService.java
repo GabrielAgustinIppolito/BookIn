@@ -52,13 +52,13 @@ public class BookService implements AbstractBookService {
     }
 
     @Override
-    public Iterable<Book> findByGenresAndIsAvailableTrue(Genre genre) {
-        return bookRepo.findByGenresAndIsAvailableTrue(genre);
+    public Iterable<Book> findByGenresIdAndCityIdAndIsAvailableTrue(long genreId, long cityId) {
+        return bookRepo.findByGenresIdAndCityIdAndIsAvailableTrue(genreId, cityId);
     }
 
     @Override
-    public Iterable<Book> findByTagsAndIsAvailableTrue(Tag tag) {
-        return bookRepo.findByTagsAndIsAvailableTrue(tag);
+    public Iterable<Book> findByTagsAndCityIdAndIsAvailableTrue(long tagId, long cityId) {
+        return bookRepo.findByTagsAndCityIdAndIsAvailableTrue(tagId, cityId);
     }
 
     @Override

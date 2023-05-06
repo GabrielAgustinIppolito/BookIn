@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Root from './routes/root.jsx'
+import Root, {action as rootAction}  from './routes/root.jsx'
 import './routes/root.css'
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -11,11 +11,13 @@ import Registration, { action as registrationAction, loader as registrationLoade
 import RegisterNewBook, { action as registrationBookAction, loader as registrationBookLoader } from './routes/registerNewBook.jsx';
 import Profile, { loader as profileLoader } from './routes/profile.jsx';
 import OwnerProfile, {loader as ownerProfileLoader} from './routes/publicProfile.jsx';
+import Search from './routes/search.jsx';
 
 const router = createBrowserRouter([
   {
   path: "/",
   element: <Root />,
+  action: rootAction,
   children: [
     {
       index: true,
@@ -53,6 +55,11 @@ const router = createBrowserRouter([
       path: "/public-profile/:id",
       element: <OwnerProfile />,
       loader: ownerProfileLoader,
+    },
+    {
+      path: "/search",
+      element: <Search />,
+      loader: registrationBookLoader
     }
     
   ]

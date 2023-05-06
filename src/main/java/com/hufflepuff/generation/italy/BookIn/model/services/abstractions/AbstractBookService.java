@@ -21,9 +21,9 @@ public interface AbstractBookService {
 
     Iterable<Book> findByAuthorContainingAndIsAvailableTrue(String partName);
 
-    Iterable<Book> findByGenresAndIsAvailableTrue(Genre genre);
+    Iterable<Book> findByGenresIdAndCityIdAndIsAvailableTrue(long genreId, long cityId);
 
-    Iterable<Book> findByTagsAndIsAvailableTrue(Tag tag);
+    Iterable<Book> findByTagsAndCityIdAndIsAvailableTrue(long tagId, long cityId);
 
     Iterable<Book> findByPublisherContainingAndIsAvailableTrue(String pubPartName);
 

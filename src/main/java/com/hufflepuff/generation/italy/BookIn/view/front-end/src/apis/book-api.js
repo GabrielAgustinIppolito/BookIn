@@ -71,45 +71,70 @@ export const getBook = async(id) => {
     return response.data;
   }
 
-  export const getTags = async() => {
-    const response = await axios.get(`${rootUrl}/books/all-tags`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    return response.data;
-  }
-  export const getGenres = async() => {
-    const response = await axios.get(`${rootUrl}/books/all-genres`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    return response.data;
-  }
+export const getTags = async() => {
+  const response = await axios.get(`${rootUrl}/books/all-tags`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  return response.data;
+}
+export const getGenres = async() => {
+  const response = await axios.get(`${rootUrl}/books/all-genres`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  return response.data;
+}
 
-  export const getCities = async() => {
-    const response = await axios.get(`${rootUrl}/public/all-cities`);
-    return response.data;
-  }
-  
-  export const getUserCityPosix = async() => {
-    const response = await axios.get(`${rootUrl}/books/user/city`,{
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    return response.data;
-  }
+export const getCities = async() => {
+  const response = await axios.get(`${rootUrl}/public/all-cities`);
+  return response.data;
+}
 
-  export const saveBook = async(bookWrapper) => {
-    const response = await axios.post(`${rootUrl}/books/register-new-book`,
-     bookWrapper,
-      {
+export const getUserCityPosix = async() => {
+  const response = await axios.get(`${rootUrl}/books/user/city`,{
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  return response.data;
+}
+
+export const saveBook = async(bookWrapper) => {
+  const response = await axios.post(`${rootUrl}/books/register-new-book`,
+    bookWrapper,
+    {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  console.log(response.data);
+  return response.data;
+}
+
+export const getBooksByGenre = async(genreId) => {
+  try {
+    const response = await axios.get(`${rootUrl}/books/search-genre/${genreId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    console.log(response.data);
-    return response.data;
+      }});
+      return response.data;
+  } catch (error) {
+    return error.response.status;
   }
+}
+
+export const getBooksByTag = async(tagId) => {
+  try {
+    const response = await axios.get(`${rootUrl}/books/search-genre/${tagId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }});
+      return response.data;
+  } catch (error) {
+    return error.response.status;
+  }
+}
+
