@@ -30,11 +30,10 @@ export const action = async ({ request }) => {
     "location": {
           "id": 0,
           "longitude": bookAllData.longitude,
-          "latitude": bookAllData.latitude,
-          "city": bookAllData.city
+          "latitude": bookAllData.latitude
       }
   }
-  
+  console.log(bookWrapper);
   await saveBook(bookWrapper);
   return redirect("/");
  };

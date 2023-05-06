@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,7 +38,13 @@ public class CompleteBookDto {
             b.isAvailable(), b.getLocation().getId(), b.getLocation().getLatitude(),
             b.getLocation().getLongitude(), b.getOwner().getId());
    }
-
+   public static List<CompleteBookDto> fromEntityList(List<Book> books) {
+      List<CompleteBookDto> bookDtoList = new ArrayList<>();
+      for (Book b : books) {
+         bookDtoList.add(fromEntity(b));
+      }
+      return bookDtoList;
+   }
 //   public Book toEntity(){
 //      return new Book(id, title, isbn, year == null || year.length() == 0 ? null : LocalDate.parse(year), publisher,
 //            language, author, isShippable, review, isAvailable, new GeoLocation(locationId, city, latitude, longitude,

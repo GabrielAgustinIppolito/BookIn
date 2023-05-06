@@ -54,9 +54,12 @@ public class BookController {
 
     @PostMapping("/register-new-book")
     public ResponseEntity<BookDto> create(@RequestBody BookWrapper bookWrapper, @AuthenticationPrincipal User user){
+        Optional<User> currentUser = userService.findUserById(user.getId());
         BookDto bdto = bookWrapper.getBookDto();
         Book b = bdto.toEntity();
         b.setOwner(user);
+        b.setCity(currentUser.get().getCity());
+        b.setAvailable(true);
         Set<Genre> genres = GenreDto.fromDtoList(bookWrapper.getGenresDto());
         Set<Tag> tags = TagDto.fromDtoList(bookWrapper.getTagsDto());
         GeoLocation l = bookWrapper.getLocation();
@@ -83,11 +86,14 @@ public class BookController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/search-genre/{genre}")
-    public ResponseEntity<List<BookDto>> findByGenreAndIsAvailableTrue(@PathVariable Genre genre){
-        List<Book> books = (List) service.findByGenresAndIsAvailableTrue(genre);
+    @GetMapping("/search-genre/{genreId}")
+    public ResponseEntity<List<CompleteBookDto>> findByGenreAndIsAvailableTrue(@PathVariable long genreId,
+                                                                               @AuthenticationPrincipal User user){
+        Optional<User> currentUser = userService.findUserById(user.getId());
+        long cityId = currentUser.get().getCity().getId();
+        List<Book> books = (List) service.findByGenresIdAndCityIdAndIsAvailableTrue(genreId,cityId);
         if (!books.isEmpty()) {
-            return ResponseEntity.ok().body(BookDto.fromEntityList(books));
+            return ResponseEntity.ok().body(CompleteBookDto.fromEntityList(books));
         }
         return ResponseEntity.notFound().build();
     }
@@ -178,6 +184,17 @@ public class BookController {
             bookServiceCRUD.update(b);
             return ResponseEntity.noContent().build();
     }
+
+//    @GetMapping("/by-genre")
+//    public ResponseEntity<List<BookDto>> findByLanguageAndIsAvailableTrue(@PathVariable String language){
+//        List<Book> books = (List) service.findByLanguageAndIsAvailableTrue(language);
+//        if (!books.isEmpty()) {
+//            return ResponseEntity.ok().body(BookDto.fromEntityList(books));
+//        }
+//        return ResponseEntity.notFound().build();
+//    }
+
+
 
     @GetMapping("/all-tags")
     public ResponseEntity<List<TagDto>> getAllTags(){
