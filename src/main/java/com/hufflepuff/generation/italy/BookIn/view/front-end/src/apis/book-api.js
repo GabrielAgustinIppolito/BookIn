@@ -115,10 +115,14 @@ export const saveBook = async(bookWrapper) => {
 }
 
 export const getBooksByGenre = async(genreId) => {
-  const response = await axios.get(`${rootUrl}/books/search-genre/${genreId}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-  return response.data;
+  try {
+    const response = await axios.get(`${rootUrl}/books/search-genre/${genreId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }});
+      return response.data;
+  } catch (error) {
+    return error.response.status;
+  }
+
 }

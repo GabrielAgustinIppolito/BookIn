@@ -6,7 +6,6 @@ import { getBooksByGenre } from "../apis/book-api";
 export default function Search() {
    const { tags, genres, userCityPosix } = useLoaderData();
    const [tag, setTag] = useState();
-   const [genreId, setGenreId] = useState();
 
    const [booksToShow, setBookToShow] = useState([]);
 
@@ -15,16 +14,20 @@ export default function Search() {
 
    const handleChangingGenres = async (e) => {
       const books = await getBooksByGenre(e.target.value);
-      setBookToShow(books);
-   };
-
-   // let showPOfBooks;
-   // useEffect(() => { booksToShow ? 
-   //    showPOfBooks = <p>{booksToShow.map(book => book.title)}</p> 
+      if(books == 404){
+         setBookToShow([]);
+      } else {
+         console.log(books);
+      setBookToShow([...books]);
+      }
       
-   //    : showPOfBooks = <p></p> }, [booksToShow]);
-
-   
+   };
+   useEffect(()=>{console.log(booksToShow)},[booksToShow])
+   // useEffect(() => { booksToShow ? () =>{
+   //    const showPOfBooks = () => {
+   //       booksToShow ? <p>{booksToShow.map(book => book.title)}</p> : null
+   //    }}
+   //    : null }, [booksToShow]);
 
    return (
       <>
@@ -47,7 +50,7 @@ export default function Search() {
                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {booksToShow ?
+            {booksToShow.length != 0 ?
                booksToShow.map(book => (
                   <Marker
                      position={book.longitude && book.latitude ? [book.longitude, book.latitude]
@@ -59,7 +62,7 @@ export default function Search() {
                   </Marker>))
                : null}
          </MapContainer>
-         {/* {showPOfBooks} */}
+         <p>{booksToShow.map(book => book.title)}</p>
          
       </>
    );
