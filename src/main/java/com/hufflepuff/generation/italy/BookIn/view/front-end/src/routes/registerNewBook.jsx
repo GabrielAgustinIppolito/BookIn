@@ -44,9 +44,6 @@ export async function loader() {
   const tags = await getTags();
   const genres = await getGenres();
   const userCityPosix = await getUserCityPosix();
-  /* const simplifiedGenres = await genres.map((genre) =>(
-    { label: `${genre.name}`, value: genre.id }
- )); */
   return { tags, genres, userCityPosix };
 }
 
@@ -93,12 +90,12 @@ export default function RegisterNewBook() {
         ref={markerRef}
         >
         <Popup minWidth={90}>
-          <p>hi</p>
+          <p>Piazzami qui!</p>
         </Popup>
       </Marker>
       </MapContainer>
     </>
-  ), [userCityPosix]);
+  ), [userCityPosix, eventHandlers, position]);
 
   const handleChangingTags = (e) => {
     let selectedTag = [...tagList];
@@ -204,15 +201,10 @@ export default function RegisterNewBook() {
             <input name="review" type="text" className="textarea textarea-bordered h-24 shadow-inner w-full max-w-xs" />
           </div>
           {console.log(position)}
-          <p>Posizione di scambio per il libro</p>
-          <p>
-           latitude: {position.longitude ? position.longitude : position.lat.toFixed(4)},
-           longitude:
-          {position.latitude ? position.latitude : position.lng.toFixed(4)},
-          </p>
+          <p>Scegli dove scambiare il tuo libro</p>
           {displayMap}
           <div>
-            <p>Posizione mappa: </p> 
+            <p>Posizione mappa: </p>
             {map ? <MapPositioner map={map} /> : null}
           </div>
           <div className="form-control bg-primary rounded-xl p-3">

@@ -15,7 +15,7 @@ export default function Profile() {
   ));
   return (
     <>
-      <div className="grid grid-cols-2 gap-2 justify-center items-center place-items-center m-10 p-10">
+      <div className="grid gap-2 justify-center items-center place-items-center m-10 p-10">
         <div className="card w-96 h-80 bg-base-200 shadow-xl">
           <h1 className="my-titles m-auto mt-5 text-3xl">Ciao {user.firstname}!</h1>
           <figure className="px-10 pt-10">
@@ -29,14 +29,6 @@ export default function Profile() {
             <p>Città: {user.city || "città non specificata"}</p>
             <p>Libri condivisi: {books.length}</p>
           </div>
-        </div>
-        <div className="card flex place-content-center w-full p-10 h-80 bg-base-100 shadow-xl">
-          <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor
-          quam illum eveniet repellendus nesciunt minus suscipit consequatur
-          corporis ab, incidunt porro commodi iure voluptate hic rem tempore?
-          Voluptatibus, eius nihil.
-          </p>
         </div>
       </div>
       <div className="group-card">{cardsToShow}</div>
