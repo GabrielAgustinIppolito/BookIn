@@ -79,7 +79,7 @@ export default function RegisterNewBook() {
         zoom={13}
         scrollWheelZoom={false}
         ref={setMap}
-        style={{ height: '400px', width: '90%', overflow: 'scroll' }}
+        style={{ height: '400px', width: '90%', overflow: 'hidden' }}
         >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

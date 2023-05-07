@@ -1,17 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { infoBookFromIsbn } from "../apis/google-api";
 
 export default function BookCard({book}) {
 
   const [isLoading, setLoading] = useState(true);
   const [link, setlink] = useState();
-
+  // const apiKey = process.env.API_KEY;
   useEffect(  () => {
     axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}`, {
       headers: {
-        Authorization: 'Client-ID AIzaSyCbmF5rV0X92Jznk-plmOe_vPNhuilzGH8',
+        Authorization: `Client-ID ${(import.meta.env.VITE_API_KEY)}`,
       }
     }).then(response => {
       setlink(response.data);

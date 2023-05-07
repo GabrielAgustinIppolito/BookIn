@@ -12,11 +12,13 @@ import RegisterNewBook, { action as registrationBookAction, loader as registrati
 import Profile, { loader as profileLoader } from './routes/profile.jsx';
 import OwnerProfile, {loader as ownerProfileLoader} from './routes/publicProfile.jsx';
 import Search, {loader as searchLoader} from './routes/search.jsx';
+import ErrorPage from './routes/error-page.jsx';
 
 const router = createBrowserRouter([
   {
   path: "/",
   element: <Root />,
+  errorElement: <ErrorPage/>,
   children: [
     {
       index: true,
