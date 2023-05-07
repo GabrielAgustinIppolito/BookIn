@@ -45,7 +45,7 @@ export default function Book() {
                   <span className="mb-0.5 inline-block text-gray-500">
                     {book.author ? " " + book.author : <i> Non specificato</i>}
                   </span>
-                  <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
+                  <h2 className="my-titles text-2xl font-bold text-gray-800 lg:text-3xl">
                     {book.title ? book.title : <i> Nessun titolo</i>}
                   </h2>
                 </div>
@@ -98,8 +98,7 @@ export default function Book() {
                 </div>
               <NavLink to={`/public-profile/${owner.id}`}>
                   <button
-                    
-                    className="btn btn-primary rounded-lg bg-warning px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
+                    className="btn btn-primary rounded-lg text-white transition duration-100 hover:bg-secondary active:bg-secondary sm:flex-none"
                   >
                     Scambia questo libro!
                     </button>

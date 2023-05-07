@@ -45,13 +45,13 @@ export default function BookCard({book}) {
     cover = <button className="btn loading">loading</button>
   }
   return (
-    <div className="card card-side bg-accent max-w-screen-lg m-8 shadow-xl">
+    <div className="card card-side bg-base-200 max-w-screen-lg m-8 shadow-xl">
       <NavLink to={`/books/${book.id}`}>
         {cover}
       </NavLink>
       <div className="card-body">
         <NavLink to={`/books/${book.id}`}>
-          <h2 className="card-title">{book.title}</h2>
+          <h2 className="card-title hover:text-accent active:text-warning">{book.title}</h2>
         </NavLink>
         <p>Autore: {book.author || "N/S"}</p>
         <p>Editore: {book.publisher || "N/S"}</p>

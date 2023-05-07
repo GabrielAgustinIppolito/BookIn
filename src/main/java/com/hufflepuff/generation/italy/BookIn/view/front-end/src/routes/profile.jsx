@@ -17,7 +17,7 @@ export default function Profile() {
     <>
       <div className="grid gap-2 justify-center items-center place-items-center m-10 p-10">
         <div className="card w-96 h-80 bg-base-200 shadow-xl">
-          <h1 className="my-titles m-auto mt-5 text-3xl">Ciao {user.firstname}!</h1>
+          <h1 className="my-titles m-auto mt-5 text-3xl">Bentornato {user.firstname}!</h1>
           <figure className="px-10 pt-10">
             <div className="avatar">
               <div className="w-28 rounded-full">
@@ -31,7 +31,9 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      <div className="group-card">{cardsToShow}</div>
+      <div className="grid gap-2 justify-center items-center mx-auto my-5 lg:grid-cols-2">
+        {cardsToShow}
+      </div>
     </>
   );
 }

@@ -5,7 +5,6 @@ import { NavLink } from "react-router-dom";
 export default function PublicBookCard({ book }) {
   const [isLoading, setLoading] = useState(true);
   const [link, setlink] = useState();
-  // const apiKey = process.env.API_KEY;
 
   useEffect(() => {
     axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}`, {
@@ -15,10 +14,8 @@ export default function PublicBookCard({ book }) {
     }).then(response => {
       setlink(response.data);
       setLoading(false);
-      console.log(response.data)
     });
-    // result = await infoBookFromIsbn(book.isbn);
-  }, []);
+  }, [book]);
 
   useEffect(
     () => {
@@ -30,7 +27,7 @@ export default function PublicBookCard({ book }) {
         }
       }
     }
-    , [isLoading]);
+    , [isLoading, book, link]);
 
   let cover =
     <figure>
@@ -44,15 +41,16 @@ export default function PublicBookCard({ book }) {
   if (isLoading) {
     cover = <button className="btn loading max-w-xs h-80 rounded-xl">***Loading***</button>
   }
+
   return (
-    <div className={`card card-side bg-accent max-w-screen-lg m-8 shadow-xl
+    <div className={`card card-side bg-base-200 max-w-screen-lg m-8 shadow-xl
                     ${!book.available && "opacity-50 "}`}>
       <NavLink to={`/books/${book.id}`}>
         {cover}
       </NavLink>
       <div className="card-body">
         <NavLink to={`/books/${book.id}`}>
-          <h2 className="card-title">{book.title}</h2>
+          <h2 className="card-title hover:text-accent active:text-warning">{book.title}</h2>
         </NavLink>
         <p>Autore: {book.author || "N/S"}</p>
         <p>Editore: {book.publisher || "N/S"}</p>
