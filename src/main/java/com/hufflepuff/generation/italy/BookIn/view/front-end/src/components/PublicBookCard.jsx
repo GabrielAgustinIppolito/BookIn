@@ -1,17 +1,53 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 export default function PublicBookCard({ book }) {
+  const [isLoading, setLoading] = useState(true);
+  const [link, setlink] = useState();
+
+  useEffect(() => {
+    axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}`, {
+      headers: {
+        Authorization: 'Client-ID AIzaSyCbmF5rV0X92Jznk-plmOe_vPNhuilzGH8',
+      }
+    }).then(response => {
+      setlink(response.data);
+      setLoading(false);
+      console.log(response.data)
+    });
+    // result = await infoBookFromIsbn(book.isbn);
+  }, []);
+
+  useEffect(
+    () => {
+      if (!isLoading) {
+        if (link.totalItems != 1) {
+          book.imageUrl = "none";
+        } else {
+          book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
+        }
+      }
+    }
+    , [isLoading]);
+
+  let cover =
+    <figure>
+      <img
+        className="max-w-xs h-80 rounded-xl"
+        src={(book.imageUrl && book.imageUrl != "none") ? book.imageUrl : "../src/assets/default_book_cover_2015.jpeg"}
+        alt="Book Cover"
+      />
+    </figure>;
+
+  if (isLoading) {
+    cover = <button className="btn loading max-w-xs h-80 rounded-xl">***Loading***</button>
+  }
   return (
     <div className={`card card-side bg-accent max-w-screen-lg m-8 shadow-xl
-                    ${ !book.available && "opacity-50 "}`}>
+                    ${!book.available && "opacity-50 "}`}>
       <NavLink to={`/books/${book.id}`}>
-        <figure>
-          <img
-            className="max-w-xs h-80 rounded-xl"
-            src={`http://1.bp.blogspot.com/-Z0ePnWNTVuQ/VK3fouq-XBI/AAAAAAAAC0I/KdnHXLax8bg/s1600/PLDC0729.JPG`}
-            alt="Book Cover"
-          />
-        </figure>
+        {cover}
       </NavLink>
       <div className="card-body">
         <NavLink to={`/books/${book.id}`}>
@@ -20,7 +56,7 @@ export default function PublicBookCard({ book }) {
         <p>Autore: {book.author || "N/S"}</p>
         <p>Editore: {book.publisher || "N/S"}</p>
         <p>Anno di pubblicazione: {book.year || "N/S"}</p>
-        <p>{ book.available ? "🟢Disponibile🟢" : "🔴Non più disponibile🔴"}</p>
+        <p>{book.available ? "🟢Disponibile🟢" : "🔴Non più disponibile🔴"}</p>
       </div>
     </div>
   );

@@ -25,7 +25,6 @@ export default function Profile() {
               </div>
             </div>
           </figure>
-
           <div className="card-body items-center text-center">
             <p>Città: {user.city || "città non specificata"}</p>
             <p>Libri condivisi: {books.length}</p>
