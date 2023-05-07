@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { NavLink, Form, useLoaderData } from "react-router-dom";
 import {
@@ -17,20 +17,15 @@ export async function loader() {
   const genres = await getGenres();
   const userCityPosix = await getUserCityPosix();
   const allBooks = await getAllBooksFromUserCity();
-  for (let book of allBooks) {
-     const link = await infoBookFromIsbn(book.isbn);
-     if (link.totalItems != 1) {
-      book.imageUrl = "none";
-    } else {
-      book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
-    }
-  }
+
   return { tags, genres, userCityPosix, allBooks };
 }
 
 export default function Search() {
   const { tags, genres, userCityPosix, allBooks } = useLoaderData();
   const [booksToShow, setBooksToShow] = useState([...allBooks]);
+
+   useEffect(() => {console.log(booksToShow)}, [booksToShow]);
 
   const optionedGenres = genres.map((genre) => (
     <option key={genre.id} value={genre.id}>
