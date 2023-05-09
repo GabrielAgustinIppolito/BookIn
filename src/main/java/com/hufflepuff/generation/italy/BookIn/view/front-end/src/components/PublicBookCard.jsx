@@ -23,7 +23,12 @@ export default function PublicBookCard({ book }) {
         if (link.totalItems != 1) {
           book.imageUrl = "none";
         } else {
-          book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
+          if( link.items[0].volumeInfo.imageLinks){
+            book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
+          } else {
+            console.log(link.items[0]);
+            book.imageUrl = "none";
+          }
         }
       }
     }

@@ -11,7 +11,12 @@ export async function loader({ params }) {
   if (link.totalItems != 1) {
     book.imageUrl = "none";
   } else {
-    book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
+    if( link.items[0].volumeInfo.imageLinks){
+      book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
+    } else {
+      console.log(link.items[0]);
+      book.imageUrl = "none";
+    }
   }
   return { book, owner };
 }
@@ -106,7 +111,7 @@ export default function Book() {
               </div>
             </div>
             <MapContainer
-              center={[book.longitude, book.latitude]}
+              center={[book.latitude, book.longitude]}
               zoom={13}
               scrollWheelZoom={false}
               style={{ height: "400px" }}
@@ -115,7 +120,7 @@ export default function Book() {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <Marker position={[book.longitude, book.latitude]}>
+              <Marker position={[book.latitude, book.longitude]}>
                 <Popup>
                   <ul>
                     <li>{book.title}</li>

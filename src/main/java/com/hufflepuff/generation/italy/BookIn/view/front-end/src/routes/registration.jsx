@@ -1,12 +1,12 @@
 import { Form, redirect, useLoaderData } from "react-router-dom";
 import { getCities, registration } from "../apis/book-api";
-import { useState } from "react";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const userData = Object.fromEntries(formData);
+  console.log(userData);
   await registration(userData.firstname, userData.lastname,
-    userData.email, userData.password, userData.city);
+    userData.email, userData.password, userData.city, userData.bio);
   return redirect("/profile");
 };
 
@@ -40,9 +40,6 @@ export default function Registration() {
         <select name="city" className="select w-full max-w-xs">
           <option disabled selected>Scegli la tua città</option>
           {optionedCities} 
-          {/* fare una chiamata axios a tutte le city 
-          e sul on change del select impostare il value
-           di uno stato con i valori della citta*/}
         </select>
 
         <div className="form-control w-full max-w-xs">
@@ -57,6 +54,9 @@ export default function Registration() {
           </label>
           <input name="password" type="password" placeholder="Scrivi qui" className="input input-bordered w-full max-w-xs" />
         </div>
+
+        <textarea id="bio" name="bio" rows="6" cols="40"className="textarea textarea-accent w-full max-w-xs" placeholder="Bio"/>
+
         <button className="btn btn-primary" type="submit">Registrati</button>
       </Form>
     </>

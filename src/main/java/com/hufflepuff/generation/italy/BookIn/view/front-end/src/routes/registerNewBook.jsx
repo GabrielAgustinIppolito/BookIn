@@ -31,8 +31,8 @@ export const action = async ({ request }) => {
     "tagsDto": globalTags,
     "location": {
       "id": 0,     
-      "longitude": globalPos.longitude ? globalPos.longitude : globalPos.lat.toFixed(4),
-      "latitude": globalPos.latitude ? globalPos.latitude : globalPos.lng.toFixed(4)
+      "longitude": globalPos.longitude ? globalPos.longitude : globalPos.lng.toFixed(4),
+      "latitude": globalPos.latitude ? globalPos.latitude : globalPos.lat.  ed(4)
     }
   }
   console.log(bookWrapper);
@@ -63,7 +63,7 @@ export default function RegisterNewBook() {
       dragend() {
         const marker = markerRef.current
         if (marker != null) {
-          setPosition(marker.getLatLng())
+          setPosition(marker.getLatLng());
         }
       },
     }),
@@ -72,7 +72,7 @@ export default function RegisterNewBook() {
   const displayMap = useMemo(() => (
     <>
       <MapContainer
-        center={[userCityPosix.longitude, userCityPosix.latitude]}
+        center={[userCityPosix.latitude, userCityPosix.longitude]}
         zoom={13}
         scrollWheelZoom={false}
         ref={setMap}
@@ -86,7 +86,7 @@ export default function RegisterNewBook() {
       <Marker
         draggable='true'
         eventHandlers={eventHandlers}
-        position={position.longitude ? [position.longitude, position.latitude] : position}
+        position={position.longitude ? [position.latitude, position.longitude] : position}
         ref={markerRef}
         >
         <Popup minWidth={90}>

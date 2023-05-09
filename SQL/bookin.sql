@@ -32,6 +32,7 @@ CREATE TABLE _user (
         lastname VARCHAR(255),
         password VARCHAR(255),
         role VARCHAR(255),
+        bio VARCHAR,
 
         CONSTRAINT PK_user PRIMARY KEY (_user_id),
         CONSTRAINT FK_user_city FOREIGN KEY(city_id)
@@ -148,7 +149,7 @@ INSERT INTO genre (genre_id, name)
     (013, 'Storico'), (014, 'Avventura'), (015, 'Biografia'), (016, 'Folklore'), (017, 'Poesia'), (018, 'Raccolta Fotografica'),
     (019, 'Graphic Novel'), (020, 'Opera teatrale');
 
-INSERT INTO public.geolocation(geolocation_id, longitude, latitude)
+INSERT INTO public.geolocation(geolocation_id, latitude, longitude)
 	VALUES (001, 37.3110710, 13.5768652), (002, 37.3572607, 13.9237678), (003, 38.1156369,13.3612966),
 	      (004, 37.5028120, 15.0883146), (005, 42.3506978, 	13.3999338), (006, 40.6372425, 15.8022214),
        (007, 38.9099992, 16.5876779), (008, 40.8399968, 14.2528707), (009, 44.4944456, 11.3492311),

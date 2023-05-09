@@ -9,7 +9,6 @@ import {
   getTags,
   getUserCityPosix,
 } from "../apis/book-api";
-import { infoBookFromIsbn } from "../apis/google-api";
 import BookTable from "../components/BookTable";
 
 export async function loader() {
@@ -40,14 +39,12 @@ export default function Search() {
   ));
 
   const handleChangingSelect = async (e) => {
-    console.log(e.target.id);
     let books;
     if (e.target.id === "genres") books = await getBooksByGenre(e.target.value);
     if (e.target.id === "tags") books = await getBooksByTag(e.target.value);
     if (books == 404) {
       setBooksToShow([]);
     } else {
-      console.log(books);
       setBooksToShow([...books]);
     }
   };
@@ -138,7 +135,7 @@ export default function Search() {
           </select>
         </div>
         <MapContainer
-          center={[userCityPosix.longitude, userCityPosix.latitude]}
+          center={[userCityPosix.latitude, userCityPosix.longitude]}
           zoom={13}
           scrollWheelZoom={false}
           style={{
@@ -159,8 +156,8 @@ export default function Search() {
                   key={book.id}
                   position={
                     book.longitude && book.latitude
-                      ? [book.longitude, book.latitude]
-                      : [userCityPosix.longitude, userCityPosix.latitude]
+                      ? [book.latitude, book.longitude]
+                      : [userCityPosix.latitude, userCityPosix.longitude]
                   }
                 >
                   <Popup>

@@ -30,6 +30,7 @@ public class User implements UserDetails {
    private String lastname;
    private String email;
    private String password;
+   private String bio;
 
    @ManyToOne
    @JoinColumn(name = "city_id", nullable = false)

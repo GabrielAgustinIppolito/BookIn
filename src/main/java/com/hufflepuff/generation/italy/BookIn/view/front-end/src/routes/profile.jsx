@@ -10,12 +10,13 @@ export const loader = async () => {
 
 export default function Profile() {
   const { user, books } = useLoaderData();
+  console.log(user);
   const cardsToShow = books.map((b) => (
     <BookCard key={b.id} book={b}></BookCard>
   ));
   return (
     <>
-      <div className="grid gap-2 justify-center items-center place-items-center m-10 p-10">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-2 justify-center items-center place-items-center m-10 p-10">
         <div className="card w-96 h-80 bg-base-200 shadow-xl">
           <h1 className="my-titles m-auto mt-5 text-3xl">Bentornat* {user.firstname}!</h1>
           <figure className="px-10 pt-10">
@@ -30,7 +31,14 @@ export default function Profile() {
             <p>Libri condivisi: {books.length}</p>
           </div>
         </div>
+        <div className="card w-96 h-80 bg-base-200 shadow-xl">
+          <h2 className="my-titles m-auto mt-5 text-3xl">Bio</h2>
+          <div className="card-body items-center text-center">
+            <p>{user.bio}</p>
+          </div>
+        </div>
       </div>
+
       <div className="grid gap-2 justify-center items-center mx-auto my-5 lg:grid-cols-2">
         {cardsToShow}
       </div>

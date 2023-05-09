@@ -17,7 +17,8 @@ export const registration = async (
   lastname,
   email,
   password,
-  city
+  city,
+  bio
 ) => {
   const response = await axios.post(`${rootUrl}/auth/register`, {
     firstname: `${firstname}`,
@@ -25,6 +26,7 @@ export const registration = async (
     email: `${email}`,
     password: `${password}`,
     city_id: `${city}`,
+    bio: `${bio}`
   });
   localStorage.setItem("token", response.data.access_token);
   localStorage.setItem("refresh_token", response.data.access_token);
@@ -136,7 +138,12 @@ export const getBooksByGenre = async (genreId) => {
       if (link.totalItems != 1) {
         book.imageUrl = "none";
       } else {
-        book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
+        if( link.items[0].volumeInfo.imageLinks){
+          book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
+        } else {
+          console.log(link.items[0]);
+          book.imageUrl = "none";
+        }
       }
       allBooks.push(book);
     }
@@ -159,7 +166,12 @@ export const getBooksByTag = async (tagId) => {
       if (link.totalItems != 1) {
         book.imageUrl = "none";
       } else {
-        book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
+        if( link.items[0].volumeInfo.imageLinks){
+          book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
+        } else {
+          console.log(link.items[0]);
+          book.imageUrl = "none";
+        }
       }
       allBooks.push(book);
     }
@@ -185,7 +197,12 @@ export const getAllBooksFromUserCity = async () => {
       if (link.totalItems != 1) {
         book.imageUrl = "none";
       } else {
-        book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
+        if( link.items[0].volumeInfo.imageLinks){
+          book.imageUrl = link.items[0].volumeInfo.imageLinks.thumbnail;
+        } else {
+          console.log(link.items[0]);
+          book.imageUrl = "none";
+        }
       }
       allBooks.push(book);
     }

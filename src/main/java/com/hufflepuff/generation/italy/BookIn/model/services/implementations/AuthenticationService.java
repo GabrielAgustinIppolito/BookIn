@@ -43,6 +43,7 @@ public class AuthenticationService {
         .password(passwordEncoder.encode(request.getPassword()))
         .role(Role.USER)
         .city(cityRepo.findById(request.getCity_id()).get())
+        .bio(request.getBio())
         .build();
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
