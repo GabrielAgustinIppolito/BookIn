@@ -32,7 +32,7 @@ export const action = async ({ request }) => {
     "location": {
       "id": 0,     
       "longitude": globalPos.longitude ? globalPos.longitude : globalPos.lng.toFixed(4),
-      "latitude": globalPos.latitude ? globalPos.latitude : globalPos.lat.  ed(4)
+      "latitude": globalPos.latitude ? globalPos.latitude : globalPos.lat.toFixed(4)
     }
   }
   console.log(bookWrapper);
@@ -200,7 +200,6 @@ export default function RegisterNewBook() {
             </label>
             <input name="review" type="text" className="textarea textarea-bordered h-24 shadow-inner w-full max-w-xs" />
           </div>
-          {console.log(position)}
           <p>Scegli dove scambiare il tuo libro</p>
           {displayMap}
           <div>

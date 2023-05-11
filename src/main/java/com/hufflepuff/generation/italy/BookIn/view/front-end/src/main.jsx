@@ -13,6 +13,7 @@ import Profile, { loader as profileLoader } from './routes/profile.jsx';
 import OwnerProfile, {loader as ownerProfileLoader} from './routes/publicProfile.jsx';
 import Search, {loader as searchLoader} from './routes/search.jsx';
 import ErrorPage from './routes/error-page.jsx';
+import BookEdit, {loader as bookEditLoader, action as bookEditAction}  from './routes/book-edit.jsx';
 
 const router = createBrowserRouter([
   {
@@ -26,9 +27,15 @@ const router = createBrowserRouter([
       action: loginAction
     },
     {
-      path: "books/:id",
+      path: "/books/:id",
       element: <Book />,
       loader: bookLoader
+    },
+    {
+      path: "/edit/:id",
+      element: <BookEdit />,
+      loader: bookEditLoader,
+      action: bookEditAction
     },
     {
       path: "/login",

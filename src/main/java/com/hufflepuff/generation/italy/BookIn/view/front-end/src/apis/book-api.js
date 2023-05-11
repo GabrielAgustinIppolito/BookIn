@@ -118,6 +118,33 @@ export const saveBook = async (bookWrapper) => {
       },
     }
   );
+  return response.data;
+};
+
+export const updateBook = async (bookWrapper) => {
+  console.log(bookWrapper);
+  const response = await axios.put(
+    `${rootUrl}/books/${bookWrapper.id}`,
+    bookWrapper,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+  console.log(response.data);
+  return response.data;
+};
+
+export const deleteBook = async (bookId) => {
+  const response = await axios.delete(
+    `${rootUrl}/books/${bookId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
   console.log(response.data);
   return response.data;
 };

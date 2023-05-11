@@ -1,6 +1,7 @@
 package com.hufflepuff.generation.italy.BookIn.dtos;
 
 import com.hufflepuff.generation.italy.BookIn.model.entities.Book;
+import com.hufflepuff.generation.italy.BookIn.model.entities.GeoLocation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,10 +46,25 @@ public class CompleteBookDto {
       }
       return bookDtoList;
    }
-//   public Book toEntity(){
-//      return new Book(id, title, isbn, year == null || year.length() == 0 ? null : LocalDate.parse(year), publisher,
-//            language, author, isShippable, review, isAvailable, new GeoLocation(locationId, city, latitude, longitude,
-//            null),
-//            null, null, null);
-//   }
+   public Book toEntity(){
+      return new Book(id, title, isbn, year == null || year.length() == 0 ? null : LocalDate.parse(year), publisher,
+            language, author, isShippable, review, isAvailable, new GeoLocation(locationId,  latitude, longitude),
+            null, null, null, null);
+   }
+   public Book bookToUpdate(Book book){
+
+      if(getTitle().length()>0) book.setTitle(getTitle());
+      if(getIsbn().length()>0) book.setISBN(getIsbn());
+      if(getYear().length()>0) book.setYear(LocalDate.parse(getYear()));
+      if(getPublisher().length()>0) book.setPublisher(getPublisher());
+      if(getLanguage().length()>0) book.setLanguage(getLanguage());
+      if(getAuthor().length()>0) book.setAuthor(getAuthor());
+      if(getReview().length()>0) book.setReview(getReview());
+      book.setShippable(isShippable());
+      book.setAvailable(isAvailable());
+      if(getLocationId() >= 0) {
+         book.setLocation(new GeoLocation(locationId,  latitude, longitude));
+      }
+      return book;
+   }
 }

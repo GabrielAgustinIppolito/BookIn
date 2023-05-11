@@ -177,16 +177,18 @@ public class BookController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update (@RequestBody BookDto bookDto,@PathVariable long id){
-        if(bookDto.getId() != id){
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<Void> update (@RequestBody CompleteBookDto bookDto, @PathVariable long id){
+        Optional<Book> b = bookServiceCRUD.findById(id);
+        if(b.isEmpty()){
+            return ResponseEntity.notFound().build();
         }
-        Book b = bookDto.toEntity();
-            bookServiceCRUD.update(b);
-            return ResponseEntity.noContent().build();
+        Book updatingBook = bookDto.bookToUpdate(b.get());
+        bookServiceCRUD.update(updatingBook);
+        return ResponseEntity.noContent().build();
     }
+
+
 
     @GetMapping("/all-tags")
     public ResponseEntity<List<TagDto>> getAllTags(){
