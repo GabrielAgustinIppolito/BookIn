@@ -1,5 +1,6 @@
 package com.hufflepuff.generation.italy.BookIn.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hufflepuff.generation.italy.BookIn.model.entities.Book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,8 +21,10 @@ public class BookDto {
     private String publisher;
     private String language;
     private String author;
+    @JsonProperty
     private boolean isShippable;
     private String review;
+    @JsonProperty
     private boolean isAvailable;
 
     public static BookDto fromEntity(Book b){

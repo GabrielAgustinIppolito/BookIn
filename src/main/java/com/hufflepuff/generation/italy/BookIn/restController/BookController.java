@@ -178,12 +178,12 @@ public class BookController {
         }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update (@RequestBody CompleteBookDto bookDto, @PathVariable long id){
+    public ResponseEntity<Void> update (@RequestBody BookWrapper bookWrapper, @PathVariable long id){
         Optional<Book> b = bookServiceCRUD.findById(id);
         if(b.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        Book updatingBook = bookDto.bookToUpdate(b.get());
+        Book updatingBook = bookWrapper.bookToUpdate(b.get());
         bookServiceCRUD.update(updatingBook);
         return ResponseEntity.noContent().build();
     }

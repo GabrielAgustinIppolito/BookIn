@@ -124,7 +124,7 @@ export const saveBook = async (bookWrapper) => {
 export const updateBook = async (bookWrapper) => {
   console.log(bookWrapper);
   const response = await axios.put(
-    `${rootUrl}/books/${bookWrapper.id}`,
+    `${rootUrl}/books/${bookWrapper.bookDto.id}`,
     bookWrapper,
     {
       headers: {
