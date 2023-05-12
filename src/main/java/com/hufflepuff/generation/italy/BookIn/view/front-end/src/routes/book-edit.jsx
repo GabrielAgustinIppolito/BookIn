@@ -22,7 +22,7 @@ export async function loader({ params }) {
    return { book };
 }
 
-export const action = async ({request}) => {
+export const action = async ({ request }) => {
    const formData = await request.formData();
    const bookAllData = Object.fromEntries(formData);
    const bookWrapper = {
@@ -42,8 +42,8 @@ export const action = async ({request}) => {
       "tagsDto": null,
       "location": {
          "id": globalBook.locationId,
-         "longitude": globalBook.longitude ,
-         "latitude": globalBook.latitude 
+         "longitude": globalBook.longitude,
+         "latitude": globalBook.latitude
       }
    }
    console.log(globalBook);
@@ -53,6 +53,7 @@ export const action = async ({request}) => {
 
 export default function BookEdit() {
    const [book, setBook] = useState(useLoaderData().book);
+   const [isAvailableStatus, setAvailableStatus] = useState(book.available);
    const [position, setPosition] = useState([book.latitude, book.longitude]);
    const markerRef = useRef(null);
    const navigate = useNavigate();
@@ -63,7 +64,7 @@ export default function BookEdit() {
          dragend() {
             const marker = markerRef.current
             if (marker != null) {
-               setPosition([marker.getLatLng().lat.toFixed(4),marker.getLatLng().lng.toFixed(4),]);
+               setPosition([marker.getLatLng().lat.toFixed(4), marker.getLatLng().lng.toFixed(4),]);
             }
          },
       }),
@@ -98,8 +99,15 @@ export default function BookEdit() {
    ), [eventHandlers, position]);
 
    const handleInputChange = (e) => {
-      const inputCampName = e.target.name;
+ 
+         console.log(e.target.className.baseVal);
+         console.log(e.target.tagName);
+
+      let inputCampName = e.target.name;
       const insertedValue = e.target.value;
+      if(e.target.className.baseVal === 'isAvailableButton'){
+         inputCampName = 'isAvailable';
+      }
       switch (inputCampName) {
          case "title":
             setBook({ ...book, title: insertedValue });
@@ -124,15 +132,18 @@ export default function BookEdit() {
             break;
          case 'isAvailable':
             setBook({ ...book, available: !book.available });
+            setAvailableStatus(!isAvailableStatus);
             globalBook.available = !globalBook.available;
             break;
       }
    }
-   
-   useState(globalBook=book,[book]);
+
+   useState(globalBook = book, [book]);
    useEffect(
-      () => { globalBook.longitude= position[1];
-         globalBook.latitude=position[0];}, [position]);
+      () => {
+         globalBook.longitude = position[1];
+         globalBook.latitude = position[0];
+      }, [position]);
 
 
 
@@ -158,7 +169,7 @@ export default function BookEdit() {
                         <div className="collapse-content">
                            <textarea name="review"
                               onChange={handleInputChange}
-                              rows="3" cols="40"
+                              rows="3" cols="80"
                               className="textarea textarea-accent w-full max-w-xs"
                               maxLength="250"
                               placeholder={book.review ? book.review : "Nessuna recensione"} />
@@ -264,29 +275,50 @@ export default function BookEdit() {
                            </div>
                         </div>
                      </div>
-                     <button name="isAvailable"
-                             value={book.available}
+
+                     {/* {isAvailableStatus ?
+                        <button name="isAvailable"
+                           value={isAvailableStatus}
+                           type="button"
+                           onClick={handleInputChange}
+                           className={`btn gap-2 btn-secondary`}>
+                           Disponibile
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 3h-7a2.98 2.98 0 0 0-2 .78A2.98 2.98 0 0 0 10 3H3a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h5.758c.526 0 1.042.214 1.414.586l1.121 1.121c.009.009.021.012.03.021.086.079.182.149.294.196h.002a.996.996 0 0 0 .762 0h.002c.112-.047.208-.117.294-.196.009-.009.021-.012.03-.021l1.121-1.121A2.015 2.015 0 0 1 15.242 20H21a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM8.758 18H4V5h6c.552 0 1 .449 1 1v12.689A4.032 4.032 0 0 0 8.758 18zM20 18h-4.758c-.799 0-1.584.246-2.242.689V6c0-.551.448-1 1-1h6v13z"></path></svg>
+                    
+                     </button>
+                  :
+                  <button name="isAvailable"
+                     value={isAvailableStatus}
+                     type="button"
+                     onClick={handleInputChange}
+                     className={`btn gap-2 btn-error`}>
+                     Non Disponibile
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6.012 18H21V4a2 2 0 0 0-2-2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.805 5 19s.55-.988 1.012-1zM8 6h9v2H8V6z"></path></svg>
+                  </button>                               
+                     } */}
+                  <button name="isAvailable"
+                             value={isAvailableStatus}
                              type="button" 
                              onClick={handleInputChange}
-                             className={`btn gap-2 ${book.available ? "btn-secondary" : "btn-error"}`}>
-                                 {book.available ? <>
+                             className={`btn gap-2 ${isAvailableStatus ? "btn-secondary" : "btn-error"}`}>
+                                 {isAvailableStatus ? <>
                                  Disponibile
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 3h-7a2.98 2.98 0 0 0-2 .78A2.98 2.98 0 0 0 10 3H3a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h5.758c.526 0 1.042.214 1.414.586l1.121 1.121c.009.009.021.012.03.021.086.079.182.149.294.196h.002a.996.996 0 0 0 .762 0h.002c.112-.047.208-.117.294-.196.009-.009.021-.012.03-.021l1.121-1.121A2.015 2.015 0 0 1 15.242 20H21a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM8.758 18H4V5h6c.552 0 1 .449 1 1v12.689A4.032 4.032 0 0 0 8.758 18zM20 18h-4.758c-.799 0-1.584.246-2.242.689V6c0-.551.448-1 1-1h6v13z"></path></svg></>
+                                 <svg className="isAvailableButton"  name="isAvailable" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path className="isAvailableButton" d="M21 3h-7a2.98 2.98 0 0 0-2 .78A2.98 2.98 0 0 0 10 3H3a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h5.758c.526 0 1.042.214 1.414.586l1.121 1.121c.009.009.021.012.03.021.086.079.182.149.294.196h.002a.996.996 0 0 0 .762 0h.002c.112-.047.208-.117.294-.196.009-.009.021-.012.03-.021l1.121-1.121A2.015 2.015 0 0 1 15.242 20H21a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM8.758 18H4V5h6c.552 0 1 .449 1 1v12.689A4.032 4.032 0 0 0 8.758 18zM20 18h-4.758c-.799 0-1.584.246-2.242.689V6c0-.551.448-1 1-1h6v13z"></path></svg></>
                               : <>
                                  Non Disponibile 
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6.012 18H21V4a2 2 0 0 0-2-2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.805 5 19s.55-.988 1.012-1zM8 6h9v2H8V6z"></path></svg></>}
+                                 <svg className="isAvailableButton"name="isAvailable" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path className="isAvailableButton" d="M6.012 18H21V4a2 2 0 0 0-2-2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.805 5 19s.55-.988 1.012-1zM8 6h9v2H8V6z"></path></svg></>}
                      </button>                     
-                  </div>
-               </div>
-               {displayMap}
-               <div className="form-control flex-row gap-8 justify-center">
-                  <button type="button" class="btn btn-outline btn-error"
-                     onClick={() => { navigate(-1); }}>
-                     Anulla</button>
-                  <button class="btn btn-outline btn-primary ">Salva</button>
                </div>
             </div>
+            {displayMap}
+            <div className="form-control flex-row gap-8 justify-center">
+               <button type="button" class="btn btn-outline btn-error"
+                  onClick={() => { navigate(-1); }}>
+                  Anulla</button>
+               <button class="btn btn-outline btn-primary ">Salva</button>
+            </div>
          </div>
-      </Form>
+      </div>
+   </Form >
    </>);
 }

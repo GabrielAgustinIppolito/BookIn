@@ -34,8 +34,9 @@ export default function Root() {
             </NavLink>
           </div>
         </div>
-
+        
         <div className="navbar-center">
+        <NavLink to="/home">
           <figure>
             <img
               className="max-h-20"
@@ -43,6 +44,7 @@ export default function Root() {
               alt="BookIn Logo"
             />
           </figure>
+        </NavLink>
         </div>
 
         <div className="navbar-end">

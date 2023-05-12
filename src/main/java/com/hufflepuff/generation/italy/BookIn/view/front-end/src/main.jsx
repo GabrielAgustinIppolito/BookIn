@@ -14,6 +14,7 @@ import OwnerProfile, {loader as ownerProfileLoader} from './routes/publicProfile
 import Search, {loader as searchLoader} from './routes/search.jsx';
 import ErrorPage from './routes/error-page.jsx';
 import BookEdit, {loader as bookEditLoader, action as bookEditAction}  from './routes/book-edit.jsx';
+import Home, {loader as homeLoader} from './routes/home.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       index: true,
       element: <Index />,
       action: loginAction
+    },{
+      path: "/home",
+      element: <Home />,
+      loader: homeLoader
     },
     {
       path: "/books/:id",

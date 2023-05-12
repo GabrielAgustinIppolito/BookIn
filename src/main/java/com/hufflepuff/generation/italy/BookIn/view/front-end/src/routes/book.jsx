@@ -101,12 +101,9 @@ export default function Book() {
                     </span>
                   </div>
                 </div>
-              <NavLink to={`/public-profile/${owner.id}`}>
-                  <button
-                    className="btn btn-primary rounded-lg text-white transition duration-100 hover:bg-secondary active:bg-secondary sm:flex-none"
-                  >
+                <NavLink to={`/public-profile/${owner.id}`}
+              className={`btn btn-primary rounded-lg text-white transition duration-100 hover:bg-secondary active:bg-secondary sm:flex-none ${book.available ? "" : "btn-disabled"}`}>
                     Scambia questo libro!
-                    </button>
                 </NavLink>
               </div>
             </div>

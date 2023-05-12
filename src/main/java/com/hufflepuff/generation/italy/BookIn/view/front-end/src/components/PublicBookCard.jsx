@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 export default function PublicBookCard({ book }) {
   const [isLoading, setLoading] = useState(true);
-  const [link, setlink] = useState();
+  const [link, setLink] = useState();
 
   useEffect(() => {
     axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}`, {
@@ -12,7 +12,7 @@ export default function PublicBookCard({ book }) {
         Authorization: `Client-ID ${(import.meta.env.VITE_API_KEY)}`,
       }
     }).then(response => {
-      setlink(response.data);
+      setLink(response.data);
       setLoading(false);
     });
   }, [book]);
