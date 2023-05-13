@@ -4,7 +4,7 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { infoBookFromIsbn } from "../apis/google-api";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-
+// CompleteBookDto format -> bookDto + splitted location
 let globalBook;
 
 export async function loader({ params }) {
@@ -25,6 +25,7 @@ export async function loader({ params }) {
 export const action = async ({ request }) => {
    const formData = await request.formData();
    const bookAllData = Object.fromEntries(formData);
+   //bookWrapper format
    const bookWrapper = {
       "bookDto": {
          "id": globalBook.id,
@@ -46,7 +47,6 @@ export const action = async ({ request }) => {
          "latitude": globalBook.latitude
       }
    }
-   console.log(globalBook);
    await updateBook(bookWrapper);
    return redirect("/profile");
 };
@@ -145,7 +145,7 @@ export default function BookEdit() {
          globalBook.latitude = position[0];
       }, [position]);
 
-
+   console.log(globalBook);
 
    return (<>
       <Form method="put" className="py-6 sm:py-8 lg:py-12">
@@ -224,7 +224,6 @@ export default function BookEdit() {
                            </div>
                         </div>
 
-
                         <div className="collapse">
                            <input type="checkbox" />
                            <span className="text-sm text-gray-500 collapse-title">
@@ -275,27 +274,6 @@ export default function BookEdit() {
                            </div>
                         </div>
                      </div>
-
-                     {/* {isAvailableStatus ?
-                        <button name="isAvailable"
-                           value={isAvailableStatus}
-                           type="button"
-                           onClick={handleInputChange}
-                           className={`btn gap-2 btn-secondary`}>
-                           Disponibile
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 3h-7a2.98 2.98 0 0 0-2 .78A2.98 2.98 0 0 0 10 3H3a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h5.758c.526 0 1.042.214 1.414.586l1.121 1.121c.009.009.021.012.03.021.086.079.182.149.294.196h.002a.996.996 0 0 0 .762 0h.002c.112-.047.208-.117.294-.196.009-.009.021-.012.03-.021l1.121-1.121A2.015 2.015 0 0 1 15.242 20H21a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM8.758 18H4V5h6c.552 0 1 .449 1 1v12.689A4.032 4.032 0 0 0 8.758 18zM20 18h-4.758c-.799 0-1.584.246-2.242.689V6c0-.551.448-1 1-1h6v13z"></path></svg>
-                    
-                     </button>
-                  :
-                  <button name="isAvailable"
-                     value={isAvailableStatus}
-                     type="button"
-                     onClick={handleInputChange}
-                     className={`btn gap-2 btn-error`}>
-                     Non Disponibile
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6.012 18H21V4a2 2 0 0 0-2-2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.805 5 19s.55-.988 1.012-1zM8 6h9v2H8V6z"></path></svg>
-                  </button>                               
-                     } */}
                   <button name="isAvailable"
                              value={isAvailableStatus}
                              type="button" 

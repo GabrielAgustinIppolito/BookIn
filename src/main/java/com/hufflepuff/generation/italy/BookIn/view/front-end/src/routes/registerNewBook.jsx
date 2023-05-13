@@ -198,7 +198,7 @@ export default function RegisterNewBook() {
             <label className="label">
               <span className="text-lg">Recensione</span>
             </label>
-            <input name="review" type="text" className="textarea textarea-bordered h-24 shadow-inner w-full max-w-xs" />
+            <input name="review" maxLength="250" type="text" className="textarea textarea-bordered h-24 shadow-inner w-full max-w-xs" />
           </div>
           <p>Scegli dove scambiare il tuo libro</p>
           {displayMap}
