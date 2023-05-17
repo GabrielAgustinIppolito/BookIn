@@ -39,7 +39,6 @@ public class BookWrapper {
         if(getBookDto().getLanguage() != null && getBookDto().getLanguage().length()>0) book.setLanguage(getBookDto().getLanguage());
         if(getBookDto().getAuthor() != null && getBookDto().getAuthor().length()>0) book.setAuthor(getBookDto().getAuthor());
         if(getBookDto().getReview() != null && getBookDto().getReview().length()>0) book.setReview(getBookDto().getReview());
-        System.out.println("***************************************************************"+getBookDto().isAvailable());
         book.setAvailable(getBookDto().isAvailable());
 
         if(getBookDto().isShippable() != true || getBookDto().isShippable() != false){

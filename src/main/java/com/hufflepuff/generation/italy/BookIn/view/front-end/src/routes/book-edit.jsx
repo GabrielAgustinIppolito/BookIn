@@ -29,7 +29,9 @@ export const action = async ({ request }) => {
    const bookWrapper = {
       "bookDto": {
          "id": globalBook.id,
-         "title": bookAllData.title,
+         "title": bookAllData.title ? bookAllData.title 
+                                    : globalBook.title ? globalBook.title 
+                                                       : "titolo non trovato",
          "isbn": bookAllData.isbn,
          "year": bookAllData.year,
          "publisher": bookAllData.publisher,
