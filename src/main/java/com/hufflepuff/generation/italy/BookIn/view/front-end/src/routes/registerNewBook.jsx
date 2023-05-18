@@ -1,10 +1,11 @@
 import { Form, redirect, useLoaderData } from "react-router-dom";
-import { getGenres, getTags, getUserCityPosix, saveBook } from "../apis/book-api";
-import Selection from "../components/Selection";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { getGenres, getTags, getUserCityPosix, saveBook } from "../apis/book-api";
 import "../../node_modules/leaflet/dist/leaflet.css";
+import Selection from "../components/Selection";
 import MapPositioner from "../components/MapPositioner";
+import Input from "../components/Input";
 
 
 let globalTags = [];
@@ -157,43 +158,46 @@ export default function RegisterNewBook() {
       <Form method="post" className="grid grid-cols-2 gap-5 m-auto mt-10 mb-10 p-5 bg-base-200 rounded-xl max-w-screen-lg shadow-2xl">
         <div className="flex flex-col items-center justify-center gap-5">
           <h1 className="my-titles text-4xl m-auto mt-5">Nuovo libro</h1>
-
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="text-lg">Titolo</span>
-            </label>
-            <input name="title" type="text" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
-          </div>
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="text-lg">ISBN</span>
-            </label>
-            <input name="isbn" maxLength="13" type="text" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
-          </div>
+          <Input
+          label="Titolo"
+          name="title"
+          type="text"
+          placeholder="Inserisci un titolo"
+          >
+          </Input>
+          <Input
+          label="ISBN"
+          name="isbn"
+          type="text"
+          placeholder="Inserisci il codice ISBN"
+          ></Input>
           <div className="form-control w-full max-w-xs">
             <label className="label">
               <span className="text-lg">Anno di pubblicazione</span>
             </label>
             <input name="year" type="date" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
           </div>
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="text-lg">Editore</span>
-            </label>
-            <input name="publisher" type="text" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
-          </div>
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="text-lg">Lingua</span>
-            </label>
-            <input name="language" type="text" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
-          </div>
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="text-lg">Autore</span>
-            </label>
-            <input name="author" type="text" placeholder="Scrivi qui" className="input input-bordered shadow-inner w-full max-w-xs" />
-          </div>
+          <Input
+          label="Editore"
+          name="publisher"
+          type="text"
+          placeholder="Inserisci il nome dell'editore"
+          >
+          </Input>
+          <Input
+          label="Lingua"
+          name="language"
+          type="text"
+          placeholder="Lingua del libro"
+          >
+          </Input>
+          <Input
+          label="Autore"
+          name="author"
+          type="text"
+          placeholder="Inserisci l'autore"
+          >
+          </Input>
           <div className="form-control w-full max-w-xs">
             <label className="label">
               <span className="text-lg">Recensione</span>
